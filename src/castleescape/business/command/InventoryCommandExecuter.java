@@ -20,7 +20,7 @@ public class InventoryCommandExecuter implements CommandExecuter {
 	public void execute(Game game, Command command) {
 		//If the command has a parameter then the user used the command
 		//incorrectly
-		if (command.hasCommandParameter()) {
+		if (command.hasCommandParameters()) {
 			ViewUtil.println("I don't understand what you mean");
 		} else {
 			//Get a reference to the player character's inventory

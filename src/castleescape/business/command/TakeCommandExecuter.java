@@ -27,7 +27,7 @@ public class TakeCommandExecuter implements CommandExecuter {
 
 		//Attempt to get the item with the specified name in the room's
 		//inventory. If no such item exists, then the value of item will be null
-		String itemName = command.getCommandParameter();
+		String itemName = command.getCommandParameter(Command.ITEM);
 		Item item = room.getInventory().getItemByName(itemName);
 		
 		//If the item does not exist in the room, tell the user

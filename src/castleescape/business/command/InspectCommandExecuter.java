@@ -23,13 +23,14 @@ public class InspectCommandExecuter implements CommandExecuter {
 	@Override
 	public void execute(Game game, Command command) {
 		//Get the name of the inspectable object that the user wishes to inspect
-		String objectName = command.getCommandParameter();
+		String objectName = command.getCommandParameter(Command.OBJECT);
 
 		//Get a reference to the room that we are currently in
 		Room currentRoom = game.getCurrentRoom();
 
 		//Attempt to find an inspectable object in either the room or the player
-		//inventory that has the name specified by the user.
+		//inventory that has the name specified by the user. If the name is
+		//null, then a null object is returned
 		InspectableObject currentObject;
 		currentObject = currentRoom.getInspectableObjectByName(objectName);
 

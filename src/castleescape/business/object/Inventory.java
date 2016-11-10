@@ -6,6 +6,7 @@
 package castleescape.business.object;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class describing an object that can store items.
@@ -25,7 +26,7 @@ public class Inventory {
 	 * chosen over an array because it is dynamic, which is a requirement for
 	 * some inventories. The arraylist is final because it is never changed.
 	 */
-	private final ArrayList<Item> content;
+	private final List<Item> content;
 
 	/**
 	 * The capacity of this inventory, if it is limited. If not, this variable
@@ -236,6 +237,21 @@ public class Inventory {
 	 */
 	public boolean containsItem(Item item) {
 		return content.contains(item);
+	}
+
+	/**
+	 * Get a list of names of the items in this inventory.
+	 *
+	 * @return a list of names of the items in this inventory
+	 */
+	public List<String> getContentView() {
+		List<String> returnList = new ArrayList<>();
+		
+		for (Item i: content) {
+			returnList.add(i.getName());
+		}
+		
+		return returnList;
 	}
 
 	/**

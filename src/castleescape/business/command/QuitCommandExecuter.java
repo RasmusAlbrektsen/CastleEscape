@@ -18,10 +18,10 @@ public class QuitCommandExecuter implements CommandExecuter {
 	@Override
 	public void execute(Game game, Command command) {
 		//Quit the game only if the quit command has not parameters
-		if (command.hasCommandParameter()) {
+		if (command.hasCommandParameters()) {
 			ViewUtil.println("Quit what?");
 		} else {
-			game.quit();
+			//TODO: How do we quit? :)
 		}
 	}
 }

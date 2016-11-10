@@ -27,7 +27,7 @@ public class DropCommandExecuter implements CommandExecuter {
 
 		//Attempt to get the item with the specified name in the player's
 		//inventory. If no such item exists, then the value of item will be null
-		String itemName = command.getCommandParameter();
+		String itemName = command.getCommandParameter(Command.ITEM);
 		Item item = game.getPlayer().getInventory().getItemByName(itemName);
 
 		//Get the inventory of the player and the current room

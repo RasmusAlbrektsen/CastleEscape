@@ -8,27 +8,25 @@ import castleescape.business.ViewUtil;
  * Command for peeking into a room, revealing whether a monster is in there.
  */
 public class PeekCommandExecuter implements CommandExecuter {
+	
 	@Override
 	public void execute(Game game, Command command) {
-		if (command.hasCommandParameter()) {
-			//If the monster or the monster's room is uninitialised
-			if (game.getMonster() == null || game.getMonster().getCurrentRoom() == null) {
-				ViewUtil.println("The room appears empty");
+		if (command.hasCommandParameters()) {
+			//If the player has typed a direction, which is not in the current
+			//room's hashmap, or if the direction is null
+			if (game.getCurrentRoom().getExit(command.getCommandParameter(Command.DIRECTION)) == null) {
+				ViewUtil.println("There is no door to peek through.");
 				return;
 			}
-			//If the player has typed a direction, which is not in the current rooms hashmap
-			if (game.getCurrentRoom().getExit(command.getCommandParameter()) == null) {
-				ViewUtil.println("There is no door to peek through");
-				return;
-			}
+			
 			//If the monsters room matches the room the player is peeking into
-			if (game.getMonster().getCurrentRoom().equals(game.getCurrentRoom().getExit(command.getCommandParameter()))) {
+			if (game.getMonster().getCurrentRoom() == game.getCurrentRoom().getExit(command.getCommandParameter(Command.DIRECTION))) {
 				ViewUtil.println("The monster is in there!");
 			} else {
-				ViewUtil.println("The room appears empty");
+				ViewUtil.println("The room appears empty.");
 			}
 		} else {
-			ViewUtil.println("peek in which direction?");
+			ViewUtil.println("Peek where?");
 		}
 	}
 }

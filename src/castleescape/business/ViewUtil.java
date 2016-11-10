@@ -1,23 +1,16 @@
-package castleescape.business;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+package castleescape.business;
 
 /**
+ * The ViewUtil is designed to transform simple strings into html markup before
+ * they are sent to the user interface.
+ * <p>
  * Currently PrintUtil supports printing of strings, chars, integers and
  * doubles.
- * <p>
- * This class is designed to make use of the mediator pattern to communicate
- * between the game implementation and the user interface. Instead of adding a
- * deep dependency on the user interface inside the game logic, all user
- * interface related actions go through this class, which will forward these
- * actions to the UI in a way defined by the implementation. This means that
- * changing the user interface of this game is merely a matter of adapting this
- * single class.
  *
  * @author Kasper
  */
@@ -29,13 +22,30 @@ public class ViewUtil {
 	private static final String LINE_SEPARATOR_PROPERTY = "line.separator";
 
 	/**
+	 * The stringbuilder for accumulating characters to print to the user
+	 * interface.
+	 */
+	private static final StringBuilder string = new StringBuilder();
+	
+	/**
+	 * Whether we are in the process of printing a line already. If this is
+	 * false, then a call to print(String) should append an open paragraph
+	 * element before the string.
+	 */
+	private static boolean isPrintingLine = false;
+
+	/**
 	 * Print the specified string to the user interface.
 	 *
 	 * @param s the string to print
 	 */
 	public static void print(String s) {
-		//TODO: Forward to user interface during phase 2
-		System.out.print(s);
+		if (! isPrintingLine) {
+			string.append("<p>");
+			isPrintingLine = true;
+		}
+		
+		string.append(s);
 	}
 
 	/**
@@ -132,6 +142,16 @@ public class ViewUtil {
 	 * Print a newline to the user interface.
 	 */
 	public static void newLine() {
-		print(System.getProperty(LINE_SEPARATOR_PROPERTY));
+		string.append("</p>");
+		isPrintingLine = false;
+	}
+	
+	public static String getString() {
+		//Save the contents of the stringbuilder in a temporary variable so that
+		//it can be reset before returning the string
+		String s = string.toString();
+		string.setLength(0);
+		
+		return s;
 	}
 }

@@ -27,7 +27,7 @@ public class Event {
 	private final EventWord eventWord;
 
 	/**
-	 * HashMap containing the event parameters.
+	 * Map containing the event parameters.
 	 */
 	private final Map<String, String> eventParams;
 

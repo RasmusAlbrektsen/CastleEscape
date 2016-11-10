@@ -40,12 +40,6 @@ import java.util.Scanner;
 public class Game {
 
 	/**
-	 * The parser object responsible for getting input from the user and
-	 * converting it to {@link Command} objects.
-	 */
-	private final Parser parser;
-
-	/**
 	 * Map of command executers. The keys are CommandWord objects and the values
 	 * are the CommandExecuters associated with these CommandWord objects.
 	 */
@@ -127,7 +121,6 @@ public class Game {
 		eventExecuters.put(EventWord.REMOVE_ROOM_ITEM, new RemoveRoomItemEventExecuter());
 
 		//Initialize remaining variables
-		parser = new Parser();
 		monster = new Monster(roomMap.get(Configurations.MONSTER_START_ROOM_NAME));
 		scoreManager = new ScoreManager();
 	}
@@ -240,6 +233,17 @@ public class Game {
 	}
 
 	/**
+	 * Get the command executer associated with the specified command word.
+	 *
+	 * @param commandWord the command word that the requested command executer
+	 *                    is associated with
+	 * @return the command executer associated with the specified command word
+	 */
+	public CommandExecuter getCommandExecuter(CommandWord commandWord) {
+		return commandExecuters.get(commandWord);
+	}
+
+	/**
 	 * Get the event executer associated with the specified event word.
 	 *
 	 * @param eventWord the event word that the requested event executer is
@@ -251,70 +255,15 @@ public class Game {
 	}
 
 	/**
-	 * Start playing the game. This method will print the welcome message to the
-	 * console and initiate the main game loop. Thus, this method will not
-	 * return until the user is done playing the game.
-	 * <p>
-	 * For every iteration in the game loop the user will be asked to enter a
-	 * command using the {@link Parser}, and the command will be processed and
-	 * its event (if any) is carried out.
+	 * Start playing the game. This method will print the welcome message along
+	 * with the description of the first room given by
+	 * {@link Room#getLongDescription()}.
 	 */
-	public void play() {
-		//Set the game to running mode
-		running = true;
-
-		//Print the welcome message to the console
-		printWelcome();
-
-		//Keep looping as long as the running variable is true. Setting this
-		//variable to false anywhere inside the while loop will make it stop
-		//iterating and allow this method to return, and thus allow the game to
-		//end.
-		while (running) {
-			//Fetch the next command from the user. This method call pauses
-			//until the user has entered a command.
-			Command command = parser.getCommand();
-
-			//For aesthetic reasons only
-			ViewUtil.newLine();
-
-			//If the player is caught by the monster, game over
-			if (monster.isPlayerCaught()) {
-				ViewUtil.println("The monster caught you and shredded you to pieces!");
-				ViewUtil.println("\t\tGAME OVER");
-
-				//Game over, so we quit
-				quit();
-			} else {
-				//The player is still alive
-				//Process the entered command. The processCommand() method will
-				//return a boolean that is true if the command was a "quit" command
-				//and false otherwise. By setting the value of the finished variable
-				//here we can control if the loop will iterate again, or if it will
-				//stop
-				processCommand(command);
-			}
-		}
-
-		//Record player score
-		scoreManager.recordCurrentGameScore();
-
-		//Reset the score manager in case someone chooses to run the game again
-		scoreManager.reset();
-
-		//Print out thank you and good bye message
-		ViewUtil.println("Thank you for playing. Good bye.");
-	}
-
-	/**
-	 * Print the welcome message to the console. This will also print the
-	 * description of the first room given by {@link Room#getLongDescription()}.
-	 */
-	private void printWelcome() {
+	public void start() {
 		//Print out game details
 		ViewUtil.newLine();
-		ViewUtil.println("Welcome to the World of Zuul!");
-		ViewUtil.println("World of Zuul is a new, incredibly boring adventure game.");
+		ViewUtil.println("Welcome to Castle Escape!");
+		ViewUtil.println("Castle Escape is a game where the objective is to escape a castle. Wow.");
 
 		//Printing out CommandWord.HELP will replace it with the return value of
 		//its toString() method, which is the string representation of the
@@ -329,11 +278,23 @@ public class Game {
 
 	/**
 	 * Process the specified {@link Command} to carry out the action associated
-	 * with it.
+	 * with it. Thisa method will also check whether the player has been caught,
+	 * as such an action can only happen when the player executes a command.
 	 *
 	 * @param command the command to process
 	 */
-	private void processCommand(Command command) {
+	public void processCommand(Command command) {
+		//If the player is caught by the monster, game over
+		if (monster.isPlayerCaught()) {
+			ViewUtil.println("The monster caught you and shredded you to pieces!");
+			ViewUtil.println("\t\tGAME OVER");
+
+			//Game over, so we quit
+			//TODO: How do we quit? :)
+			return;
+		}
+
+		//The player is still alive, so we can process the command
 		//Notify the monster that a command has been entered.
 		monster.notifyOfCommand(this);
 
@@ -350,13 +311,6 @@ public class Game {
 
 		//At this point executer is able to execute the specified command
 		executer.execute(this, command);
-	}
-
-	/**
-	 * Make the game stop playing. The current game loop will run to an end.
-	 */
-	public void quit() {
-		running = false;
 	}
 
 	/**

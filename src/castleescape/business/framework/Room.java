@@ -2,8 +2,11 @@ package castleescape.business.framework;
 
 import castleescape.business.object.InspectableObject;
 import castleescape.business.object.Inventory;
+import java.util.ArrayList;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -25,10 +28,10 @@ public class Room {
 	private String description;
 
 	/**
-	 * {@link HashMap} for mapping between direction strings and the exits in
+	 * {@link Map} for mapping between direction strings and the exits in
 	 * the room.
 	 */
-	private final HashMap<String, Room> exits;
+	private final Map<String, Room> exits;
 
 	/**
 	 * Inventory, where the items go.
@@ -36,10 +39,10 @@ public class Room {
 	private final Inventory inventory;
 
 	/**
-	 * {@link HashMap} for storing the inspectable objects in this room by their
+	 * {@link Map} for storing the inspectable objects in this room by their
 	 * names.
 	 */
-	private final HashMap<String, InspectableObject> roomObjects;
+	private final Map<String, InspectableObject> roomObjects;
 
 	/**
 	 * Constructs a new room with the specified description. The constructed
@@ -117,12 +120,13 @@ public class Room {
 		StringBuilder descriptionBuilder = new StringBuilder();
 		descriptionBuilder.append(getRoomName()).append('\n')
 				.append(getShortDescription()).append("\n\n");
-		
-		if (getInventory().getItemCount() != 0)
+
+		if (getInventory().getItemCount() != 0) {
 			descriptionBuilder.append("Scattered on the floor you see: ").append(getInventory()).append("\n\n");
-		
+		}
+
 		descriptionBuilder.append(getExitString());
-		
+
 		return descriptionBuilder.toString();
 	}
 
@@ -165,13 +169,31 @@ public class Room {
 		//direction key in the exits hash map
 		return exits.get(direction);
 	}
+	
+	/**
+	 * Get a map of all the exits from this room.
+	 *
+	 * @return the Map of the exits from the room
+	 */
+	public Map<String, Room> getExits() {
+		return exits;
+	}
 
 	/**
-	 * get the list of all exits. May return null if no exits are present.
-	 * @return the hashMap of the exits to the room.
+	 * Get a map of all the exits from this room. The exits are stored as
+	 * strings for convenience of use with a user interface.
+	 *
+	 * @return the Map of the exits from the room
 	 */
-	public HashMap<String, Room> getExits() {
-		return exits;
+	public Map<String, String> getExitView() {
+		Map<String, String> returnMap = new HashMap<>();
+		
+		for (String direction: exits.keySet()) {
+			String otherRoomName = exits.get(direction).getRoomName();
+			returnMap.put(direction, otherRoomName);
+		}
+		
+		return returnMap;
 	}
 
 	/**
@@ -229,7 +251,16 @@ public class Room {
 			return object;
 		}
 	}
-	
+
+	/**
+	 * Get a list of names of the inspectable objects in this room.
+	 *
+	 * @return a list of names of the inspectable objects in this room
+	 */
+	public List<String> getInspectableObjectView() {
+		return new ArrayList<>(roomObjects.keySet());
+	}
+
 	@Override
 	public String toString() {
 		return getRoomName();
