@@ -27,7 +27,7 @@ public class FXMLDocumentController implements Initializable {
 	 */
 	private BusinessMediator businessMediator;
 
-	//DropDown Menus
+	// DropDown Menus
 	@FXML
 	private MenuButton roomButton;
 
@@ -69,7 +69,7 @@ public class FXMLDocumentController implements Initializable {
 	@FXML
 	private WebView console;
 
-	//Action events
+	//DropDown Menus
 	@FXML
 	private void roomAction(ActionEvent event) {
 
@@ -85,7 +85,7 @@ public class FXMLDocumentController implements Initializable {
 
 	}
 
-	//Buttons
+	//Buttons actions
 	@FXML
 	private void useAction(ActionEvent event) {
 
@@ -103,7 +103,7 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void takeAction(ActionEvent event) {
-
+		
 	}
 
 	@FXML
@@ -113,8 +113,7 @@ public class FXMLDocumentController implements Initializable {
 
 	@FXML
 	private void northAction(ActionEvent event) {
-		String startMsg = businessMediator.start();
-		console.getEngine().loadContent(startMsg);
+		console.getEngine().loadContent(businessMediator.start());
 	}
 
 	@FXML
@@ -131,12 +130,7 @@ public class FXMLDocumentController implements Initializable {
 	private void southAction(ActionEvent event) {
 
 	}
-
-	/**
-	 * Set the business mediator to be used by this controller.
-	 *
-	 * @param bm the business mediator to use
-	 */
+	
 	public void setBusinessMediator(BusinessMediator bm) {
 		this.businessMediator = bm;
 	}
