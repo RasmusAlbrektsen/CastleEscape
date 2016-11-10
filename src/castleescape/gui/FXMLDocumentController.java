@@ -131,8 +131,9 @@ public class FXMLDocumentController implements Initializable {
 	}
 
 	/**
-	 * -	* Set the business mediator to be used by this controller. -	* -	*
-	 * @param bm the business mediator to use -
+	 * Set the business mediator to be used by this controller.
+	 * 
+	 * @param bm the business mediator to use
 	 */
 	public void setBusinessMediator(BusinessMediator bm) {
 		this.businessMediator = bm;
