@@ -1,14 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.WebView?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="castleescape.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="310.0" prefWidth="496.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="castleescape.gui.FXMLDocumentController">
 	<children>
-		<Button fx:id="button" layoutX="126" layoutY="90" onAction="#handleButtonAction" text="Nononoono!!!" />
-		<Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <AnchorPane layoutX="287.0" layoutY="22.0" prefHeight="112.0" prefWidth="171.0">
+         <children>
+            <MenuButton fx:id="roomButton" layoutX="103.0" mnemonicParsing="false" onAction="#roomAction" prefHeight="27.0" prefWidth="82.0" text="Room ">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <Button fx:id="takeButton" layoutY="85.0" mnemonicParsing="false" onAction="#takeAction" text="Take" />
+            <Button fx:id="dropButton" layoutX="137.0" layoutY="39.0" mnemonicParsing="false" onAction="#dropAction" text="Drop" />
+            <Button fx:id="useButton" layoutY="39.0" mnemonicParsing="false" onAction="#useAction" text="Use" />
+            <MenuButton fx:id="inventoryButton" mnemonicParsing="false" onAction="#inventoryAction" text="Inventory">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <Button fx:id="inspectButton" layoutX="121.0" layoutY="85.0" mnemonicParsing="false" onAction="#inspectAction" text="Inspect" />
+            <Button fx:id="hintButton" layoutX="71.0" layoutY="38.0" mnemonicParsing="false" onAction="#hintAction" text="Hint" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="320.0" layoutY="170.0" prefHeight="84.0" prefWidth="113.0">
+         <children>
+            <Button fx:id="northButtom" layoutX="30.0" mnemonicParsing="false" onAction="#northAction" prefHeight="27.0" prefWidth="59.0" text="North" />
+          <Button fx:id="westButtom" layoutY="29.0" mnemonicParsing="false" onAction="#westAction" prefHeight="27.0" prefWidth="59.0" text="West" />
+            <Button fx:id="eastButtom" layoutX="59.0" layoutY="29.0" mnemonicParsing="false" onAction="#eastAction" prefHeight="27.0" prefWidth="59.0" text="East" />
+      		<Button fx:id="southButtom" layoutX="29.0" layoutY="56.0" mnemonicParsing="false" onAction="#southAction" prefHeight="27.0" prefWidth="59.0" text="South" />
+         </children>
+      </AnchorPane>
+      <WebView fx:id="webViewField" layoutX="1.0" prefHeight="310.0" prefWidth="258.0" />
+      <MenuButton fx:id="peakButtom" layoutX="346.0" layoutY="266.0" mnemonicParsing="false" onAction="#peakAction" text="Peak">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </MenuButton>
 	</children>
 </AnchorPane>
