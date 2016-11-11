@@ -268,7 +268,7 @@ public class Game {
 		//Printing out CommandWord.HELP will replace it with the return value of
 		//its toString() method, which is the string representation of the
 		//command word
-		ViewUtil.println("Type '" + CommandWord.HELP + "' if you need help.");
+		ViewUtil.println("Press 'Help' if you need help.");
 		ViewUtil.newLine();
 
 		//Print the long description of the current room, that is the starting

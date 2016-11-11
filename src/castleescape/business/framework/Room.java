@@ -118,11 +118,11 @@ public class Room {
 	 */
 	public String getLongDescription() {
 		StringBuilder descriptionBuilder = new StringBuilder();
-		descriptionBuilder.append(getRoomName()).append('\n')
-				.append(getShortDescription()).append("\n\n");
+		descriptionBuilder.append(getRoomName()).append("</br>")
+				.append(getShortDescription()).append("</br></br>");
 
 		if (getInventory().getItemCount() != 0) {
-			descriptionBuilder.append("Scattered on the floor you see: ").append(getInventory()).append("\n\n");
+			descriptionBuilder.append("Scattered on the floor you see: ").append(getInventory()).append("</br></br>");
 		}
 
 		descriptionBuilder.append(getExitString());

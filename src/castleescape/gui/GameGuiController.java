@@ -7,12 +7,14 @@ package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.web.WebView;
 
 /**
@@ -66,7 +68,8 @@ public class GameGuiController implements Initializable {
 	/* Action events */
 	@FXML
 	private void northButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed north button</p>");
+		String msg = businessMediator.start();
+		writeToConsole(msg);
 	}
 
 	@FXML
@@ -111,7 +114,7 @@ public class GameGuiController implements Initializable {
 
 	@FXML
 	private void helpButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed help button</p>");
+		writeToConsole(businessMediator.notifyHelp());
 	}
 
 	@FXML
