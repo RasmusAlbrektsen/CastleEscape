@@ -17,7 +17,8 @@ import javafx.stage.Stage;
 import util.XMLFileLocater;
 
 /**
- *
+ * Entry point for the JavaFXML application and the game logic.
+ * 
  * @author Kasper
  */
 public class CastleEscape extends Application {
@@ -47,10 +48,10 @@ public class CastleEscape extends Application {
 	public void start(Stage stage) throws Exception {
 		BusinessMediator bm = initGame();
 
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("GameGuiView.fxml"));
 
 		Parent root = (Parent) loader.load();
-		FXMLDocumentController controller = loader.getController();
+		GameGuiController controller = loader.getController();
 		controller.setBusinessMediator(bm);
 
 		Scene scene = new Scene(root);

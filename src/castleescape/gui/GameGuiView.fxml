@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@gameguiview.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="castleescape.gui.GameGuiController">
+   <bottom>
+      <VBox prefHeight="100.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
+               <children>
+                  <MenuButton fx:id="inventoryDropDown" mnemonicParsing="false" text="MenuButton">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                  </MenuButton>
+                  <MenuButton fx:id="roomContentDropDown" mnemonicParsing="false" text="MenuButton">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                  </MenuButton>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <padding>
+                  <Insets left="16.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
+               <children>
+                  <Button fx:id="takeButton" mnemonicParsing="false" onAction="#takeButtonOnAction" text="Take" />
+                  <Button fx:id="dropButton" mnemonicParsing="false" onAction="#dropButtonOnAction" text="Drop" />
+                  <Button fx:id="useButton" mnemonicParsing="false" onAction="#useButtonOnAction" text="Use" />
+                  <Button fx:id="inspectButton" mnemonicParsing="false" onAction="#inspectButtonOnAction" text="Inspect" />
+                  <Button fx:id="inventoryButton" mnemonicParsing="false" onAction="#inventoryButtonOnAction" text="Inventory" />
+                  <Button fx:id="helpButton" mnemonicParsing="false" onAction="#helpButtonOnAction" text="Help" />
+               </children>
+               <padding>
+                  <Insets left="16.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
+   <right>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <BorderPane>
+               <top>
+                  <Button fx:id="northButton" mnemonicParsing="false" onAction="#northButtonOnAction" text="North" BorderPane.alignment="CENTER" />
+               </top>
+               <left>
+                  <Button fx:id="westButton" mnemonicParsing="false" onAction="#westButtonOnAction" text="West" BorderPane.alignment="CENTER" />
+               </left>
+               <bottom>
+                  <Button fx:id="southButton" mnemonicParsing="false" onAction="#southButtonOnAction" text="South" BorderPane.alignment="CENTER" />
+               </bottom>
+               <right>
+                  <Button fx:id="eastButton" mnemonicParsing="false" onAction="#eastButtonOnAction" text="East" BorderPane.alignment="CENTER" />
+               </right>
+            </BorderPane>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
+               <children>
+                  <MenuButton fx:id="roomDropDown" mnemonicParsing="false" text="MenuButton">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="Action 1" />
+                      <MenuItem mnemonicParsing="false" text="Action 2" />
+                    </items>
+                  </MenuButton>
+                  <Button fx:id="peekButton" mnemonicParsing="false" onAction="#peekButtonOnAction" text="Peek" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="8.0" right="8.0" top="48.0" />
+         </padding>
+      </VBox>
+   </right>
+   <left>
+      <WebView fx:id="console" prefHeight="300.0" prefWidth="383.0" BorderPane.alignment="CENTER" />
+   </left>
+</BorderPane>
