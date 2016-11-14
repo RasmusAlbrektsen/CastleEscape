@@ -7,14 +7,14 @@ package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
 import java.net.URL;
-import java.util.Optional;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.web.WebView;
 
 /**
@@ -55,11 +55,11 @@ public class GameGuiController implements Initializable {
 
 	/* Drop downs */
 	@FXML
-	private MenuButton inventoryDropDown;
+	private ChoiceBox<String> inventoryDropDown;
 	@FXML
-	private MenuButton roomContentDropDown;
+	private ChoiceBox<String> roomContentDropDown;
 	@FXML
-	private MenuButton roomDropDown;
+	private ChoiceBox<String> roomDropDown;
 
 	/* Web view */
 	@FXML
@@ -68,58 +68,100 @@ public class GameGuiController implements Initializable {
 	/* Action events */
 	@FXML
 	private void northButtonOnAction(ActionEvent event) {
-		String msg = businessMediator.start();
+		String msg = businessMediator.notifyGo("north");
 		writeToConsole(msg);
+
+		updateGameDataDisplay();
 	}
 
 	@FXML
 	private void southButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed south button</p>");
+		String msg = businessMediator.notifyGo("south");
+		writeToConsole(msg);
+
+		updateGameDataDisplay();
 	}
 
 	@FXML
 	private void eastButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed east button</p>");
+		String msg = businessMediator.notifyGo("east");
+		writeToConsole(msg);
+
+		updateGameDataDisplay();
 	}
 
 	@FXML
 	private void westButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed west button</p>");
+		String msg = businessMediator.notifyGo("west");
+		writeToConsole(msg);
+
+		updateGameDataDisplay();
 	}
 
 	@FXML
 	private void takeButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed take button</p>");
+		String msg = businessMediator.notifyTake(roomContentDropDown.getSelectionModel().getSelectedItem());
+		writeToConsole(msg);
+
+		updateGameDataDisplay();
 	}
 
 	@FXML
 	private void dropButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed drop button</p>");
+		String msg = businessMediator.notifyDrop(inventoryDropDown.getSelectionModel().getSelectedItem());
+		writeToConsole(msg);
+
+		updateGameDataDisplay();
 	}
 
 	@FXML
 	private void useButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed use button</p>");
+		String msg = businessMediator.notifyUse(
+				inventoryDropDown.getSelectionModel().getSelectedItem(),
+				roomContentDropDown.getSelectionModel().getSelectedItem());
+
+		writeToConsole(msg);
+
+		updateGameDataDisplay();
 	}
 
 	@FXML
 	private void inspectButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed inspect button</p>");
+		String inventorySelection = inventoryDropDown.getSelectionModel().getSelectedItem();
+		String roomSelection = roomContentDropDown.getSelectionModel().getSelectedItem();
+		String msg;
+
+		if (inventorySelection != null) {
+			msg = businessMediator.notifyInspect(inventorySelection);
+		} else {
+			msg = businessMediator.notifyInspect(roomSelection);
+		}
+
+		writeToConsole(msg);
+
+		updateGameDataDisplay();
 	}
 
 	@FXML
 	private void inventoryButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed inventory button</p>");
+		writeToConsole(businessMediator.notifyInventory());
+
+		updateGameDataDisplay();
 	}
 
 	@FXML
 	private void helpButtonOnAction(ActionEvent event) {
 		writeToConsole(businessMediator.notifyHelp());
+
+		updateGameDataDisplay();
 	}
 
 	@FXML
 	private void peekButtonOnAction(ActionEvent event) {
-		writeToConsole("<p>Pressed peak button</p>");
+		String msg = businessMediator.notifyPeek(roomDropDown.getSelectionModel().getSelectedItem());
+		writeToConsole(msg);
+		
+		updateGameDataDisplay();
 	}
 
 	/**
@@ -129,6 +171,9 @@ public class GameGuiController implements Initializable {
 	 */
 	public void setBusinessMediator(BusinessMediator bm) {
 		this.businessMediator = bm;
+
+		String msg = businessMediator.start();
+		writeToConsole(msg);
 	}
 
 	/**
@@ -139,6 +184,27 @@ public class GameGuiController implements Initializable {
 	 */
 	private void writeToConsole(String s) {
 		console.getEngine().loadContent(s);
+	}
+
+	/**
+	 * Synchronize the display of the room exits and player and room inventories
+	 * with the actual data in the game.
+	 */
+	private void updateGameDataDisplay() {
+		//Update player inventory display
+		List<String> playerItems = businessMediator.getPlayerItems();
+		inventoryDropDown.getItems().setAll(playerItems);
+
+		//Update room inventory and content display
+		List<String> roomItems = businessMediator.getRoomItems();
+		roomContentDropDown.getItems().setAll(roomItems);
+
+		List<String> roomObjects = businessMediator.getRoomObjects();
+		roomContentDropDown.getItems().addAll(roomObjects);
+		
+		//Update exits
+		Map<String, String> exits = businessMediator.getCurrentExits();
+		roomDropDown.getItems().setAll(exits.keySet());
 	}
 
 	/**

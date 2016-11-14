@@ -15,18 +15,8 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
                <children>
-                  <MenuButton fx:id="inventoryDropDown" mnemonicParsing="false" text="MenuButton">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                  </MenuButton>
-                  <MenuButton fx:id="roomContentDropDown" mnemonicParsing="false" text="MenuButton">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                  </MenuButton>
+                  <ChoiceBox fx:id="inventoryDropDown" prefWidth="150.0" />
+                  <ChoiceBox fx:id="roomContentDropDown" prefWidth="150.0" />
                </children>
                <VBox.margin>
                   <Insets />
@@ -41,7 +31,7 @@
                   <Button fx:id="dropButton" mnemonicParsing="false" onAction="#dropButtonOnAction" text="Drop" />
                   <Button fx:id="useButton" mnemonicParsing="false" onAction="#useButtonOnAction" text="Use" />
                   <Button fx:id="inspectButton" mnemonicParsing="false" onAction="#inspectButtonOnAction" text="Inspect" />
-                  <Button fx:id="inventoryButton" mnemonicParsing="false" onAction="#inventoryButtonOnAction" text="Inventory" />
+                  <Button fx:id="inventoryButton" mnemonicParsing="false" onAction="#inventoryButtonOnAction" prefHeight="31.0" prefWidth="206.0" text="Inventory" />
                   <Button fx:id="helpButton" mnemonicParsing="false" onAction="#helpButtonOnAction" text="Help" />
                </children>
                <padding>
@@ -70,12 +60,7 @@
             </BorderPane>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
                <children>
-                  <MenuButton fx:id="roomDropDown" mnemonicParsing="false" text="MenuButton">
-                    <items>
-                      <MenuItem mnemonicParsing="false" text="Action 1" />
-                      <MenuItem mnemonicParsing="false" text="Action 2" />
-                    </items>
-                  </MenuButton>
+                  <ChoiceBox fx:id="roomDropDown" prefHeight="31.0" prefWidth="126.0" />
                   <Button fx:id="peekButton" mnemonicParsing="false" onAction="#peekButtonOnAction" text="Peek" />
                </children>
             </HBox>

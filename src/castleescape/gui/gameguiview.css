@@ -5,3 +5,10 @@
 .mainFxmlClass {
 
 }
+
+.button {
+	-fx-background-image: url("../../../res/buttonBg.png");
+	-fx-background-position: center;
+	-fx-background-repeat: stretch;
+	-fx-background-size: 100%;
+}

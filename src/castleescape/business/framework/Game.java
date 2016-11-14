@@ -23,6 +23,7 @@ import castleescape.business.command.InspectCommandExecuter;
 import castleescape.business.command.CommandExecuter;
 import castleescape.business.Configurations;
 import castleescape.business.ViewUtil;
+import castleescape.business.object.InspectableObjectRegister;
 import util.XMLRoomExitBuilder;
 
 import java.util.HashMap;
