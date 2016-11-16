@@ -29,6 +29,9 @@ public class Character {
 	 */
 	private final Inventory inventory;
 
+	private String name;
+
+	private String description;
 	/**
 	 * Constructs a new character with the specified clumsiness and carry
 	 * capacity.
@@ -36,9 +39,11 @@ public class Character {
 	 * @param clumsiness    how likely the character is to make noise
 	 * @param carryCapacity how many items the character can carry
 	 */
-	public Character(double clumsiness, int carryCapacity) {
+	public Character(double clumsiness, int carryCapacity,String name,String description) {
 		this.clumsiness = clumsiness;
 		inventory = new Inventory(carryCapacity);
+		this.name=name;
+		this.description=description;
 	}
 
 	/**
@@ -61,5 +66,9 @@ public class Character {
 	 */
 	public double getClumsiness() {
 		return clumsiness;
+	}
+
+	public String toString(){
+		return name;
 	}
 }

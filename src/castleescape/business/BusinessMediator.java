@@ -7,7 +7,9 @@ package castleescape.business;
 
 import castleescape.business.command.Command;
 import castleescape.business.command.CommandWord;
+import castleescape.business.framework.Character;
 import castleescape.business.framework.Game;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,10 +30,10 @@ public class BusinessMediator {
 	 * Constructs a new mediator for connecting the user interface with the
 	 * business code.
 	 *
-	 * @param game the game instance
 	 */
-	public BusinessMediator(Game game) {
-		this.game = game;
+	public BusinessMediator() {
+		this.game = new Game();
+
 	}
 
 	/* Methods for notifying the business layer of the state of execution */
@@ -228,5 +230,13 @@ public class BusinessMediator {
 		game.processCommand(command);
 
 		return ViewUtil.getString();
+	}
+
+	public void notifyCharacterSelected(Character choice){
+		game.setPlayer(choice);
+	}
+
+	public Character[] getCharacterList(){
+		return game.getCharacters();
 	}
 }

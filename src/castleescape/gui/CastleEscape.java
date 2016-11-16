@@ -6,13 +6,19 @@
 package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
+import castleescape.business.framework.Character;
 import castleescape.business.framework.Game;
 import java.io.File;
+import java.sql.Time;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceDialog;
 import javafx.stage.Stage;
 import util.XMLFileLocater;
 
@@ -29,19 +35,23 @@ public class CastleEscape extends Application {
 		//List of files in the xml folder
 		File[] fileList = xmlFolder.listFiles();
 		//Prompt for a selection between games, list the names of them
-		System.out.println("Which game would you like to play?:");
-		for (int i = 0; i < fileList.length; i++) {
-			System.out.println(i + 1 + ": " + fileList[i].getName());
-		}
 
-		Scanner input = new Scanner(System.in);
-		//Parse the selected folder with the XMLFileLocater
-		XMLFileLocater locater = new XMLFileLocater(fileList[input.nextInt() - 1].toPath());
+		ChoiceDialog<File> choiceDialog= new ChoiceDialog<>(fileList[0],fileList);
+		choiceDialog.setHeaderText("Wich game would you like to play?");
+		choiceDialog.setTitle("Game selection");
+		choiceDialog.showAndWait();
 
+		XMLFileLocater locater = new XMLFileLocater(choiceDialog.getResult().toPath());
+
+		BusinessMediator bm = new BusinessMediator();
+
+		ChoiceDialog<Character> characterChoiceDialog = new ChoiceDialog<Character>(bm.getCharacterList()[0],bm.getCharacterList());
+		characterChoiceDialog.setHeaderText("Which character would you like to play?");
+		characterChoiceDialog.setTitle("Character selection");
+		characterChoiceDialog.showAndWait();
+		bm.notifyCharacterSelected(characterChoiceDialog.getResult());
 		//construct game instance
-		Game game = new Game();
-
-		return new BusinessMediator(game);
+		return bm;
 	}
 
 	@Override

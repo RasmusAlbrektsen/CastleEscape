@@ -26,6 +26,7 @@ import castleescape.business.ViewUtil;
 import castleescape.business.object.InspectableObjectRegister;
 import util.XMLRoomExitBuilder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -97,7 +98,6 @@ public class Game {
 		currentRoom = roomMap.get(Configurations.START_ROOM_NAME);
 
 		//Create a player character
-		createPlayerCharacter();
 
 		//Add command executers and associate them with command words
 		commandExecuters = new HashMap<>();
@@ -135,6 +135,14 @@ public class Game {
 		return monster;
 	}
 
+	public Character[] getCharacters(){
+		return new Character[] {
+				new Character(0.2, 2, "Norman", "Norman who is a normal ninja, that makes less noise but can't carry that much"),
+				new Character(0.8, 6, "Bob", "Bob is a bodybuilder making him capable of carrying a lot if items but he also makes a lot of noise"),
+				new Character(0.7, 3, "Obi", "Obi the obvious is a man that makes a lot of noise, but is capable to carry a medium amount of stuff"),
+				new Character(0.4, 4, "Tim", "Tim is pretty generic, he does not make that much noise and can carry a reasonable number of items"),
+				new Character(0, 999, "", "")};
+	}
 	/**
 	 * Get the player character in the game.
 	 *
@@ -144,83 +152,8 @@ public class Game {
 		return player;
 	}
 
-	/**
-	 * Construct a new player character by prompting the user to choose between
-	 * four predetermined options.
-	 */
-	private void createPlayerCharacter() {
-		//Present options to the player
-		ViewUtil.println("Players you can choose:");
-		ViewUtil.println("\tPlayer 1: Norman who is a normal ninja, that makes less noise but can't carry that much");
-		ViewUtil.println("\tPlayer 2: Bob is a bodybuilder making him capable of carrying a lot if items but he also makes a lot of noise");
-		ViewUtil.println("\tPlayer 3: Obi the obvious is a man that makes a lot of noise, but is capable to carry a medium amount of stuff");
-		ViewUtil.println("\tPlayer 4: Tim is pretty generic, he does not make that much noise and can carry a reasonable number of items");
-		ViewUtil.newLine();
-
-		//Scanner name is "input" and this feature makes it possible for the
-		//user to choose a player character
-		Scanner input = new Scanner(System.in);
-
-		//Declare choice variable to store the player choice
-		int choice;
-
-		//Get user input until the choice maps to a valid Character
-		while (true) {
-			//Prompt the user to make a decision
-			ViewUtil.print("Choose by typing a number between 1 and 4: ");
-
-			//Get user input and handle the chance of the user typing
-			//non-integer input
-			try {
-				choice = input.nextInt();
-			} catch (InputMismatchException e) {
-				ViewUtil.println("Only numbers allowed! Try again.");
-
-				//Clear the input, as it is invalid
-				input.nextLine();
-				continue; //Star over in this loop
-			}
-
-			//If the choice is outside of the valid range [1;4] then tell the
-			//user that their input was invalid. After this, the loop will
-			//iterate again, allowing for the user to make an extra attempt.
-			//Otherwise, if the value is valid, break out of the loop.
-			// || means or
-			if (choice > 5 || choice < 1) {
-				ViewUtil.println("The integer has to be between 1 and 4");
-			} else {
-				break;
-			}
-		}
-
-		//Choice is now an integer in the range [1;4]. Use a switch statement to
-		//construct the matching player character.
-		switch (choice) {
-			case 1:
-				//Low noise, low carry capacity
-				//Norman the normal ninja
-				player = new Character(0.2, 2);
-				break;
-			case 2:
-				//A lot of noise, high cary capacity
-				//Bob the (body)builder
-				player = new Character(0.8, 6);
-				break;
-			case 3:
-				//A lot of noise, medium carry capacity
-				//Obi the obvious
-				player = new Character(0.7, 3);
-				break;
-			case 4:
-				//Medium noise, medium carry capacity
-				//Tim the generic person
-				player = new Character(0.4, 4);
-				break;
-			case 5:
-				ViewUtil.println("Activated debug character! GODMODE");
-				player = new Character(0, 999);
-				break;
-		}
+	public void setPlayer(Character player) {
+		this.player = player;
 	}
 
 	/**
