@@ -38,7 +38,7 @@ public class Monster {
 	/**
 	 * Whether the monster is idling, waiting to meet the player.
 	 */
-	private boolean watingForPlayer = true;
+	private boolean waitingForPlayer = true;
 
 	/**
 	 * The time at which the monster last began hunting the player, in
@@ -94,7 +94,7 @@ public class Monster {
 		ViewUtil.println(WARNING_MESSAGE);
 
 		//Stop waiting the first time the player is hunted
-		watingForPlayer = false;
+		waitingForPlayer = false;
 		hunting = true;
 
 		//Calculate chase path
@@ -137,7 +137,7 @@ public class Monster {
 		//If the monster is waiting for the player, no need to do any more.
 		//Otherwise determine if the monster should move to a random room
 		//connected to the current room.
-		if (!watingForPlayer) {
+		if (!waitingForPlayer) {
 
 			//Roll a random number to determine if the monster should move to
 			//another room
