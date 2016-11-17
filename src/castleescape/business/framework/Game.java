@@ -194,6 +194,7 @@ public class Game {
 	 * {@link Room#getLongDescription()}.
 	 */
 	public void start() {
+		running = true;
 		//Print out game details
 		ViewUtil.newLine();
 		ViewUtil.println("Welcome to Castle Escape!");
@@ -224,7 +225,7 @@ public class Game {
 			ViewUtil.println("\t\tGAME OVER");
 
 			//Game over, so we quit
-			//TODO: How do we quit? :)
+			end();
 			return;
 		}
 
@@ -246,7 +247,19 @@ public class Game {
 		//At this point executer is able to execute the specified command
 		executer.execute(this, command);
 	}
-
+	
+	public void end() {
+		running =  false; 
+	}
+	
+	public boolean isRunning(){
+		return running;
+	}
+	
+	public void saveScore(String name) {
+		scoreManager.recordCurrentGameScore(name);
+		scoreManager.reset();
+	}
 	/**
 	 * Add a room to the game.
 	 *

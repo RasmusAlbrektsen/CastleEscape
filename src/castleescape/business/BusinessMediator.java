@@ -103,7 +103,7 @@ public class BusinessMediator {
 	 * @param toTake the name of the item that the user atempted to take
 	 * @return the message to print as a result
 	 */
-	public String notifyTake(String toTake) {
+	public boolean notifyTake(String toTake) {
 		Map<String, String> params = new HashMap<>();
 
 		params.put(Command.ITEM, toTake);
@@ -111,7 +111,7 @@ public class BusinessMediator {
 		Command command = new Command(CommandWord.TAKE, params);
 		game.processCommand(command);
 
-		return ViewUtil.getString();
+		return game.isRunning();
 	}
 
 	/**
@@ -121,7 +121,7 @@ public class BusinessMediator {
 	 * @param toDrop the name of the item that the user attempted to drop
 	 * @return the message to print as a result
 	 */
-	public String notifyDrop(String toDrop) {
+	public boolean notifyDrop(String toDrop) {
 		Map<String, String> params = new HashMap<>();
 
 		params.put(Command.ITEM, toDrop);
@@ -129,7 +129,7 @@ public class BusinessMediator {
 		Command command = new Command(CommandWord.DROP, params);
 		game.processCommand(command);
 
-		return ViewUtil.getString();
+		return game.isRunning();
 	}
 
 	/**
@@ -140,7 +140,7 @@ public class BusinessMediator {
 	 *                  attempted to inspect
 	 * @return the message to print as a result
 	 */
-	public String notifyInspect(String toInspect) {
+	public boolean notifyInspect(String toInspect) {
 		Map<String, String> params = new HashMap<>();
 
 		params.put(Command.OBJECT, toInspect);
@@ -148,7 +148,7 @@ public class BusinessMediator {
 		Command command = new Command(CommandWord.INSPECT, params);
 		game.processCommand(command);
 
-		return ViewUtil.getString();
+		return game.isRunning();
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class BusinessMediator {
 	 *                to use the item on
 	 * @return the message to print as a result
 	 */
-	public String notifyUse(String useItem, String useOn) {
+	public boolean notifyUse(String useItem, String useOn) {
 		Map<String, String> params = new HashMap<>();
 
 		params.put(Command.ITEM, useItem);
@@ -169,7 +169,7 @@ public class BusinessMediator {
 		Command command = new Command(CommandWord.USE, params);
 		game.processCommand(command);
 
-		return ViewUtil.getString();
+		return game.isRunning();
 	}
 
 	/**
@@ -179,7 +179,7 @@ public class BusinessMediator {
 	 * @param direction the direction that the user attempted to peek in
 	 * @return the message to print as a result
 	 */
-	public String notifyPeek(String direction) {
+	public boolean notifyPeek(String direction) {
 		Map<String, String> params = new HashMap<>();
 
 		params.put(Command.DIRECTION, direction);
@@ -187,7 +187,7 @@ public class BusinessMediator {
 		Command command = new Command(CommandWord.PEEK, params);
 		game.processCommand(command);
 
-		return ViewUtil.getString();
+		return game.isRunning();
 	}
 
 	/**
@@ -197,7 +197,7 @@ public class BusinessMediator {
 	 * @param direction the direction that the user attempted to walk in
 	 * @return the message to print as a result
 	 */
-	public String notifyGo(String direction) {
+	public boolean notifyGo(String direction) {
 		Map<String, String> params = new HashMap<>();
 
 		params.put(Command.DIRECTION, direction);
@@ -205,7 +205,7 @@ public class BusinessMediator {
 		Command command = new Command(CommandWord.GO, params);
 		game.processCommand(command);
 
-		return ViewUtil.getString();
+		return game.isRunning();
 	}
 
 	/**
@@ -213,11 +213,11 @@ public class BusinessMediator {
 	 *
 	 * @return the help message to display
 	 */
-	public String notifyHelp() {
+	public boolean notifyHelp() {
 		Command command = new Command(CommandWord.HELP, null);
 		game.processCommand(command);
 
-		return ViewUtil.getString();
+		return game.isRunning();
 	}
 
 	/**
@@ -225,10 +225,13 @@ public class BusinessMediator {
 	 *
 	 * @return the help message to display
 	 */
-	public String notifyInventory() {
+	public boolean notifyInventory() {
 		Command command = new Command(CommandWord.INVENTORY, null);
 		game.processCommand(command);
 
+		return game.isRunning();
+	}
+	public String getTextOutput(){
 		return ViewUtil.getString();
 	}
 
@@ -238,5 +241,8 @@ public class BusinessMediator {
 
 	public Character[] getCharacterList(){
 		return game.getCharacters();
+	}
+	public void saveScore(String name) {
+		game.saveScore(name);
 	}
 }

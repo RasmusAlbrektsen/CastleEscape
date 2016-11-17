@@ -9,12 +9,14 @@ import castleescape.business.BusinessMediator;
 import java.net.URL;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.web.WebView;
 
 /**
@@ -68,10 +70,13 @@ public class GameGuiController implements Initializable {
 	/* Action events */
 	@FXML
 	private void northButtonOnAction(ActionEvent event) {
-		String msg = businessMediator.notifyGo("north");
-		writeToConsole(msg);
+		boolean running = businessMediator.notifyGo("north");
+		writeToConsole(businessMediator.getTextOutput());
 
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	@FXML
@@ -80,6 +85,9 @@ public class GameGuiController implements Initializable {
 		writeToConsole(msg);
 
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	@FXML
@@ -88,6 +96,9 @@ public class GameGuiController implements Initializable {
 		writeToConsole(msg);
 
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	@FXML
@@ -96,6 +107,9 @@ public class GameGuiController implements Initializable {
 		writeToConsole(msg);
 
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	@FXML
@@ -104,6 +118,9 @@ public class GameGuiController implements Initializable {
 		writeToConsole(msg);
 
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	@FXML
@@ -112,6 +129,9 @@ public class GameGuiController implements Initializable {
 		writeToConsole(msg);
 
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	@FXML
@@ -123,6 +143,9 @@ public class GameGuiController implements Initializable {
 		writeToConsole(msg);
 
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	@FXML
@@ -140,6 +163,9 @@ public class GameGuiController implements Initializable {
 		writeToConsole(msg);
 
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	@FXML
@@ -147,6 +173,9 @@ public class GameGuiController implements Initializable {
 		writeToConsole(businessMediator.notifyInventory());
 
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	@FXML
@@ -154,6 +183,9 @@ public class GameGuiController implements Initializable {
 		writeToConsole(businessMediator.notifyHelp());
 
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	@FXML
@@ -162,6 +194,9 @@ public class GameGuiController implements Initializable {
 		writeToConsole(msg);
 		
 		updateGameDataDisplay();
+		if (! running){
+			this.getNameAndSaveScore();
+		}
 	}
 
 	/**
@@ -174,6 +209,7 @@ public class GameGuiController implements Initializable {
 
 		String msg = businessMediator.start();
 		writeToConsole(msg);
+		
 	}
 
 	/**
@@ -206,7 +242,19 @@ public class GameGuiController implements Initializable {
 		Map<String, String> exits = businessMediator.getCurrentExits();
 		roomDropDown.getItems().setAll(exits.keySet());
 	}
-
+	
+	private void getNameAndSaveScore() {
+		TextInputDialog nameDialog = new TextInputDialog ("FOO");
+		nameDialog.setTitle("Name");
+		nameDialog.setHeaderText("Enter player name");
+		nameDialog.setContentText("Please enter your name");
+		
+		Optional<String> result = nameDialog.showAndWait();
+		if (result.isPresent()){
+			this.businessMediator.saveScore(result.get());
+		}
+	}
+			
 	/**
 	 * Initializes the controller class.
 	 */
