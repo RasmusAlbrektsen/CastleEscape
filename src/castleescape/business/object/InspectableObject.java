@@ -38,11 +38,7 @@ public class InspectableObject {
 	 * @param description the description of the object
 	 */
 	public InspectableObject(String name, String description) {
-		//Names are lower case by convention. This is to increase the ease of
-		//use when writing commands that include item names, so that the user
-		//does not have to worry about whether the name of an item is with
-		//capital letters
-		this.name = name.toLowerCase();
+		this.name = name;
 		this.description = description;
 
 		//Initialize array of use events

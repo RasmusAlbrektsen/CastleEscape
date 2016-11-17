@@ -10,7 +10,7 @@ public class Configurations {
 
 	public static final int MONSTER_MOVE_ROOM_TIME = 6000;
 	public final static double MONSTER_MOVE_CHANCE = 0.2;
-	public final static String SAFE_ROOM_NAME = "wine cellar";
-	public final static String START_ROOM_NAME = "great hall";
-	public final static String MONSTER_START_ROOM_NAME = "dining room";
+	public final static String SAFE_ROOM_NAME = "Dense Forest";
+	public final static String START_ROOM_NAME = "Barracks";
+	public final static String MONSTER_START_ROOM_NAME = "Monster Pit";
 }

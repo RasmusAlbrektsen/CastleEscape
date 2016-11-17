@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.web.*?>
 <?import java.lang.*?>
@@ -44,20 +45,25 @@
    <right>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <BorderPane>
-               <top>
-                  <Button fx:id="northButton" mnemonicParsing="false" onAction="#northButtonOnAction" text="North" BorderPane.alignment="CENTER" />
-               </top>
-               <left>
-                  <Button fx:id="westButton" mnemonicParsing="false" onAction="#westButtonOnAction" text="West" BorderPane.alignment="CENTER" />
-               </left>
-               <bottom>
-                  <Button fx:id="southButton" mnemonicParsing="false" onAction="#southButtonOnAction" text="South" BorderPane.alignment="CENTER" />
-               </bottom>
-               <right>
-                  <Button fx:id="eastButton" mnemonicParsing="false" onAction="#eastButtonOnAction" text="East" BorderPane.alignment="CENTER" />
-               </right>
-            </BorderPane>
+            <StackPane prefHeight="196.0" prefWidth="196.0">
+               <children>
+                  <Canvas fx:id="compass" height="196.0" width="196.0" />
+                  <BorderPane prefHeight="196.0" prefWidth="196.0">
+                     <top>
+                        <Button fx:id="northButton" mnemonicParsing="false" onAction="#northButtonOnAction" BorderPane.alignment="CENTER" />
+                     </top>
+                     <right>
+                        <Button fx:id="eastButton" mnemonicParsing="false" onAction="#eastButtonOnAction" BorderPane.alignment="CENTER" />
+                     </right>
+                     <left>
+                        <Button fx:id="westButton" mnemonicParsing="false" onAction="#westButtonOnAction" BorderPane.alignment="CENTER" />
+                     </left>
+                     <bottom>
+                        <Button fx:id="southButton" mnemonicParsing="false" onAction="#southButtonOnAction" BorderPane.alignment="CENTER" />
+                     </bottom>
+                  </BorderPane>
+               </children>
+            </StackPane>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
                <children>
                   <ChoiceBox fx:id="roomDropDown" prefHeight="31.0" prefWidth="126.0" />

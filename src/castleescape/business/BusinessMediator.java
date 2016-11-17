@@ -29,7 +29,6 @@ public class BusinessMediator {
 	/**
 	 * Constructs a new mediator for connecting the user interface with the
 	 * business code.
-	 *
 	 */
 	public BusinessMediator() {
 		this.game = new Game();
@@ -232,11 +231,21 @@ public class BusinessMediator {
 		return ViewUtil.getString();
 	}
 
-	public void notifyCharacterSelected(Character choice){
+	/**
+	 * Notify the game that the user selected a player character.
+	 *
+	 * @param choice the chosen player character
+	 */
+	public void notifyCharacterSelected(Character choice) {
 		game.setPlayer(choice);
 	}
 
-	public Character[] getCharacterList(){
+	/**
+	 * Request an arry of possible player characters from the game.
+	 *
+	 * @return an arry of possible player characters from the game
+	 */
+	public Character[] getCharacterList() {
 		return game.getCharacters();
 	}
 }
