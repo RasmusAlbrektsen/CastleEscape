@@ -38,7 +38,7 @@
 
 .button {
 	/*-fx-graphic: url("../../res/button.png");*/
-	-fx-background-image: url("../../res/inventory_button.png");
+	-fx-background-image: url("../../res/button.png");
 	-fx-background-repeat: no-repeat;       
     -fx-background-position:left; 
 	-fx-padding: 0.6em;
@@ -56,4 +56,8 @@
 	-fx-font-weight: bold;
 	-fx-font-size: 16.0px;
 	-fx-text-fill: -castleEscape-button-text-color;
+}
+
+.compassButton {
+	-fx-background-image:url(""); /*TODO: No background?*/
 }

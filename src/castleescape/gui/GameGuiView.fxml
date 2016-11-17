@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.web.*?>
@@ -34,12 +35,13 @@
             </HBox>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
                <children>
-                  <Button fx:id="takeButton" mnemonicParsing="false" onAction="#takeButtonOnAction" prefHeight="41.0" prefWidth="70.0" text="Take" />
-                  <Button fx:id="dropButton" mnemonicParsing="false" onAction="#dropButtonOnAction" prefHeight="41.0" prefWidth="71.0" text="Drop" />
-                  <Button fx:id="useButton" mnemonicParsing="false" onAction="#useButtonOnAction" prefHeight="41.0" prefWidth="67.0" text="Use" />
-                  <Button fx:id="inspectButton" mnemonicParsing="false" onAction="#inspectButtonOnAction" prefHeight="41.0" prefWidth="94.0" text="Inspect" />
-                  <Button fx:id="inventoryButton" mnemonicParsing="false" onAction="#inventoryButtonOnAction" prefHeight="35.0" prefWidth="140.0" stylesheets="@gameguiview.css" text="Inventory" />
-                  <Button fx:id="helpButton" mnemonicParsing="false" onAction="#helpButtonOnAction" prefHeight="41.0" prefWidth="79.0" styleClass="textButton" text="Help" />
+                  <Button fx:id="takeButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="41.0" prefWidth="70.0" text="Take" />
+                  <Button fx:id="dropButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="41.0" prefWidth="71.0" text="Drop" />
+                  <Button fx:id="useButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="41.0" prefWidth="67.0" text="Use" />
+                  <Button fx:id="inspectButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="41.0" prefWidth="94.0" text="Inspect" />
+                  <Button fx:id="inventoryButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="35.0" prefWidth="140.0" text="Inventory" />
+                  <Button fx:id="helpButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="41.0" prefWidth="79.0" styleClass="textButton" text="Help" />
+                  <Button mnemonicParsing="false" text="Button" />
                </children>
                <padding>
                   <Insets left="16.0" />
@@ -51,27 +53,29 @@
    <right>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <BorderPane prefHeight="127.0" prefWidth="294.0">
-               <top>
-                  <Button fx:id="northButton" mnemonicParsing="false" onAction="#northButtonOnAction" prefHeight="45.0" prefWidth="99.0" style="-fx-label-padding: 2;" text="North" BorderPane.alignment="CENTER">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets></Button>
-               </top>
-               <left>
-                  <Button fx:id="westButton" mnemonicParsing="false" onAction="#westButtonOnAction" prefHeight="41.0" prefWidth="82.0" text="West" BorderPane.alignment="CENTER" />
-               </left>
-               <bottom>
-                  <Button fx:id="southButton" mnemonicParsing="false" onAction="#southButtonOnAction" prefHeight="41.0" prefWidth="91.0" text="South" BorderPane.alignment="CENTER" />
-               </bottom>
-               <right>
-                  <Button fx:id="eastButton" mnemonicParsing="false" onAction="#eastButtonOnAction" prefHeight="41.0" prefWidth="84.0" text="East" BorderPane.alignment="CENTER" />
-               </right>
-            </BorderPane>
+            <StackPane prefHeight="196.0" prefWidth="196.0">
+               <children>
+                  <Canvas fx:id="compass" height="196.0" width="196.0" />
+                  <BorderPane prefHeight="196.0" prefWidth="196.0">
+                     <top>
+                        <Button fx:id="northButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButton" text="Button" BorderPane.alignment="CENTER" />
+                     </top>
+                     <right>
+                        <Button fx:id="eastButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButton" text="Button" BorderPane.alignment="CENTER" />
+                     </right>
+                     <bottom>
+                        <Button fx:id="southButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButton" text="Button" BorderPane.alignment="CENTER" />
+                     </bottom>
+                     <left>
+                        <Button fx:id="westButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButton" text="Button" BorderPane.alignment="CENTER" />
+                     </left>
+                  </BorderPane>
+               </children>
+            </StackPane>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="16.0">
                <children>
                   <ChoiceBox fx:id="roomDropDown" prefHeight="31.0" prefWidth="126.0" />
-                  <Button fx:id="peekButton" mnemonicParsing="false" onAction="#peekButtonOnAction" prefHeight="41.0" prefWidth="75.0" text="Peek" />
+                  <Button fx:id="peekButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="41.0" prefWidth="75.0" text="Peek" />
                </children>
             </HBox>
          </children>
