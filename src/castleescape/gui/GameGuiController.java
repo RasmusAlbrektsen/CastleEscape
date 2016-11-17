@@ -199,7 +199,24 @@ public class GameGuiController implements Initializable {
 	 * @param s the string to write to the console
 	 */
 	private void writeToConsole(String s) {
-		console.getEngine().loadContent(s);
+		//Convert string s to an html string with a stylesheet defined in the
+		//header, so that styling can take place elsewhere
+		String contentString
+				= "<html>"
+				+ "<head>"
+				+ "<link rel=\"stylesheet\" type=\"text/css\" href=\""
+				+ getClass().getResource("consoleview.css")
+				+ "\"/>"
+				+ "</head>"
+				+ "<body>"
+				+ "<div class=\"webview\">"
+				+ s
+				+ "</div>"
+				+ "</body>"
+				+ "</html>";
+
+		//Load the html string into the web view
+		console.getEngine().loadContent(contentString);
 	}
 
 	/**

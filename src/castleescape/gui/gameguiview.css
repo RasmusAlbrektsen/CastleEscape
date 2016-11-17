@@ -2,13 +2,58 @@
  * Stylesheet file for the game GUI view.
  */
 
-.mainFxmlClass {
+/*******************************************************************************
+ *                                                                             *
+ * Fonts                                                                       *
+ *                                                                             *
+ ******************************************************************************/
 
+@font-face {
+	src: url('../../res/fonts/Adobe-Garamond-Pro-Regular.ttf');
 }
 
+/*******************************************************************************
+ *                                                                             *
+ * Main design                                                                 *
+ *                                                                             *
+ ******************************************************************************/
+
+.mainFrame {
+	-fx-background-image: url("../../res/background.jpg");
+	-fx-background-repeat: stretch;   
+    -fx-background-position: center center;
+}
+
+.root {
+	/*Defining colors for later use in style */
+	-castleEscape-button-color: transparent;
+	-castleEscape-button-text-color: rgb(255, 255, 255);
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Button Style                                                                *
+ *                                                                             *
+ ******************************************************************************/
+
 .button {
-	-fx-background-image: url("../../../res/buttonBg.png");
-	-fx-background-position: center;
-	-fx-background-repeat: stretch;
-	-fx-background-size: 100%;
+	/*-fx-graphic: url("../../res/button.png");*/
+	-fx-background-image: url("../../res/inventory_button.png");
+	-fx-background-repeat: no-repeat;       
+    -fx-background-position:left; 
+	-fx-padding: 0.6em;
+	-fx-background-size: 100% 100%;
+	-fx-background-color: -castleEscape-button-color;
+	-fx-font-family: "Adobe Garamond Pro";
+	-fx-font-weight: bold;
+	-fx-font-size: 16.0px;
+	-fx-text-fill: -castleEscape-button-text-color;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+}
+
+.textButton{
+	-fx-font-family: "Adobe Garamond Pro";
+	-fx-font-weight: bold;
+	-fx-font-size: 16.0px;
+	-fx-text-fill: -castleEscape-button-text-color;
 }
