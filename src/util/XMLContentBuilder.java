@@ -13,7 +13,7 @@ class XMLContentBuilder {
 	 * Enumeration of the builder types
 	 */
 	enum Type {
-		ROOM, INSPECTABLEOBJECT, ITEM
+		ROOM, INSPECTABLEOBJECT, ITEM, CONFIGURATIONS
 	}
 
 	/**
@@ -51,6 +51,13 @@ class XMLContentBuilder {
 				break;
 			case "":
 				break;
+			default:
+				if (build == null&&type.equals(Type.CONFIGURATIONS)) {
+					build=new XMLConfugurationsBuilder();
+				}
+				if (build instanceof XMLConfugurationsBuilder){
+					((XMLConfugurationsBuilder) build).addConfiguration(element,data);
+				}
 		}
 	}
 

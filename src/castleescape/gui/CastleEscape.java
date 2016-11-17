@@ -15,6 +15,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -68,6 +69,14 @@ public class CastleEscape extends Application {
 
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	public static void exit(){
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException ignored) {}
+		Platform.exit();
+		System.exit(0);
 	}
 
 	/**
