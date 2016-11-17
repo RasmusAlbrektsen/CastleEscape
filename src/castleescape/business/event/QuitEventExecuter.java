@@ -7,13 +7,12 @@ package castleescape.business.event;
 
 import castleescape.business.ViewUtil;
 import castleescape.business.framework.Game;
-import castleescape.gui.CastleEscape;
 
 /**
  *
  * @author DitteKoustrup
  */
-public class QuitExecuter implements EventExecuter {
+public class QuitEventExecuter implements EventExecuter {
 
 	@Override
 	public void execute(Game game, Event event) {
@@ -22,8 +21,6 @@ public class QuitExecuter implements EventExecuter {
 			ViewUtil.println(description);
 		}
 		game.end();
-		
-		CastleEscape.quit();
 	}
 	
 }

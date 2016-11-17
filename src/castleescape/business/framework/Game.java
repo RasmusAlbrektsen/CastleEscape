@@ -23,13 +23,11 @@ import castleescape.business.command.InspectCommandExecuter;
 import castleescape.business.command.CommandExecuter;
 import castleescape.business.Configurations;
 import castleescape.business.ViewUtil;
-import castleescape.business.object.InspectableObjectRegister;
+import castleescape.business.event.QuitEventExecuter;
 import util.XMLRoomExitBuilder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import org.xml.sax.Parser;
 
 /**
  * Class defining instance behavior for setting up and running a game. This
@@ -119,6 +117,7 @@ public class Game {
 		eventExecuters.put(EventWord.SET_DESCRIPTION, new SetDescriptionEventExecuter());
 		eventExecuters.put(EventWord.REMOVE_PLAYER_ITEM, new RemovePlayerItemEventExecuter());
 		eventExecuters.put(EventWord.REMOVE_ROOM_ITEM, new RemoveRoomItemEventExecuter());
+		eventExecuters.put(EventWord.QUIT, new QuitEventExecuter());
 
 		//Initialize remaining variables
 		monster = new Monster(roomMap.get(Configurations.getMonsterStartRoomName()));

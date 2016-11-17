@@ -226,35 +226,17 @@ public class GameGuiController implements Initializable {
 	private void updateGameDataDisplay() {
 		//Update player inventory display
 		List<String> playerItems = businessMediator.getPlayerItems();
-		String item =inventoryDropDown.getSelectionModel().getSelectedItem();
 		inventoryDropDown.getItems().setAll(playerItems);
-		if (playerItems.contains(item)){
-			inventoryDropDown.getSelectionModel().select(item);
-		}
 
 		//Update room inventory and content display
 		List<String> roomItems = businessMediator.getRoomItems();
-		item=roomContentDropDown.getSelectionModel().getSelectedItem();
 		roomContentDropDown.getItems().setAll(roomItems);
-		if (roomItems.contains(item)){
-			roomContentDropDown.getSelectionModel().select(item);
-		}
-
-
 		List<String> roomObjects = businessMediator.getRoomObjects();
 		roomContentDropDown.getItems().addAll(roomObjects);
 
-		if (roomObjects.contains(item)){
-			roomContentDropDown.getSelectionModel().select(item);
-		}
-
 		//Update exits
 		Map<String, String> exits = businessMediator.getCurrentExits();
-		item = roomDropDown.getSelectionModel().getSelectedItem();
 		roomDropDown.getItems().setAll(exits.keySet());
-		if (exits.containsKey(item)){
-			roomDropDown.getSelectionModel().select(item);
-		}
 
 		//Render compass and map
 		renderCompass();
@@ -373,6 +355,8 @@ public class GameGuiController implements Initializable {
 		if (result.isPresent()){
 			this.businessMediator.saveScore(result.get());
 		}
+		
+		CastleEscape.quit();
 	}
 			
 	/**
