@@ -7,11 +7,14 @@ package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.Set;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 
 /**
@@ -90,9 +94,15 @@ public class GameGuiController implements Initializable {
 	/* Action events */
 	@FXML
 	private void commandButtonOnAction(ActionEvent event) {
+		//Get the source of the button action
 		Object source = event.getSource();
+		
+		//By now, we assume that the game is still running.
 		boolean running = true;
 
+		//Carry out the operations associated with the pressed button. These
+		//methods return booleans indicating whether the game has ended, which
+		//we use to update the value of running
 		if (source == northButton) {
 			running = northButtonPressed();
 		} else if (source == southButton) {
@@ -117,10 +127,13 @@ public class GameGuiController implements Initializable {
 			running = peekButtonPressed();
 		}
 
+		//Write the text that was generated on this iteration to the console
 		writeToConsole(businessMediator.getTextOutput());
 
+		//Update data display, as something might have changed now
 		updateGameDataDisplay();
 
+		//If the game is no longer running, get the players score and quit
 		if (! running){
 			this.getNameAndSaveScore();
 		}
@@ -172,6 +185,8 @@ public class GameGuiController implements Initializable {
 	}
 
 	private boolean helpButtonPressed() {
+		List<String> playerItems = businessMediator.getPlayerItems();
+		System.out.println(Arrays.toString(playerItems.toArray()));
 		return businessMediator.notifyHelp();
 	}
 
@@ -187,9 +202,14 @@ public class GameGuiController implements Initializable {
 	public void setBusinessMediator(BusinessMediator bm) {
 		this.businessMediator = bm;
 
+		//Start the game using the business mediator and print the result to the
+		//GUI console
 		String msg = businessMediator.start();
 		writeToConsole(msg);
 		
+		//Initialize the display of all game data now that the game has been
+		//properly initialized
+		updateGameDataDisplay();
 	}
 
 	/**
@@ -225,19 +245,42 @@ public class GameGuiController implements Initializable {
 	 */
 	private void updateGameDataDisplay() {
 		//Update player inventory display
+		//Get the list of items in the player's inventory
 		List<String> playerItems = businessMediator.getPlayerItems();
-		inventoryDropDown.getItems().setAll(playerItems);
-
+		
+		//Remember the current selection in the choice box, as this will be
+		//reset when we repopulate it, even if the selected item persists
+		String item = inventoryDropDown.getValue();
+		
+		//Repopulate the choice box. This requires out list to be wrapped in an
+		//observable array list
+		inventoryDropDown.setItems(FXCollections.observableArrayList(playerItems));
+		
+		//If the previously selected item persisted, select it again
+		if (playerItems.contains(item)) {
+			inventoryDropDown.setValue(item);
+		}
+		
+		//Now do the same exact thing for room content and room exits
 		//Update room inventory and content display
-		List<String> roomItems = businessMediator.getRoomItems();
-		roomContentDropDown.getItems().setAll(roomItems);
-		List<String> roomObjects = businessMediator.getRoomObjects();
-		roomContentDropDown.getItems().addAll(roomObjects);
+		List<String> roomContent = businessMediator.getRoomItems();
+		roomContent.addAll(businessMediator.getRoomObjects());
+		item = roomContentDropDown.getValue();
+		roomContentDropDown.setItems(FXCollections.observableArrayList(roomContent));
+		
+		if (roomContent.contains(item)) {
+			roomContentDropDown.setValue(item);
+		}
 
 		//Update exits
-		Map<String, String> exits = businessMediator.getCurrentExits();
-		roomDropDown.getItems().setAll(exits.keySet());
-
+		Set<String> exitDirections = businessMediator.getCurrentExits().keySet();
+		item = roomDropDown.getValue();
+		roomDropDown.setItems(FXCollections.observableArrayList(exitDirections));
+		
+		if (exitDirections.contains(item)) {
+			roomDropDown.setValue(item);
+		}
+		
 		//Render compass and map
 		renderCompass();
 	}
@@ -255,6 +298,11 @@ public class GameGuiController implements Initializable {
 		//Clear previous renderings, otherwise rooms rendered previously will
 		//carry over
 		g.clearRect(0, 0, compass.getWidth(), compass.getHeight());
+		
+		//Render a translucent background behind the compass - to make it look
+		//cool
+		g.setFill(new Color(0, 0, 0, 0.5));
+		g.fillRect(0, 0, compass.getWidth(), compass.getHeight());
 
 		//Calculate the center of the canvas, which is where we want to render
 		//the current room
@@ -262,6 +310,7 @@ public class GameGuiController implements Initializable {
 		double cy = compass.getHeight() / 2;
 
 		//Render the current room, centered on (cx, cy)
+		g.setFill(Color.BLACK);
 		renderSquareCentered(g, cx, cy, MAP_ROOM_WIDTH, MAP_ROOM_HEIGHT);
 
 		//Get the exits from the current room. A connection to all neighbor
@@ -308,6 +357,11 @@ public class GameGuiController implements Initializable {
 					MAP_ROOM_SPACING, MAP_ROOM_SPACING);
 		}
 
+		//We do not want the anything we rendered to exceed the bounds of the
+		//compass image, so we clear all pixels that are further than r pixels
+		//away from the center of the canvas, where r is the radius of the
+		//compass minus a few pixels to account for the edge of the compass to
+		//be anti-aliased
 		int halfWidth = (int) compass.getWidth() / 2;
 		int halfHeight = (int) compass.getHeight() / 2;
 
@@ -339,10 +393,11 @@ public class GameGuiController implements Initializable {
 	}
 
 	/**
-	 * Reuest the user to enter a player name and save the player's score.
+	 * Request the user to enter a player name and save the player's score.
+	 * After this the application will quit.
 	 */
 	private void getNameAndSaveScore() {
-		//Cerate a text input dialog
+		//Create a text input dialog
 		TextInputDialog nameDialog = new TextInputDialog ("FOO");
 		nameDialog.setTitle("Name");
 		nameDialog.setHeaderText("Enter player name");
@@ -356,6 +411,8 @@ public class GameGuiController implements Initializable {
 			this.businessMediator.saveScore(result.get());
 		}
 		
+		//Quit the game after the player's score has been set. A static call is
+		//fine, as System.exit() and Platform.exit() are static calls as well
 		CastleEscape.quit();
 	}
 			
