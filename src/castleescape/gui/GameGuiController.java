@@ -422,7 +422,7 @@ public class GameGuiController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		//Read compass image
-		compassImg = new Image(getClass().getResourceAsStream("compass.png"));
+		compassImg = new Image(getClass().getResourceAsStream("compass02.png"));
 	}
 
 }
