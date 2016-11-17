@@ -98,7 +98,6 @@ public class Game {
 		currentRoom = roomMap.get(Configurations.START_ROOM_NAME);
 
 		//Create a player character
-
 		//Add command executers and associate them with command words
 		commandExecuters = new HashMap<>();
 		commandExecuters.put(CommandWord.HELP, new HelpCommandExecuter());
@@ -135,14 +134,15 @@ public class Game {
 		return monster;
 	}
 
-	public Character[] getCharacters(){
-		return new Character[] {
-				new Character(0.2, 2, "Norman", "Norman who is a normal ninja, that makes less noise but can't carry that much"),
-				new Character(0.8, 6, "Bob", "Bob is a bodybuilder making him capable of carrying a lot if items but he also makes a lot of noise"),
-				new Character(0.7, 3, "Obi", "Obi the obvious is a man that makes a lot of noise, but is capable to carry a medium amount of stuff"),
-				new Character(0.4, 4, "Tim", "Tim is pretty generic, he does not make that much noise and can carry a reasonable number of items"),
-				new Character(0, 999, "", "")};
+	public Character[] getCharacters() {
+		return new Character[]{
+			new Character(0.2, 2, "Norman", "Norman who is a normal ninja, that makes less noise but can't carry that much"),
+			new Character(0.8, 6, "Bob", "Bob is a bodybuilder making him capable of carrying a lot if items but he also makes a lot of noise"),
+			new Character(0.7, 3, "Obi", "Obi the obvious is a man that makes a lot of noise, but is capable to carry a medium amount of stuff"),
+			new Character(0.4, 4, "Tim", "Tim is pretty generic, he does not make that much noise and can carry a reasonable number of items"),
+			new Character(0, 999, "", "")};
 	}
+
 	/**
 	 * Get the player character in the game.
 	 *
@@ -194,6 +194,9 @@ public class Game {
 	 * {@link Room#getLongDescription()}.
 	 */
 	public void start() {
+		//Set the game as running
+		running = true;
+
 		//Print out game details
 		ViewUtil.newLine();
 		ViewUtil.println("Welcome to Castle Escape!");
@@ -224,7 +227,7 @@ public class Game {
 			ViewUtil.println("\t\tGAME OVER");
 
 			//Game over, so we quit
-			//TODO: How do we quit? :)
+			end();
 			return;
 		}
 
@@ -245,6 +248,34 @@ public class Game {
 
 		//At this point executer is able to execute the specified command
 		executer.execute(this, command);
+	}
+
+	/**
+	 * Notify the game that it should end.
+	 */
+	public void end() {
+		running = false;
+	}
+
+	/**
+	 * Test whether the game is currently running. If not, that means it either
+	 * has not been {@link #start() started yet} or the player has finished
+	 * playing.
+	 *
+	 * @return true if the game is running, false otherwise
+	 */
+	public boolean isRunning() {
+		return running;
+	}
+
+	/**
+	 * Save the player's score using the specified player name.
+	 * 
+	 * @param name the name of the player
+	 */
+	public void saveScore(String name) {
+		scoreManager.recordCurrentGameScore(name);
+		scoreManager.reset();
 	}
 
 	/**

@@ -21,7 +21,7 @@ public class QuitCommandExecuter implements CommandExecuter {
 		if (command.hasCommandParameters()) {
 			ViewUtil.println("Quit what?");
 		} else {
-			//TODO: How do we quit? :)
+			game.end();
 		}
 	}
 }

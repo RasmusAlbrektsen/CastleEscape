@@ -75,19 +75,15 @@ public class ScoreManager {
 	 * Calling this method will not reset the player's score. To do so, call
 	 * {@link #reset()}.
 	 */
-	public void recordCurrentGameScore() {
-		//Get the name of the player	
-		ViewUtil.print("Enter player name (clipped to 3 characters): ");
-		Scanner in = new Scanner(System.in);
-		String playerName = in.nextLine();
+	public void recordCurrentGameScore(String name) {
 
 		//Clip the name to three characters
-		if (playerName.length() > 3) {
-			playerName = playerName.substring(0, 3);
+		if (name.length() > 3) {
+			name = name.substring(0, 3);
 		}
 
 		//Construct new score object
-		Score score = new Score(playerName, currentGameScore);
+		Score score = new Score(name, currentGameScore);
 
 		//Add the score to the internal score list
 		addScore(score);

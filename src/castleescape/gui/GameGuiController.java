@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.web.WebView;
 
@@ -87,101 +89,94 @@ public class GameGuiController implements Initializable {
 
 	/* Action events */
 	@FXML
-	private void northButtonOnAction(ActionEvent event) {
-		String msg = businessMediator.notifyGo("north");
-		writeToConsole(msg);
-
+	private void commandButtonOnAction(ActionEvent event) {
+		Object source = event.getSource();
+		boolean running = true;
+		
+		if (source == northButton) {
+			running = northButtonPressed();
+		} else if (source == southButton) {
+			running = southButtonPressed();
+		} else if (source == eastButton) {
+			running = eastButtonPressed();
+		} else if (source == westButton) {
+			running = westButtonPressed();
+		} else if (source == takeButton) {
+			running = takeButtonPressed();
+		} else if (source == dropButton) {
+			running = dropButtonPressed();
+		} else if (source == useButton) {
+			running = useButtonPressed();
+		} else if (source == inspectButton) {
+			running = inspectButtonPressed();
+		} else if (source == inventoryButton) {
+			running = inventoryButtonPressed();
+		} else if (source == helpButton) {
+			running = helpButtonPressed();
+		} else if (source == peekButton) {
+			running = peekButtonPressed();
+		}
+		
+		writeToConsole(businessMediator.getTextOutput());
+		
 		updateGameDataDisplay();
+		
+		if (! running){
+			this.getNameAndSaveScore();
+		}
+	}
+	
+	private boolean northButtonPressed() {
+		return businessMediator.notifyGo("north");
 	}
 
-	@FXML
-	private void southButtonOnAction(ActionEvent event) {
-		String msg = businessMediator.notifyGo("south");
-		writeToConsole(msg);
-
-		updateGameDataDisplay();
+	private boolean southButtonPressed() {
+		return businessMediator.notifyGo("south");
+	}
+	
+	private boolean eastButtonPressed() {
+		return businessMediator.notifyGo("east");
 	}
 
-	@FXML
-	private void eastButtonOnAction(ActionEvent event) {
-		String msg = businessMediator.notifyGo("east");
-		writeToConsole(msg);
-
-		updateGameDataDisplay();
+	private boolean westButtonPressed() {
+		return businessMediator.notifyGo("west");
 	}
 
-	@FXML
-	private void westButtonOnAction(ActionEvent event) {
-		String msg = businessMediator.notifyGo("west");
-		writeToConsole(msg);
-
-		updateGameDataDisplay();
+	private boolean takeButtonPressed() {
+		return businessMediator.notifyTake(roomContentDropDown.getSelectionModel().getSelectedItem());
+	}
+	
+	private boolean dropButtonPressed() {
+		return businessMediator.notifyDrop(inventoryDropDown.getSelectionModel().getSelectedItem());
 	}
 
-	@FXML
-	private void takeButtonOnAction(ActionEvent event) {
-		String msg = businessMediator.notifyTake(roomContentDropDown.getSelectionModel().getSelectedItem());
-		writeToConsole(msg);
-
-		updateGameDataDisplay();
-	}
-
-	@FXML
-	private void dropButtonOnAction(ActionEvent event) {
-		String msg = businessMediator.notifyDrop(inventoryDropDown.getSelectionModel().getSelectedItem());
-		writeToConsole(msg);
-
-		updateGameDataDisplay();
-	}
-
-	@FXML
-	private void useButtonOnAction(ActionEvent event) {
-		String msg = businessMediator.notifyUse(
+	private boolean useButtonPressed() {
+		return businessMediator.notifyUse(
 				inventoryDropDown.getSelectionModel().getSelectedItem(),
 				roomContentDropDown.getSelectionModel().getSelectedItem());
-
-		writeToConsole(msg);
-
-		updateGameDataDisplay();
 	}
-
-	@FXML
-	private void inspectButtonOnAction(ActionEvent event) {
+	
+	private boolean inspectButtonPressed() {
 		String inventorySelection = inventoryDropDown.getSelectionModel().getSelectedItem();
 		String roomSelection = roomContentDropDown.getSelectionModel().getSelectedItem();
-		String msg;
 
 		if (inventorySelection != null) {
-			msg = businessMediator.notifyInspect(inventorySelection);
+			return businessMediator.notifyInspect(inventorySelection);
 		} else {
-			msg = businessMediator.notifyInspect(roomSelection);
+			return businessMediator.notifyInspect(roomSelection);
 		}
-
-		writeToConsole(msg);
-
-		updateGameDataDisplay();
 	}
 
-	@FXML
-	private void inventoryButtonOnAction(ActionEvent event) {
-		writeToConsole(businessMediator.notifyInventory());
-
-		updateGameDataDisplay();
+	private boolean inventoryButtonPressed() {
+		return businessMediator.notifyInventory();
 	}
 
-	@FXML
-	private void helpButtonOnAction(ActionEvent event) {
-		writeToConsole(businessMediator.notifyHelp());
-
-		updateGameDataDisplay();
+	private boolean helpButtonPressed() {
+		return businessMediator.notifyHelp();
 	}
 
-	@FXML
-	private void peekButtonOnAction(ActionEvent event) {
-		String msg = businessMediator.notifyPeek(roomDropDown.getSelectionModel().getSelectedItem());
-		writeToConsole(msg);
-
-		updateGameDataDisplay();
+	private boolean peekButtonPressed() {
+		return businessMediator.notifyPeek(roomDropDown.getSelectionModel().getSelectedItem());
 	}
 
 	/**
@@ -194,6 +189,7 @@ public class GameGuiController implements Initializable {
 
 		String msg = businessMediator.start();
 		writeToConsole(msg);
+		
 	}
 
 	/**
@@ -296,9 +292,6 @@ public class GameGuiController implements Initializable {
 					MAP_ROOM_SPACING, MAP_ROOM_SPACING);
 		}
 
-		//Draw the compass image
-		g.drawImage(compassImg, 0, 0);
-
 		int halfWidth = (int) compass.getWidth() / 2;
 		int halfHeight = (int) compass.getHeight() / 2;
 		
@@ -310,6 +303,8 @@ public class GameGuiController implements Initializable {
 			}
 		}
 		
+		//Draw the compass image
+		g.drawImage(compassImg, 0, 0);
 	}
 
 	/**
@@ -326,7 +321,26 @@ public class GameGuiController implements Initializable {
 	private void renderSquareCentered(GraphicsContext g, double cx, double cy, double w, double h) {
 		g.fillRect(cx - w / 2, cy - h / 2, w, h);
 	}
-
+	
+	/**
+	 * Reuest the user to enter a player name and save the player's score.
+	 */
+	private void getNameAndSaveScore() {
+		//Cerate a text input dialog
+		TextInputDialog nameDialog = new TextInputDialog ("FOO");
+		nameDialog.setTitle("Name");
+		nameDialog.setHeaderText("Enter player name");
+		nameDialog.setContentText("Please enter your name");
+		
+		//Get the result of opening the dialog
+		Optional<String> result = nameDialog.showAndWait();
+		
+		//If the player entered a name, save his score, otherwise discard it
+		if (result.isPresent()){
+			this.businessMediator.saveScore(result.get());
+		}
+	}
+			
 	/**
 	 * Initializes the controller class.
 	 */
