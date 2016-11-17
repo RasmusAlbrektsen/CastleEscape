@@ -95,7 +95,7 @@ public class Game {
 	public Game() {
 		//Initialize rooms HashMap
 		roomMap = XMLRoomExitBuilder.getRooms();
-		currentRoom = roomMap.get(Configurations.START_ROOM_NAME);
+		currentRoom = roomMap.get(Configurations.getStartRoomName());
 
 		//Create a player character
 		//Add command executers and associate them with command words
@@ -121,7 +121,7 @@ public class Game {
 		eventExecuters.put(EventWord.REMOVE_ROOM_ITEM, new RemoveRoomItemEventExecuter());
 
 		//Initialize remaining variables
-		monster = new Monster(roomMap.get(Configurations.MONSTER_START_ROOM_NAME));
+		monster = new Monster(roomMap.get(Configurations.getMonsterStartRoomName()));
 		scoreManager = new ScoreManager();
 	}
 

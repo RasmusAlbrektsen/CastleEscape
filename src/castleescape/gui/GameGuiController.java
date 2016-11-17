@@ -92,7 +92,7 @@ public class GameGuiController implements Initializable {
 	private void commandButtonOnAction(ActionEvent event) {
 		Object source = event.getSource();
 		boolean running = true;
-		
+
 		if (source == northButton) {
 			running = northButtonPressed();
 		} else if (source == southButton) {
@@ -116,16 +116,16 @@ public class GameGuiController implements Initializable {
 		} else if (source == peekButton) {
 			running = peekButtonPressed();
 		}
-		
+
 		writeToConsole(businessMediator.getTextOutput());
-		
+
 		updateGameDataDisplay();
-		
+
 		if (! running){
 			this.getNameAndSaveScore();
 		}
 	}
-	
+
 	private boolean northButtonPressed() {
 		return businessMediator.notifyGo("north");
 	}
@@ -133,7 +133,7 @@ public class GameGuiController implements Initializable {
 	private boolean southButtonPressed() {
 		return businessMediator.notifyGo("south");
 	}
-	
+
 	private boolean eastButtonPressed() {
 		return businessMediator.notifyGo("east");
 	}
@@ -145,7 +145,7 @@ public class GameGuiController implements Initializable {
 	private boolean takeButtonPressed() {
 		return businessMediator.notifyTake(roomContentDropDown.getSelectionModel().getSelectedItem());
 	}
-	
+
 	private boolean dropButtonPressed() {
 		return businessMediator.notifyDrop(inventoryDropDown.getSelectionModel().getSelectedItem());
 	}
@@ -155,7 +155,7 @@ public class GameGuiController implements Initializable {
 				inventoryDropDown.getSelectionModel().getSelectedItem(),
 				roomContentDropDown.getSelectionModel().getSelectedItem());
 	}
-	
+
 	private boolean inspectButtonPressed() {
 		String inventorySelection = inventoryDropDown.getSelectionModel().getSelectedItem();
 		String roomSelection = roomContentDropDown.getSelectionModel().getSelectedItem();
@@ -226,18 +226,35 @@ public class GameGuiController implements Initializable {
 	private void updateGameDataDisplay() {
 		//Update player inventory display
 		List<String> playerItems = businessMediator.getPlayerItems();
+		String item =inventoryDropDown.getSelectionModel().getSelectedItem();
 		inventoryDropDown.getItems().setAll(playerItems);
+		if (playerItems.contains(item)){
+			inventoryDropDown.getSelectionModel().select(item);
+		}
 
 		//Update room inventory and content display
 		List<String> roomItems = businessMediator.getRoomItems();
+		item=roomContentDropDown.getSelectionModel().getSelectedItem();
 		roomContentDropDown.getItems().setAll(roomItems);
+		if (roomItems.contains(item)){
+			roomContentDropDown.getSelectionModel().select(item);
+		}
+
 
 		List<String> roomObjects = businessMediator.getRoomObjects();
 		roomContentDropDown.getItems().addAll(roomObjects);
 
+		if (roomObjects.contains(item)){
+			roomContentDropDown.getSelectionModel().select(item);
+		}
+
 		//Update exits
 		Map<String, String> exits = businessMediator.getCurrentExits();
+		item = roomDropDown.getSelectionModel().getSelectedItem();
 		roomDropDown.getItems().setAll(exits.keySet());
+		if (exits.containsKey(item)){
+			roomDropDown.getSelectionModel().select(item);
+		}
 
 		//Render compass and map
 		renderCompass();
@@ -311,7 +328,7 @@ public class GameGuiController implements Initializable {
 
 		int halfWidth = (int) compass.getWidth() / 2;
 		int halfHeight = (int) compass.getHeight() / 2;
-		
+
 		for (int y = - halfHeight; y < halfHeight; y++) {
 			for (int x = - halfWidth; x < halfWidth; x++) {
 				if (x * x + y * y >= (halfWidth - 2) * (halfHeight - 2)) {
@@ -319,7 +336,7 @@ public class GameGuiController implements Initializable {
 				}
 			}
 		}
-		
+
 		//Draw the compass image
 		g.drawImage(compassImg, 0, 0);
 	}
@@ -338,7 +355,7 @@ public class GameGuiController implements Initializable {
 	private void renderSquareCentered(GraphicsContext g, double cx, double cy, double w, double h) {
 		g.fillRect(cx - w / 2, cy - h / 2, w, h);
 	}
-	
+
 	/**
 	 * Reuest the user to enter a player name and save the player's score.
 	 */
@@ -351,7 +368,7 @@ public class GameGuiController implements Initializable {
 		
 		//Get the result of opening the dialog
 		Optional<String> result = nameDialog.showAndWait();
-		
+
 		//If the player entered a name, save his score, otherwise discard it
 		if (result.isPresent()){
 			this.businessMediator.saveScore(result.get());

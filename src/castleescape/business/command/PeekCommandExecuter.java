@@ -21,7 +21,11 @@ public class PeekCommandExecuter implements CommandExecuter {
 			
 			//If the monsters room matches the room the player is peeking into
 			if (game.getMonster().getCurrentRoom() == game.getCurrentRoom().getExit(command.getCommandParameter(Command.DIRECTION))) {
-				ViewUtil.println("The monster is in there!");
+				if (!game.getMonster().isWaitingForPlayer()){
+					ViewUtil.println("The monster is in there!");
+				}else {
+					ViewUtil.println("Peeking into the room reveals nothing other than an old statue in the corner.");
+				}
 			} else {
 				ViewUtil.println("The room appears empty.");
 			}
