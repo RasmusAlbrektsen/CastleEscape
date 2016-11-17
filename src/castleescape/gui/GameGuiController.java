@@ -7,13 +7,13 @@ package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.Set;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -156,22 +156,22 @@ public class GameGuiController implements Initializable {
 	}
 
 	private boolean takeButtonPressed() {
-		return businessMediator.notifyTake(roomContentDropDown.getSelectionModel().getSelectedItem());
+		return businessMediator.notifyTake(roomContentDropDown.getValue());
 	}
 
 	private boolean dropButtonPressed() {
-		return businessMediator.notifyDrop(inventoryDropDown.getSelectionModel().getSelectedItem());
+		return businessMediator.notifyDrop(inventoryDropDown.getValue());
 	}
 
 	private boolean useButtonPressed() {
 		return businessMediator.notifyUse(
-				inventoryDropDown.getSelectionModel().getSelectedItem(),
-				roomContentDropDown.getSelectionModel().getSelectedItem());
+				inventoryDropDown.getValue(),
+				roomContentDropDown.getValue());
 	}
 
 	private boolean inspectButtonPressed() {
-		String inventorySelection = inventoryDropDown.getSelectionModel().getSelectedItem();
-		String roomSelection = roomContentDropDown.getSelectionModel().getSelectedItem();
+		String inventorySelection = inventoryDropDown.getValue();
+		String roomSelection = roomContentDropDown.getValue();
 
 		if (inventorySelection != null) {
 			return businessMediator.notifyInspect(inventorySelection);
@@ -185,13 +185,11 @@ public class GameGuiController implements Initializable {
 	}
 
 	private boolean helpButtonPressed() {
-		List<String> playerItems = businessMediator.getPlayerItems();
-		System.out.println(Arrays.toString(playerItems.toArray()));
 		return businessMediator.notifyHelp();
 	}
 
 	private boolean peekButtonPressed() {
-		return businessMediator.notifyPeek(roomDropDown.getSelectionModel().getSelectedItem());
+		return businessMediator.notifyPeek(roomDropDown.getValue());
 	}
 
 	/**
@@ -247,6 +245,7 @@ public class GameGuiController implements Initializable {
 		//Update player inventory display
 		//Get the list of items in the player's inventory
 		List<String> playerItems = businessMediator.getPlayerItems();
+		playerItems.add(0, null); //We add a null element to allow deselection
 		
 		//Remember the current selection in the choice box, as this will be
 		//reset when we repopulate it, even if the selected item persists
@@ -265,6 +264,7 @@ public class GameGuiController implements Initializable {
 		//Update room inventory and content display
 		List<String> roomContent = businessMediator.getRoomItems();
 		roomContent.addAll(businessMediator.getRoomObjects());
+		roomContent.add(0, null);
 		item = roomContentDropDown.getValue();
 		roomContentDropDown.setItems(FXCollections.observableArrayList(roomContent));
 		
@@ -273,7 +273,11 @@ public class GameGuiController implements Initializable {
 		}
 
 		//Update exits
-		Set<String> exitDirections = businessMediator.getCurrentExits().keySet();
+		//We want to get the exit directions as a separate list that is not
+		//backed by the exits Map. This is to allow for inserting a null element
+		//into the collection - an operation not supported by KeySet
+		List<String> exitDirections = new ArrayList<>(businessMediator.getCurrentExits().keySet());
+		exitDirections.add(0, null);
 		item = roomDropDown.getValue();
 		roomDropDown.setItems(FXCollections.observableArrayList(exitDirections));
 		

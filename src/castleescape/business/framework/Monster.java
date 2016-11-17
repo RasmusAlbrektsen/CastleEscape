@@ -28,7 +28,7 @@ public class Monster {
 	/**
 	 * The warning message displayed when the monster is hunting the player.
 	 */
-	private final String WARNING_MESSAGE = "The monster is coming!\nTHE MONSTER IS COMING";
+	private final String WARNING_MESSAGE = "The monster is coming!<br/>THE MONSTER IS COMING";
 
 	/**
 	 * Whether the monster is currently hunting the player.
@@ -90,9 +90,6 @@ public class Monster {
 		}
 
 		//Start hunting the player
-		//Warn the user
-		ViewUtil.println(WARNING_MESSAGE);
-
 		//Stop waiting the first time the player is hunted
 		waitingForPlayer = false;
 		hunting = true;
@@ -117,8 +114,21 @@ public class Monster {
 	public void notifyOfCommand(Game game) {
 		//If the monster is hunting the player, warn the player
 		if (isHunting()) {
-			ViewUtil.print(WARNING_MESSAGE);
-
+			
+			//If the player entered the safe room as a result of the command,
+			//stop hunting
+			if (game.getCurrentRoom().getRoomName().equals(Configurations.getSafeRoomName())) {
+				ViewUtil.println("You escaped the monster.");
+				ViewUtil.newLine();
+				setIdle();
+				
+				//No more to do for now, so we return
+				return;
+			} else {
+				//Otherwise warn the player
+				ViewUtil.println(WARNING_MESSAGE);
+			}
+			
 			//Move the monster towards the player if enough time has passed.
 			//This may need to happen multiple times. Stop moving if the monster
 			//has reached the player (chasePath.size() is 1)
@@ -131,6 +141,8 @@ public class Monster {
 				chasePath.pop();
 				currentRoom = chasePath.peekFirst();
 			}
+			
+			//No more to do for now, so we return
 			return;
 		}
 
@@ -182,7 +194,7 @@ public class Monster {
 		//If the player is already being hunted this will merely print a message
 		//to the user interface, as setHunting() has no effect in this case
 		if (destination.equals(currentRoom)) {
-			ViewUtil.print("You've walked right into the same room as the monster!");
+			ViewUtil.println("You've walked right into the same room as the monster!");
 			setHunting(destination);
 		}
 

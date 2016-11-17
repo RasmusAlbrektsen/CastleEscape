@@ -118,7 +118,7 @@ public class Room {
 	 */
 	public String getLongDescription() {
 		StringBuilder descriptionBuilder = new StringBuilder();
-		descriptionBuilder.append(getRoomName()).append("</br>")
+		descriptionBuilder.append("<h1>").append(getRoomName()).append("</h1>")
 				.append(getShortDescription()).append("</br></br>");
 
 		if (getInventory().getItemCount() != 0) {

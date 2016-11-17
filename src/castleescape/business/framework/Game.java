@@ -223,7 +223,7 @@ public class Game {
 		//If the player is caught by the monster, game over
 		if (monster.isPlayerCaught()) {
 			ViewUtil.println("The monster caught you and shredded you to pieces!");
-			ViewUtil.println("\t\tGAME OVER");
+			ViewUtil.println("GAME OVER");
 
 			//Game over, so we quit
 			end();
@@ -231,9 +231,6 @@ public class Game {
 		}
 
 		//The player is still alive, so we can process the command
-		//Notify the monster that a command has been entered.
-		monster.notifyOfCommand(this);
-
 		//Get the command executer associated with the specified CommandWord
 		//object
 		CommandExecuter executer = commandExecuters.get(command.getCommandWord());
@@ -247,6 +244,9 @@ public class Game {
 
 		//At this point executer is able to execute the specified command
 		executer.execute(this, command);
+		
+		//Notify the monster that a command has been entered.
+		monster.notifyOfCommand(this);
 	}
 
 	/**
