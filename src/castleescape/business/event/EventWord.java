@@ -11,7 +11,8 @@ public enum EventWord {
 	REMOVE_PLAYER_ITEM("removePlayerItem"),
 	MAKE_NOISE("makeNoise"),
 	SET_DESCRIPTION("setDescription"),
-	ADD_EXIT("addExit");
+	ADD_EXIT("addExit"),
+	QUIT("quit");
 
 	/**
 	 * The representation of an event word as a string.

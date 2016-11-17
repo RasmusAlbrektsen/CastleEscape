@@ -13,8 +13,11 @@ import java.sql.Time;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -75,6 +78,15 @@ public class CastleEscape extends Application {
 	 */
 	public static void main(String[] args) {
 		launch(args);
+	}
+	public static void quit(){
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException ignored) {}
+			
+		
+		Platform.exit();
+		System.exit(0);
 	}
 
 }
