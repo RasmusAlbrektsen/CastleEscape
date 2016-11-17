@@ -32,8 +32,10 @@ public class XMLFileLocater implements FileVisitor<Path> {
 	 * All files in rooms directory
 	 */
 	private final ArrayList<String> roomFiles = new ArrayList<>();
-	private String filetype;
-	private final String ITEM = "item", ROOM = "room", INSPECTABLE_OBJECT = "insp";
+
+	private String configFile;
+	private final String ITEM = "item", ROOM = "room", INSPECTABLE_OBJECT = "insp", ROOT = "root";
+	private String filetype=ROOT;
 
 	public XMLFileLocater(Path xmlFolder) {
 		try {
@@ -63,6 +65,9 @@ public class XMLFileLocater implements FileVisitor<Path> {
 			}
 			//Builds exits, after all rooms has been initialised.
 			XMLRoomExitBuilder.build();
+			//parse config file
+			System.out.println(configFile);
+			xmlReader.parse(configFile);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,6 +88,8 @@ public class XMLFileLocater implements FileVisitor<Path> {
 			case ROOM:
 				roomFiles.add(path);
 				break;
+			case ROOT:
+				configFile=path;
 		}
 	}
 
@@ -105,6 +112,7 @@ public class XMLFileLocater implements FileVisitor<Path> {
 		}
 		return FileVisitResult.CONTINUE;
 	}
+
 
 	/**
 	 * Called once for every file
@@ -133,6 +141,13 @@ public class XMLFileLocater implements FileVisitor<Path> {
 	 */
 	@Override
 	public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+		if (dir.getFileName().toString().equalsIgnoreCase("items")) {
+			filetype = ROOT;
+		} else if (dir.getFileName().toString().equalsIgnoreCase("rooms")) {
+			filetype = ROOT;
+		} else if (dir.getFileName().toString().equalsIgnoreCase("inspectableobjects")) {
+			filetype = ROOT;
+		}
 		return FileVisitResult.CONTINUE;
 	}
 }

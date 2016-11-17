@@ -73,6 +73,14 @@ public class CastleEscape extends Application {
 		stage.show();
 	}
 
+	public static void exit(){
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException ignored) {}
+		Platform.exit();
+		System.exit(0);
+	}
+
 	/**
 	 * @param args the command line arguments
 	 */

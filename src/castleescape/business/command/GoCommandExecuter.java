@@ -43,7 +43,7 @@ public class GoCommandExecuter implements CommandExecuter {
 		} else {
 			//If the player entered the safe room while being hunted then the
 			//monster should stop hunting the player.
-			if (game.getMonster().isHunting() && nextRoom.getRoomName().equals(Configurations.SAFE_ROOM_NAME)) {
+			if (game.getMonster().isHunting() && nextRoom.getRoomName().equals(Configurations.getSafeRoomName())) {
 				ViewUtil.println("You escaped the monster.");
 				ViewUtil.newLine();
 				game.getMonster().setIdle();

@@ -103,7 +103,7 @@ public class Monster {
 		//Set escape time based on distance between monster and player
 		startTime = System.currentTimeMillis(); //The amount of milliseconds since midnight, January 1, 1970 UTC
 		lastMove = startTime;
-		countDown = chasePath.size() * Configurations.MONSTER_MOVE_ROOM_TIME;
+		countDown = chasePath.size() * Configurations.getMonsterMoveRoomTime();
 	}
 
 	/**
@@ -123,8 +123,8 @@ public class Monster {
 			//This may need to happen multiple times. Stop moving if the monster
 			//has reached the player (chasePath.size() is 1)
 			long now = System.currentTimeMillis();
-			while (now - lastMove >= Configurations.MONSTER_MOVE_ROOM_TIME && chasePath.size() > 1) {
-				lastMove += Configurations.MONSTER_MOVE_ROOM_TIME;
+			while (now - lastMove >= Configurations.getMonsterMoveRoomTime() && chasePath.size() > 1) {
+				lastMove += Configurations.getMonsterMoveRoomTime();
 
 				//Move to the next room along the path, and remove the current
 				//room from the path
@@ -141,7 +141,7 @@ public class Monster {
 
 			//Roll a random number to determine if the monster should move to
 			//another room
-			if (Math.random() < Configurations.MONSTER_MOVE_CHANCE) {
+			if (Math.random() < Configurations.getMonsterMoveChance()) {
 
 				//Choose a random room among the exits from the current room. If
 				//no exits are present, do nothing
@@ -156,7 +156,7 @@ public class Monster {
 					//the requirements.
 					do {
 						newRoom = exits[(int) (Math.random() * exits.length)];
-					} while (newRoom.getRoomName().equals(Configurations.SAFE_ROOM_NAME));
+					} while (newRoom.getRoomName().equals(Configurations.getSafeRoomName()));
 
 					currentRoom = newRoom;
 
@@ -197,10 +197,10 @@ public class Monster {
 
 			if (chasePath.size() > lastDistance) {
 				//Player ran away from the monster, get more time
-				addEscapeTime(Configurations.MONSTER_MOVE_ROOM_TIME);
+				addEscapeTime(Configurations.getMonsterMoveRoomTime());
 			} else if (chasePath.size() < lastDistance) {
 				//Player ran towards the monster, loose time
-				addEscapeTime(-Configurations.MONSTER_MOVE_ROOM_TIME);
+				addEscapeTime(-Configurations.getMonsterMoveRoomTime());
 			} //Else no difference in distance, no time change
 		}
 	}
@@ -230,6 +230,10 @@ public class Monster {
 	 */
 	public boolean isHunting() {
 		return hunting;
+	}
+
+	public boolean isWaitingForPlayer() {
+		return waitingForPlayer;
 	}
 
 	/**
