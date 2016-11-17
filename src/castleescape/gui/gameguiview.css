@@ -58,6 +58,22 @@
 	-fx-text-fill: -castleEscape-button-text-color;
 }
 
-.compassButton {
-	-fx-background-image:url(""); /*TODO: No background?*/
+.compassButtonHorizontal {
+	-fx-background-image:null;
+	-fx-min-width:42;
+	-fx-min-height:84;
+	-fx-pref-width:42;
+	-fx-pref-height:84;
+	-fx-max-width:42;
+	-fx-max-height:84;
+}
+
+.compassButtonVertical {
+	-fx-background-image:null;
+	-fx-min-width:84;
+	-fx-min-height:42;
+	-fx-pref-width:84;
+	-fx-pref-height:42;
+	-fx-max-width:84;
+	-fx-max-height:42;
 }
