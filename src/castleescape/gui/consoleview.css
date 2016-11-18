@@ -27,7 +27,7 @@ body {
 
 /* Styling the text in Webview / output i console */	
 div.webview {
-	font-family: Arial;
+	/*font-family: Arial;*/
 	font-size: 18px;
 	display: block;
 }

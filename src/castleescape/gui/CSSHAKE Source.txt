@@ -1,1 +1,0 @@
-CSSSHAKE source: https://elrumordelaluz.github.io/csshake/

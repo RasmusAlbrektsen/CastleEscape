@@ -68,31 +68,16 @@
  * Compass                                                                     *
  *                                                                             *
  ******************************************************************************/
-
-.compassButtonHorizontal {
+.compassButton {
 	-fx-background-image: null;
-	-fx-min-width: 42;
-	-fx-min-height: 84;
-	-fx-pref-width: 42;
-	-fx-pref-height: 84;
-	-fx-max-width: 42;
-	-fx-max-height: 84;
+	-fx-min-width: 66;
+	-fx-min-height: 66;
+	-fx-pref-width: 66;
+	-fx-pref-height: 66;
+	-fx-max-width: 66;
+	-fx-max-height: 66;
 }
 
-.compassButtonVertical {
-	-fx-background-image: null;
-	-fx-min-width: 84;
-	-fx-min-height: 42;
-	-fx-pref-width: 84;
-	-fx-pref-height: 42;
-	-fx-max-width: 84;
-	-fx-max-height: 42;
-}
-
-.compassButtonVertical:hover {
-	-fx-background-image: null;
-}
-
-.compassButtonHorizontal:hover {
+.compassButton:hover {
 	-fx-background-image: null;
 }

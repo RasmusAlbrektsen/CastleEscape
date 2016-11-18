@@ -6,9 +6,9 @@
 package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -35,16 +35,12 @@ import javafx.scene.web.WebView;
 public class GameGuiController implements Initializable {
 
 	/**
-	 * Constants for rendering rooms in the map world map.
+	 * Images for rendering the map part of the GUI.
 	 */
-	private static final double MAP_ROOM_WIDTH = 84,
-			MAP_ROOM_HEIGHT = 84,
-			MAP_ROOM_SPACING = 16;
-
-	/**
-	 * The compass image.
-	 */
-	private Image compassImg;
+	private Image compassImg,
+			roomImg,
+			horizontalDoorImg,
+			verticalDoorImg;
 
 	/**
 	 * The mediator to use for making calls to business code.
@@ -96,7 +92,7 @@ public class GameGuiController implements Initializable {
 	private void commandButtonOnAction(ActionEvent event) {
 		//Get the source of the button action
 		Object source = event.getSource();
-		
+
 		//By now, we assume that the game is still running.
 		boolean running = true;
 
@@ -134,7 +130,7 @@ public class GameGuiController implements Initializable {
 		updateGameDataDisplay();
 
 		//If the game is no longer running, get the players score and quit
-		if (! running){
+		if (!running) {
 			this.getNameAndSaveScore();
 		}
 	}
@@ -204,7 +200,7 @@ public class GameGuiController implements Initializable {
 		//GUI console
 		String msg = businessMediator.start();
 		writeToConsole(msg);
-		
+
 		//Initialize the display of all game data now that the game has been
 		//properly initialized
 		updateGameDataDisplay();
@@ -246,20 +242,20 @@ public class GameGuiController implements Initializable {
 		//Get the list of items in the player's inventory
 		List<String> playerItems = businessMediator.getPlayerItems();
 		playerItems.add(0, null); //We add a null element to allow deselection
-		
+
 		//Remember the current selection in the choice box, as this will be
 		//reset when we repopulate it, even if the selected item persists
 		String item = inventoryDropDown.getValue();
-		
+
 		//Repopulate the choice box. This requires out list to be wrapped in an
 		//observable array list
 		inventoryDropDown.setItems(FXCollections.observableArrayList(playerItems));
-		
+
 		//If the previously selected item persisted, select it again
 		if (playerItems.contains(item)) {
 			inventoryDropDown.setValue(item);
 		}
-		
+
 		//Now do the same exact thing for room content and room exits
 		//Update room inventory and content display
 		List<String> roomContent = businessMediator.getRoomItems();
@@ -267,7 +263,7 @@ public class GameGuiController implements Initializable {
 		roomContent.add(0, null);
 		item = roomContentDropDown.getValue();
 		roomContentDropDown.setItems(FXCollections.observableArrayList(roomContent));
-		
+
 		if (roomContent.contains(item)) {
 			roomContentDropDown.setValue(item);
 		}
@@ -280,11 +276,11 @@ public class GameGuiController implements Initializable {
 		exitDirections.add(0, null);
 		item = roomDropDown.getValue();
 		roomDropDown.setItems(FXCollections.observableArrayList(exitDirections));
-		
+
 		if (exitDirections.contains(item)) {
 			roomDropDown.setValue(item);
 		}
-		
+
 		//Render compass and map
 		renderCompass();
 	}
@@ -302,7 +298,7 @@ public class GameGuiController implements Initializable {
 		//Clear previous renderings, otherwise rooms rendered previously will
 		//carry over
 		g.clearRect(0, 0, compass.getWidth(), compass.getHeight());
-		
+
 		//Render a translucent background behind the compass - to make it look
 		//cool
 		g.setFill(new Color(0, 0, 0, 0.5));
@@ -314,8 +310,7 @@ public class GameGuiController implements Initializable {
 		double cy = compass.getHeight() / 2;
 
 		//Render the current room, centered on (cx, cy)
-		g.setFill(Color.BLACK);
-		renderSquareCentered(g, cx, cy, MAP_ROOM_WIDTH, MAP_ROOM_HEIGHT);
+		renderImageCentered(g, roomImg, cx, cy);
 
 		//Get the exits from the current room. A connection to all neighbor
 		//rooms should be drawn
@@ -346,19 +341,27 @@ public class GameGuiController implements Initializable {
 					break;
 			}
 
-			//Render the neighbor room offset from the current room with a
-			//spacing in between
-			renderSquareCentered(g,
-					cx + (MAP_ROOM_WIDTH + MAP_ROOM_SPACING) * dx,
-					cy + (MAP_ROOM_HEIGHT + MAP_ROOM_SPACING) * dy,
-					MAP_ROOM_WIDTH, MAP_ROOM_HEIGHT);
-
-			//Render a connector between the current room and the neighbor,
-			//symbolizing a door
-			renderSquareCentered(g,
-					cx + (MAP_ROOM_WIDTH + MAP_ROOM_SPACING) / 2 * dx,
-					cy + (MAP_ROOM_HEIGHT + MAP_ROOM_SPACING) / 2 * dy,
-					MAP_ROOM_SPACING, MAP_ROOM_SPACING);
+			//Render the neighbor room just besides the current room, offset in
+			//the direction specified in the switch statement above
+			renderImageCentered(g, roomImg,
+					cx + roomImg.getWidth() * dx,
+					cy + roomImg.getHeight() * dy);
+			
+			//Render connector doors between the rooms. If the offset happened
+			//on the x axis (dx != 0) then render the horizontal room connector,
+			//otherwise assume the offset was vertical and render the vertical
+			//connector. The connector should be rendered right between the two
+			//rooms, thus its center is half a width / height from the current
+			//center (cx, cy)
+			if (dx != 0) {
+				renderImageCentered(g, horizontalDoorImg,
+					cx + roomImg.getWidth() * dx / 2,
+					cy);
+			} else {
+				renderImageCentered(g, verticalDoorImg,
+					cx,
+					cy + roomImg.getHeight() * dy / 2);
+			}
 		}
 
 		//We do not want the anything we rendered to exceed the bounds of the
@@ -369,8 +372,8 @@ public class GameGuiController implements Initializable {
 		int halfWidth = (int) compass.getWidth() / 2;
 		int halfHeight = (int) compass.getHeight() / 2;
 
-		for (int y = - halfHeight; y < halfHeight; y++) {
-			for (int x = - halfWidth; x < halfWidth; x++) {
+		for (int y = -halfHeight; y < halfHeight; y++) {
+			for (int x = -halfWidth; x < halfWidth; x++) {
 				if (x * x + y * y >= (halfWidth - 2) * (halfHeight - 2)) {
 					g.getPixelWriter().setArgb(x + halfWidth, y + halfHeight, 0);
 				}
@@ -382,18 +385,16 @@ public class GameGuiController implements Initializable {
 	}
 
 	/**
-	 * Draw a filled rectangle with the current fill color in the specified
-	 * graphics context centered on the specified coordinate (cx, cy) and with
-	 * the specified dimensions.
+	 * Draw the specified image in the specified graphics context centered on
+	 * the specified coordinate (cx, cy).
 	 *
-	 * @param g  the graphics context to draw to
-	 * @param cx the x coordinate of the center
-	 * @param cy the y coordinate of the center
-	 * @param w  the width of the rectangle
-	 * @param h  the height of the rectangle
+	 * @param g   the graphics context to draw to
+	 * @param img the image to draw
+	 * @param cx  the x coordinate of the center
+	 * @param cy  the y coordinate of the center
 	 */
-	private void renderSquareCentered(GraphicsContext g, double cx, double cy, double w, double h) {
-		g.fillRect(cx - w / 2, cy - h / 2, w, h);
+	private void renderImageCentered(GraphicsContext g, Image img, double cx, double cy) {
+		g.drawImage(img, cx - img.getWidth() / 2, cy - img.getHeight() / 2);
 	}
 
 	/**
@@ -402,31 +403,34 @@ public class GameGuiController implements Initializable {
 	 */
 	private void getNameAndSaveScore() {
 		//Create a text input dialog
-		TextInputDialog nameDialog = new TextInputDialog ("FOO");
+		TextInputDialog nameDialog = new TextInputDialog("FOO");
 		nameDialog.setTitle("Name");
 		nameDialog.setHeaderText("Enter player name");
 		nameDialog.setContentText("Please enter your name");
-		
+
 		//Get the result of opening the dialog
 		Optional<String> result = nameDialog.showAndWait();
 
 		//If the player entered a name, save his score, otherwise discard it
-		if (result.isPresent()){
+		if (result.isPresent()) {
 			this.businessMediator.saveScore(result.get());
 		}
-		
+
 		//Quit the game after the player's score has been set. A static call is
 		//fine, as System.exit() and Platform.exit() are static calls as well
 		CastleEscape.quit();
 	}
-			
+
 	/**
 	 * Initializes the controller class.
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		//Read compass image
-		compassImg = new Image(getClass().getResourceAsStream("compass02.png"));
+		//Read image resources from the classpath
+		compassImg = new Image(getClass().getResourceAsStream("/res/compass.png"));
+		roomImg = new Image(getClass().getResourceAsStream("/res/room.png"));
+		horizontalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorHorizontal.png"));
+		verticalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorVertical.png"));
 	}
 
 }

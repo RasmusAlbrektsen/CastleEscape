@@ -56,18 +56,18 @@
             <StackPane prefHeight="196.0" prefWidth="196.0">
                <children>
                   <Canvas fx:id="compass" height="196.0" width="196.0" />
-                  <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="220.0">
+                  <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="196.0" prefWidth="196.0">
                      <top>
-                        <Button fx:id="northButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButtonVertical" BorderPane.alignment="CENTER" />
+                        <Button fx:id="northButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButton" BorderPane.alignment="CENTER" />
                      </top>
                      <right>
-                        <Button fx:id="eastButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButtonHorizontal" BorderPane.alignment="CENTER" />
+                        <Button fx:id="eastButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButton" BorderPane.alignment="CENTER" />
                      </right>
                      <bottom>
-                        <Button fx:id="southButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButtonVertical" BorderPane.alignment="CENTER" />
+                        <Button fx:id="southButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButton" BorderPane.alignment="CENTER" />
                      </bottom>
                      <left>
-                        <Button fx:id="westButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButtonHorizontal" BorderPane.alignment="CENTER" />
+                        <Button fx:id="westButton" mnemonicParsing="false" onAction="#commandButtonOnAction" styleClass="compassButton" BorderPane.alignment="CENTER" />
                      </left>
                   </BorderPane>
                </children>
