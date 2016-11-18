@@ -36,7 +36,7 @@
  *                                                                             *
  ******************************************************************************/
 
-.button {
+.toggle-button, .button {
 	/*-fx-graphic: url("../../res/button.png");*/
 	-fx-background-image: url("../../res/button.png");
 	-fx-background-repeat: no-repeat;       
@@ -51,29 +51,48 @@
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
-.textButton{
-	-fx-font-family: "Adobe Garamond Pro";
-	-fx-font-weight: bold;
-	-fx-font-size: 16.0px;
-	-fx-text-fill: -castleEscape-button-text-color;
+.toggle-button:hover,
+.button:hover,
+.button:default:hover {
+       -fx-background-image: url("../../res/button-focused.png");
 }
 
+.toggle-button:pressed,
+.button:pressed,
+.button:default:pressed {
+       -fx-background-image: url("../../res/button-pressed.png");
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Compass                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+
 .compassButtonHorizontal {
-	-fx-background-image:null;
-	-fx-min-width:42;
-	-fx-min-height:84;
-	-fx-pref-width:42;
-	-fx-pref-height:84;
-	-fx-max-width:42;
-	-fx-max-height:84;
+	-fx-background-image: null;
+	-fx-min-width: 42;
+	-fx-min-height: 84;
+	-fx-pref-width: 42;
+	-fx-pref-height: 84;
+	-fx-max-width: 42;
+	-fx-max-height: 84;
 }
 
 .compassButtonVertical {
-	-fx-background-image:null;
-	-fx-min-width:84;
-	-fx-min-height:42;
-	-fx-pref-width:84;
-	-fx-pref-height:42;
-	-fx-max-width:84;
-	-fx-max-height:42;
+	-fx-background-image: null;
+	-fx-min-width: 84;
+	-fx-min-height: 42;
+	-fx-pref-width: 84;
+	-fx-pref-height: 42;
+	-fx-max-width: 84;
+	-fx-max-height: 42;
+}
+
+.compassButtonVertical:hover {
+	-fx-background-image: null;
+}
+
+.compassButtonHorizontal:hover {
+	-fx-background-image: null;
 }
