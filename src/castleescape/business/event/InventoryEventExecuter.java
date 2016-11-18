@@ -12,15 +12,15 @@ import castleescape.business.object.Item;
 /**
  * An abstract event executer that performs operations on an inventory. This
  * type of event executers will need to retrieve an item from the event object.
- * 
+ *
  * @author Kasper
  */
 abstract class InventoryEventExecuter implements EventExecuter {
-	
+
 	/**
 	 * Get the item that is described in the specified event. The event is
-	 * assumed to have a parameter with the name "Item".
-	 * 
+	 * assumed to have a parameter with the name "item".
+	 *
 	 * @param e the event to get the item information from
 	 * @return the item described by the event, or null if no such item exists
 	 */
@@ -29,7 +29,16 @@ abstract class InventoryEventExecuter implements EventExecuter {
 		return InspectableObjectRegister.getAsItem(itemName);
 	}
 
+	/**
+	 * Get the inspectable object that is described in the specified event. The
+	 * event is assumed to have a parameter with the name "item".
+	 *
+	 * @param e the event to get the item information from
+	 * @return the inspectable object described by the event, or null if no such
+	 *         object exists
+	 */
 	InspectableObject getObjectFromEvent(Event e) {
-		return InspectableObjectRegister.getAsInspectableObject(e.getEventParam(Event.ITEM));
+		String objectName = e.getEventParam(Event.ITEM);
+		return InspectableObjectRegister.getAsInspectableObject(objectName);
 	}
 }

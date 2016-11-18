@@ -33,7 +33,14 @@ public class AddPlayerItemEventExecuter extends InventoryEventExecuter {
 
 		//If the item exists, add it, otherwise do nothing
 		if (item != null) {
-			game.getPlayer().getInventory().addItem(item);
+			boolean success = game.getPlayer().getInventory().addItem(item);
+			
+			//If the item could not be added, that means the player's inventory
+			//is full, so we drop the item on the ground instead
+			if (! success) {
+				ViewUtil.println("Your inventory is full, so you drop the " + item + " on the floor.");
+				game.getCurrentRoom().getInventory().addItem(item);
+			}
 		}
 	}
 

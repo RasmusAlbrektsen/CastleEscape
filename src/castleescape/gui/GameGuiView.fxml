@@ -106,7 +106,7 @@
                   <WebView fx:id="console" prefHeight="396.0" prefWidth="393.0" />
                </children>
             </VBox>
-            <BorderPane prefHeight="200.0" prefWidth="200.0">
+            <BorderPane pickOnBounds="false" prefHeight="200.0" prefWidth="200.0">
                <bottom>
                   <HBox alignment="CENTER" prefHeight="51.0" prefWidth="574.0" spacing="4.0" BorderPane.alignment="CENTER">
                      <children>
