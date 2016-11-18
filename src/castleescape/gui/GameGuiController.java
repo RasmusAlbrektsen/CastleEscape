@@ -6,7 +6,6 @@
 package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
-import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +21,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -86,6 +86,10 @@ public class GameGuiController implements Initializable {
 	/* Canvas */
 	@FXML
 	private Canvas compass;
+
+	/* Labels */
+	@FXML
+	private Label scoreLabel;
 
 	/* Action events */
 	@FXML
@@ -234,8 +238,8 @@ public class GameGuiController implements Initializable {
 	}
 
 	/**
-	 * Synchronize the display of the room exits and player and room inventories
-	 * with the actual data in the game.
+	 * Synchronize the display of the room exits, player and room inventories,
+	 * and score with the actual data in the game.
 	 */
 	private void updateGameDataDisplay() {
 		//Update player inventory display
@@ -280,6 +284,9 @@ public class GameGuiController implements Initializable {
 		if (exitDirections.contains(item)) {
 			roomDropDown.setValue(item);
 		}
+		
+		//Update score label
+		scoreLabel.setText(String.valueOf(businessMediator.getCurrentScore()));
 
 		//Render compass and map
 		renderCompass();
@@ -346,7 +353,7 @@ public class GameGuiController implements Initializable {
 			renderImageCentered(g, roomImg,
 					cx + roomImg.getWidth() * dx,
 					cy + roomImg.getHeight() * dy);
-			
+
 			//Render connector doors between the rooms. If the offset happened
 			//on the x axis (dx != 0) then render the horizontal room connector,
 			//otherwise assume the offset was vertical and render the vertical
@@ -355,12 +362,12 @@ public class GameGuiController implements Initializable {
 			//center (cx, cy)
 			if (dx != 0) {
 				renderImageCentered(g, horizontalDoorImg,
-					cx + roomImg.getWidth() * dx / 2,
-					cy);
+						cx + roomImg.getWidth() * dx / 2,
+						cy);
 			} else {
 				renderImageCentered(g, verticalDoorImg,
-					cx,
-					cy + roomImg.getHeight() * dy / 2);
+						cx,
+						cy + roomImg.getHeight() * dy / 2);
 			}
 		}
 

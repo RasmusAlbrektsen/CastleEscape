@@ -93,6 +93,34 @@ public class BusinessMediator {
 	public List<String> getPlayerItems() {
 		return game.getPlayer().getInventory().getContentView();
 	}
+	
+	/**
+	 * Get the player's current score.
+	 * 
+	 * @return the player's current score
+	 */
+	public int getCurrentScore() {
+		return game.getScoreManager().getCurrentGameScore();
+	}
+
+	/**
+	 * Get the text output that was generated on the last game iteration. This
+	 * will clear the text output buffer.
+	 *
+	 * @return the buffered text output
+	 */
+	public String getTextOutput() {
+		return ViewUtil.getString();
+	}
+
+	/**
+	 * Request an arry of possible player characters from the game.
+	 *
+	 * @return an arry of possible player characters from the game
+	 */
+	public Character[] getCharacterList() {
+		return game.getCharacters();
+	}
 
 	/* Methods for notifying the business layer that an action was performed */
 	/**
@@ -230,9 +258,6 @@ public class BusinessMediator {
 
 		return game.isRunning();
 	}
-	public String getTextOutput(){
-		return ViewUtil.getString();
-	}
 
 	/**
 	 * Notify the game that the user selected a player character.
@@ -244,13 +269,10 @@ public class BusinessMediator {
 	}
 
 	/**
-	 * Request an arry of possible player characters from the game.
+	 * Save the current score under the specified name.
 	 *
-	 * @return an arry of possible player characters from the game
+	 * @param name the name of the player
 	 */
-	public Character[] getCharacterList() {
-		return game.getCharacters();
-	}
 	public void saveScore(String name) {
 		game.saveScore(name);
 	}

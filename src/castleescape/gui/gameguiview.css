@@ -20,7 +20,7 @@
 
 .mainFrame {
 	-fx-background-image: url("../../res/background.jpg");
-	-fx-background-repeat: stretch;   
+	-fx-background-repeat: repeat;   
     -fx-background-position: center center;
 }
 
@@ -80,4 +80,22 @@
 
 .compassButton:hover {
 	-fx-background-image: null;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Console                                                                     *
+ *                                                                             *
+ ******************************************************************************/
+.papyrus {
+	-fx-border-image-source: url("../../res/papyrus.png");
+    -fx-border-image-insets: 0, 0;
+    -fx-border-image-repeat: round, round;
+    -fx-border-image-width: 60, 60;
+    -fx-border-image-slice: 60 fill, 60 fill;
+}
+
+.scoreLabel {
+	-fx-font-family: "Adobe Garamond Pro";
+	-fx-font-weight: bold;
 }
