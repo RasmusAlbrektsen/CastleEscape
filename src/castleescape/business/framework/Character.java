@@ -17,6 +17,16 @@ import castleescape.business.object.Inventory;
 public class Character {
 
 	/**
+	 * The character's name.
+	 */
+	private final String name;
+
+	/**
+	 * The description of the character.
+	 */
+	private final String description;
+
+	/**
 	 * How likely the character is to make noise when performing actions like
 	 * inspecting or using items. A value of 0.0 means that the character will
 	 * never make noise while a value of 1.0 means that the character will
@@ -29,21 +39,37 @@ public class Character {
 	 */
 	private final Inventory inventory;
 
-	private String name;
-
-	private String description;
 	/**
-	 * Constructs a new character with the specified clumsiness and carry
-	 * capacity.
+	 * Constructs a new character.
 	 *
+	 * @param name          the name of the character
+	 * @param description   the description of the character
 	 * @param clumsiness    how likely the character is to make noise
 	 * @param carryCapacity how many items the character can carry
 	 */
-	public Character(double clumsiness, int carryCapacity,String name,String description) {
+	public Character(String name, String description, double clumsiness, int carryCapacity) {
+		this.name = name;
+		this.description = description;
 		this.clumsiness = clumsiness;
-		inventory = new Inventory(carryCapacity);
-		this.name=name;
-		this.description=description;
+		this.inventory = new Inventory(carryCapacity);
+	}
+
+	/**
+	 * Get the name of this character.
+	 *
+	 * @return the name of this character
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Get the description of this character.
+	 *
+	 * @return the description of this character
+	 */
+	public String getDescription() {
+		return description;
 	}
 
 	/**
@@ -68,7 +94,8 @@ public class Character {
 		return clumsiness;
 	}
 
-	public String toString(){
+	@Override
+	public String toString() {
 		return name;
 	}
 }

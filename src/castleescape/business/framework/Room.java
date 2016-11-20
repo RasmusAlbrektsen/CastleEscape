@@ -28,8 +28,8 @@ public class Room {
 	private String description;
 
 	/**
-	 * {@link Map} for mapping between direction strings and the exits in
-	 * the room.
+	 * {@link Map} for mapping between direction strings and the exits in the
+	 * room.
 	 */
 	private final Map<String, Room> exits;
 
@@ -169,7 +169,7 @@ public class Room {
 		//direction key in the exits hash map
 		return exits.get(direction);
 	}
-	
+
 	/**
 	 * Get a map of all the exits from this room.
 	 *
@@ -177,23 +177,6 @@ public class Room {
 	 */
 	public Map<String, Room> getExits() {
 		return exits;
-	}
-
-	/**
-	 * Get a map of all the exits from this room. The exits are stored as
-	 * strings for convenience of use with a user interface.
-	 *
-	 * @return the Map of the exits from the room
-	 */
-	public Map<String, String> getExitView() {
-		Map<String, String> returnMap = new HashMap<>();
-		
-		for (String direction: exits.keySet()) {
-			String otherRoomName = exits.get(direction).getRoomName();
-			returnMap.put(direction, otherRoomName);
-		}
-		
-		return returnMap;
 	}
 
 	/**
@@ -215,8 +198,13 @@ public class Room {
 		roomObjects.put(inspectableObject.getName(), inspectableObject);
 	}
 
-	public void removeInspectableObject(InspectableObject insp) {
-		roomObjects.remove(insp.getName());
+	/**
+	 * Remove an inspectable object from this room.
+	 *
+	 * @param inspectableObject the InspectableObject to remove
+	 */
+	public void removeInspectableObject(InspectableObject inspectableObject) {
+		roomObjects.remove(inspectableObject.getName());
 	}
 
 	/**
@@ -253,12 +241,13 @@ public class Room {
 	}
 
 	/**
-	 * Get a list of names of the inspectable objects in this room.
+	 * Get the inspectable objects in this room as a list. It is safe to alter
+	 * this list from outside.
 	 *
-	 * @return a list of names of the inspectable objects in this room
+	 * @return the inspectable objects in this room
 	 */
-	public List<String> getInspectableObjectView() {
-		return new ArrayList<>(roomObjects.keySet());
+	public List<InspectableObject> getInspectableObjects() {
+		return new ArrayList<>(roomObjects.values());
 	}
 
 	@Override

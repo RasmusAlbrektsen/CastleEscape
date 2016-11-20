@@ -7,10 +7,7 @@ package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -139,36 +136,76 @@ public class GameGuiController implements Initializable {
 		}
 	}
 
+	/**
+	 * Called when the north button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean northButtonPressed() {
 		return businessMediator.notifyGo("north");
 	}
 
+	/**
+	 * Called when the south button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean southButtonPressed() {
 		return businessMediator.notifyGo("south");
 	}
 
+	/**
+	 * Called when the east button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean eastButtonPressed() {
 		return businessMediator.notifyGo("east");
 	}
 
+	/**
+	 * Called when the west button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean westButtonPressed() {
 		return businessMediator.notifyGo("west");
 	}
 
+	/**
+	 * Called when the take button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean takeButtonPressed() {
 		return businessMediator.notifyTake(roomContentDropDown.getValue());
 	}
 
+	/**
+	 * Called when the drop button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean dropButtonPressed() {
 		return businessMediator.notifyDrop(inventoryDropDown.getValue());
 	}
 
+	/**
+	 * Called when the use button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean useButtonPressed() {
 		return businessMediator.notifyUse(
 				inventoryDropDown.getValue(),
 				roomContentDropDown.getValue());
 	}
 
+	/**
+	 * Called when the inspect button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean inspectButtonPressed() {
 		String inventorySelection = inventoryDropDown.getValue();
 		String roomSelection = roomContentDropDown.getValue();
@@ -180,14 +217,29 @@ public class GameGuiController implements Initializable {
 		}
 	}
 
+	/**
+	 * Called when the inventory button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean inventoryButtonPressed() {
 		return businessMediator.notifyInventory();
 	}
 
+	/**
+	 * Called when the help button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean helpButtonPressed() {
 		return businessMediator.notifyHelp();
 	}
 
+	/**
+	 * Called when the peek button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
 	private boolean peekButtonPressed() {
 		return businessMediator.notifyPeek(roomDropDown.getValue());
 	}
@@ -200,10 +252,11 @@ public class GameGuiController implements Initializable {
 	public void setBusinessMediator(BusinessMediator bm) {
 		this.businessMediator = bm;
 
+		//TODO
 		//Start the game using the business mediator and print the result to the
 		//GUI console
-		String msg = businessMediator.start();
-		writeToConsole(msg);
+//		businessMediator.start();
+		writeToConsole(businessMediator.getTextOutput());
 
 		//Initialize the display of all game data now that the game has been
 		//properly initialized
@@ -273,10 +326,7 @@ public class GameGuiController implements Initializable {
 		}
 
 		//Update exits
-		//We want to get the exit directions as a separate list that is not
-		//backed by the exits Map. This is to allow for inserting a null element
-		//into the collection - an operation not supported by KeySet
-		List<String> exitDirections = new ArrayList<>(businessMediator.getCurrentExits().keySet());
+		List<String> exitDirections = businessMediator.getExitDirections();
 		exitDirections.add(0, null);
 		item = roomDropDown.getValue();
 		roomDropDown.setItems(FXCollections.observableArrayList(exitDirections));
@@ -284,7 +334,7 @@ public class GameGuiController implements Initializable {
 		if (exitDirections.contains(item)) {
 			roomDropDown.setValue(item);
 		}
-		
+
 		//Update score label
 		scoreLabel.setText(String.valueOf(businessMediator.getCurrentScore()));
 
@@ -321,19 +371,19 @@ public class GameGuiController implements Initializable {
 
 		//Get the exits from the current room. A connection to all neighbor
 		//rooms should be drawn
-		Map<String, String> exits = businessMediator.getCurrentExits();
+		List<String> exitDirections = businessMediator.getExitDirections();
 
 		//For every neighbor, figure out in which direction it is located
 		//relative to the current room. For instance, a room to the north is
 		//offset along the y axis in the negative direction (thus dx = 0 and
 		//dy = -1), and a room to the east is offset along the x axis in the
 		//positive direction (thus dx = 1 and dy = 0).
-		for (Entry<String, String> neighbor : exits.entrySet()) {
+		for (String direction : exitDirections) {
 			int dx = 0;
 			int dy = 0;
 
 			//The key is the direction in which the neighbor is located
-			switch (neighbor.getKey()) {
+			switch (direction) {
 				case "north":
 					dy = -1;
 					break;

@@ -7,7 +7,6 @@ package castleescape.business.command;
 
 import castleescape.business.framework.Game;
 import castleescape.business.framework.Room;
-import castleescape.business.Configurations;
 import castleescape.business.ViewUtil;
 
 /**

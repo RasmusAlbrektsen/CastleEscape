@@ -240,21 +240,6 @@ public class Inventory {
 	}
 
 	/**
-	 * Get a list of names of the items in this inventory.
-	 *
-	 * @return a list of names of the items in this inventory
-	 */
-	public List<String> getContentView() {
-		List<String> returnList = new ArrayList<>();
-		
-		for (Item i: content) {
-			returnList.add(i.getName());
-		}
-		
-		return returnList;
-	}
-
-	/**
 	 * Get a string representation of this inventory of the form:
 	 * <br>
 	 * "Item1, Item2, Item3, Item4"

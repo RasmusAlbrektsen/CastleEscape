@@ -7,14 +7,7 @@ package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
 import castleescape.business.framework.Character;
-import castleescape.business.framework.Game;
-import java.io.File;
-import java.sql.Time;
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import castleescape.data.DataMediator;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -23,37 +16,40 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceDialog;
 import javafx.stage.Stage;
-import util.XMLFileLocater;
 
 /**
  * Entry point for the JavaFXML application and the game logic.
- * 
+ *
  * @author Kasper
  */
 public class CastleEscape extends Application {
 
 	private BusinessMediator initGame() {
-		//Folder containing the xml files
-		File xmlFolder = new File("xml");
-		//List of files in the xml folder
-		File[] fileList = xmlFolder.listFiles();
-		//Prompt for a selection between games, list the names of them
+//		//Folder containing the xml files
+//		File xmlFolder = new File("xml");
+//		//List of files in the xml folder
+//		File[] fileList = xmlFolder.listFiles();
+//		//Prompt for a selection between games, list the names of them
+//
+//		ChoiceDialog<File> choiceDialog = new ChoiceDialog<>(fileList[0], fileList);
+//		choiceDialog.setHeaderText("Wich game would you like to play?");
+//		choiceDialog.setTitle("Game selection");
+//		choiceDialog.showAndWait();
+//
+//		XMLFileLocater locater = new XMLFileLocater(choiceDialog.getResult().toPath());
 
-		ChoiceDialog<File> choiceDialog= new ChoiceDialog<>(fileList[0],fileList);
-		choiceDialog.setHeaderText("Wich game would you like to play?");
-		choiceDialog.setTitle("Game selection");
-		choiceDialog.showAndWait();
+//		ChoiceDialog<Character> characterChoiceDialog = new ChoiceDialog<Character>(bm.getCharacterList()[0], bm.getCharacterList());
+//		characterChoiceDialog.setHeaderText("Which character would you like to play?");
+//		characterChoiceDialog.setTitle("Character selection");
+//		characterChoiceDialog.showAndWait();
+//		bm.notifyCharacterSelected(characterChoiceDialog.getResult());
 
-		XMLFileLocater locater = new XMLFileLocater(choiceDialog.getResult().toPath());
 
 		BusinessMediator bm = new BusinessMediator();
+		//TODO: Holy shit
+		bm.start("ZuulMainGame");
+		bm.notifyCharacterSelected("Norman");
 
-		ChoiceDialog<Character> characterChoiceDialog = new ChoiceDialog<Character>(bm.getCharacterList()[0],bm.getCharacterList());
-		characterChoiceDialog.setHeaderText("Which character would you like to play?");
-		characterChoiceDialog.setTitle("Character selection");
-		characterChoiceDialog.showAndWait();
-		bm.notifyCharacterSelected(characterChoiceDialog.getResult());
-		//construct game instance
 		return bm;
 	}
 
@@ -73,10 +69,11 @@ public class CastleEscape extends Application {
 		stage.show();
 	}
 
-	public static void exit(){
+	public static void exit() {
 		try {
 			Thread.sleep(2000);
-		} catch (InterruptedException ignored) {}
+		} catch (InterruptedException ignored) {
+		}
 		Platform.exit();
 		System.exit(0);
 	}
@@ -87,12 +84,13 @@ public class CastleEscape extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	public static void quit(){
+
+	public static void quit() {
 		try {
 			Thread.sleep(2000);
-		} catch (InterruptedException ignored) {}
-			
-		
+		} catch (InterruptedException ignored) {
+		}
+
 		Platform.exit();
 		System.exit(0);
 	}

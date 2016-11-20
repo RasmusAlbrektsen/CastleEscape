@@ -21,13 +21,15 @@ import castleescape.business.command.DropCommandExecuter;
 import castleescape.business.command.PeekCommandExecuter;
 import castleescape.business.command.InspectCommandExecuter;
 import castleescape.business.command.CommandExecuter;
-import castleescape.business.Configurations;
 import castleescape.business.ViewUtil;
 import castleescape.business.event.QuitEventExecuter;
-import util.XMLRoomExitBuilder;
+import castleescape.business.object.InspectableObject;
+import castleescape.business.object.InspectableObjectRegister;
+import castleescape.data.DataMediator;
+import java.util.ArrayList;
 
 import java.util.HashMap;
-import org.xml.sax.Parser;
+import java.util.List;
 
 /**
  * Class defining instance behavior for setting up and running a game. This
@@ -39,6 +41,11 @@ import org.xml.sax.Parser;
  */
 public class Game {
 
+	/**
+	 * The data mediator used to communicate with the data layer.
+	 */
+	private final DataMediator dataMediator;
+	
 	/**
 	 * Map of command executers. The keys are CommandWord objects and the values
 	 * are the CommandExecuters associated with these CommandWord objects.
@@ -68,6 +75,11 @@ public class Game {
 	private final Monster monster;
 
 	/**
+	 * List of possible player characters.
+	 */
+	private final List<Character> possibleCharacters;
+
+	/**
 	 * The player character in the game.
 	 */
 	private Character player;
@@ -75,7 +87,7 @@ public class Game {
 	/**
 	 * The score manager in the game.
 	 */
-	private ScoreManager scoreManager;
+	private final ScoreManager scoreManager;
 
 	/**
 	 * Boolean keeping track of whether the game is running.
@@ -83,19 +95,46 @@ public class Game {
 	private boolean running;
 
 	/**
-	 * Constructs a new game object. This constructor will call the method
-	 * {@link XMLRoomExitBuilder#getRooms()} to initialize all rooms in the game
-	 * and constructs a {@link Parser} for reading user input.
+	 * Constructs a new game object to play the specified level.
 	 * <p>
 	 * To start the game, call the {@link #play()} method after the game object
 	 * has been successfully constructed.
+	 * 
+	 * @param levelName the name of the level to play
 	 */
-	public Game() {
-		//Initialize rooms HashMap
-		roomMap = XMLRoomExitBuilder.getRooms();
-		currentRoom = roomMap.get(Configurations.getStartRoomName());
+	public Game(String levelName) {
+		//Construct data mediator for performing operations on files
+		dataMediator = new DataMediator();
 
-		//Create a player character
+		//Load the level with the specified name
+		//TODO: Make better
+		dataMediator.readLevel("xml/" + levelName);
+		
+		//Initialize inspectable objects and items
+		List<InspectableObject> inspectableObjects = dataMediator.getInspectableObjects();
+		inspectableObjects.addAll(dataMediator.getItems());
+		
+		for (InspectableObject o: inspectableObjects) {
+			InspectableObjectRegister.registerInspectableObject(o);
+		}
+		
+		//Initialize rooms
+		roomMap = new HashMap<>();
+		
+		for (Room r: dataMediator.getRooms()) {
+			roomMap.put(r.getRoomName(), r);
+		}
+		
+		//Initialize configurations and set start room
+		Configuration configuration = dataMediator.getConfiguration();
+		currentRoom = configuration.getStartRoom();
+		
+		//Initialize monster
+		monster = new Monster(configuration.getMonsterStartRoom(),
+				configuration.getSafeRoom(),
+				configuration.getMonsterMoveChance(),
+				configuration.getMonsterMoveTime());
+
 		//Add command executers and associate them with command words
 		commandExecuters = new HashMap<>();
 		commandExecuters.put(CommandWord.HELP, new HelpCommandExecuter());
@@ -119,8 +158,15 @@ public class Game {
 		eventExecuters.put(EventWord.REMOVE_ROOM_ITEM, new RemoveRoomItemEventExecuter());
 		eventExecuters.put(EventWord.QUIT, new QuitEventExecuter());
 
+		//Add possible player characters
+		possibleCharacters = new ArrayList<>();
+		possibleCharacters.add(new Character("Norman", "Norman who is a normal ninja, that makes less noise but can't carry that much.", 0.2, 2));
+		possibleCharacters.add(new Character("Bob", "Bob is a bodybuilder making him capable of carrying a lot if items but he also makes a lot of noise.", 0.8, 6));
+		possibleCharacters.add(new Character("Obi", "Obi the obvious is a man that makes a lot of noise, but is capable to carry a medium amount of stuff.", 0.7, 3));
+		possibleCharacters.add(new Character("Tim", "Tim is pretty generic, he does not make that much noise and can carry a reasonable number of items.", 0.4, 4));
+		possibleCharacters.add(new Character("", "Debug character.", 0, 999));
+
 		//Initialize remaining variables
-		monster = new Monster(roomMap.get(Configurations.getMonsterStartRoomName()));
 		scoreManager = new ScoreManager();
 	}
 
@@ -133,26 +179,31 @@ public class Game {
 		return monster;
 	}
 
-	public Character[] getCharacters() {
-		return new Character[]{
-			new Character(0.2, 2, "Norman", "Norman who is a normal ninja, that makes less noise but can't carry that much"),
-			new Character(0.8, 6, "Bob", "Bob is a bodybuilder making him capable of carrying a lot if items but he also makes a lot of noise"),
-			new Character(0.7, 3, "Obi", "Obi the obvious is a man that makes a lot of noise, but is capable to carry a medium amount of stuff"),
-			new Character(0.4, 4, "Tim", "Tim is pretty generic, he does not make that much noise and can carry a reasonable number of items"),
-			new Character(0, 999, "", "")};
+	/**
+	 * Get all possible player characters.
+	 *
+	 * @return all possible player characters
+	 */
+	public List<Character> getCharacters() {
+		return possibleCharacters;
+	}
+
+	/**
+	 * Set the player character to use in the game.
+	 *
+	 * @param player the player character to use in the game
+	 */
+	public void setPlayer(Character player) {
+		this.player = player;
 	}
 
 	/**
 	 * Get the player character in the game.
 	 *
-	 * @return the player
+	 * @return the player character
 	 */
 	public Character getPlayer() {
 		return player;
-	}
-
-	public void setPlayer(Character player) {
-		this.player = player;
 	}
 
 	/**
@@ -244,7 +295,7 @@ public class Game {
 
 		//At this point executer is able to execute the specified command
 		executer.execute(this, command);
-		
+
 		//Notify the monster that a command has been entered.
 		monster.notifyOfCommand(this);
 	}
@@ -269,7 +320,7 @@ public class Game {
 
 	/**
 	 * Save the player's score using the specified player name.
-	 * 
+	 *
 	 * @param name the name of the player
 	 */
 	public void saveScore(String name) {
