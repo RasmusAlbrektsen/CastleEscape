@@ -42,7 +42,7 @@
                   <Button fx:id="inspectButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="41.0" prefWidth="94.0" text="Inspect" />
                   <Button fx:id="inventoryButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="35.0" prefWidth="140.0" text="Inventory" />
                   <Button fx:id="helpButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="41.0" prefWidth="79.0" styleClass="textButton" text="Help" />
-                  <Button mnemonicParsing="false" text="Button" />
+                  <Button fx:id="highscoreButton" mnemonicParsing="false" onAction="#commandButtonOnAction" prefHeight="41.0" prefWidth="123.0" text="Highscores" />
                </children>
                <padding>
                   <Insets left="16.0" />

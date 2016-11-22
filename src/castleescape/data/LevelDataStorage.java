@@ -143,19 +143,19 @@ public class LevelDataStorage {
 	public List<Room> getRooms() {
 		return rooms;
 	}
-	
+
 	/**
 	 * Set the configuration file.
-	 * 
+	 *
 	 * @param config the configuration file
 	 */
 	public void setConfig(Configuration config) {
 		this.config = config;
 	}
-	
+
 	/**
 	 * Get the configuration file
-	 * 
+	 *
 	 * @return the configuration file
 	 */
 	public Configuration getConfig() {

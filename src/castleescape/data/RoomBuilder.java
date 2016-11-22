@@ -109,14 +109,14 @@ public class RoomBuilder implements IBuilder {
 	public void build(LevelDataStorage dataStorage) {
 		//Construct new room
 		result = new Room(name, description);
-		
+
 		//Add inspectable objects
-		for (String insp: inspectableObjects) {
+		for (String insp : inspectableObjects) {
 			result.addInspectableObject(dataStorage.getInspectableObject(insp));
 		}
-		
+
 		//Add items
-		for (String item: items) {
+		for (String item : items) {
 			result.getInventory().addItem(dataStorage.getItem(item));
 		}
 	}
@@ -128,7 +128,7 @@ public class RoomBuilder implements IBuilder {
 	 */
 	public void buildExits(LevelDataStorage dataStorage) {
 		//Loop through all exits
-		for (Entry<String, String> exit: exits.entrySet()) {
+		for (Entry<String, String> exit : exits.entrySet()) {
 			//For every entry in the exit map the key is the direction and the
 			//value is the name of the room that it connects to. We add that
 			//exit

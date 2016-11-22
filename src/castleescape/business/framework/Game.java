@@ -23,6 +23,7 @@ import castleescape.business.command.InspectCommandExecuter;
 import castleescape.business.command.CommandExecuter;
 import castleescape.business.ViewUtil;
 import castleescape.business.event.QuitEventExecuter;
+import castleescape.business.event.TeleportEventExecuter;
 import castleescape.business.object.InspectableObject;
 import castleescape.business.object.InspectableObjectRegister;
 import castleescape.data.DataMediator;
@@ -41,11 +42,6 @@ import java.util.List;
  */
 public class Game {
 
-	/**
-	 * The data mediator used to communicate with the data layer.
-	 */
-	private final DataMediator dataMediator;
-	
 	/**
 	 * Map of command executers. The keys are CommandWord objects and the values
 	 * are the CommandExecuters associated with these CommandWord objects.
@@ -99,36 +95,34 @@ public class Game {
 	 * <p>
 	 * To start the game, call the {@link #play()} method after the game object
 	 * has been successfully constructed.
-	 * 
-	 * @param levelName the name of the level to play
+	 *
+	 * @param dataMediator the data mediator to use for communicating with the
+	 *                     data layer
+	 * @param levelName    the name of the level to play
 	 */
-	public Game(String levelName) {
-		//Construct data mediator for performing operations on files
-		dataMediator = new DataMediator();
-
+	public Game(DataMediator dataMediator, String levelName) {
 		//Load the level with the specified name
-		//TODO: Make better
-		dataMediator.readLevel("xml/" + levelName);
-		
+		dataMediator.readLevelData(levelName);
+
 		//Initialize inspectable objects and items
 		List<InspectableObject> inspectableObjects = dataMediator.getInspectableObjects();
 		inspectableObjects.addAll(dataMediator.getItems());
-		
-		for (InspectableObject o: inspectableObjects) {
+
+		for (InspectableObject o : inspectableObjects) {
 			InspectableObjectRegister.registerInspectableObject(o);
 		}
-		
+
 		//Initialize rooms
 		roomMap = new HashMap<>();
-		
-		for (Room r: dataMediator.getRooms()) {
+
+		for (Room r : dataMediator.getRooms()) {
 			roomMap.put(r.getRoomName(), r);
 		}
-		
+
 		//Initialize configurations and set start room
 		Configuration configuration = dataMediator.getConfiguration();
 		currentRoom = configuration.getStartRoom();
-		
+
 		//Initialize monster
 		monster = new Monster(configuration.getMonsterStartRoom(),
 				configuration.getSafeRoom(),
@@ -156,6 +150,7 @@ public class Game {
 		eventExecuters.put(EventWord.SET_DESCRIPTION, new SetDescriptionEventExecuter());
 		eventExecuters.put(EventWord.REMOVE_PLAYER_ITEM, new RemovePlayerItemEventExecuter());
 		eventExecuters.put(EventWord.REMOVE_ROOM_ITEM, new RemoveRoomItemEventExecuter());
+		eventExecuters.put(EventWord.TELEPORT, new TeleportEventExecuter());
 		eventExecuters.put(EventWord.QUIT, new QuitEventExecuter());
 
 		//Add possible player characters

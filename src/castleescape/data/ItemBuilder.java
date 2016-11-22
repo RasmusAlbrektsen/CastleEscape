@@ -37,7 +37,7 @@ public class ItemBuilder extends InspectableObjectBuilder {
 	 * value is the list of events associated with that trigger.
 	 */
 	private final Map<String, List<Event>> useEvents;
-	
+
 	/**
 	 * Constructs a new item builder.
 	 */
@@ -85,7 +85,7 @@ public class ItemBuilder extends InspectableObjectBuilder {
 			//Otherwise we make a new list.
 			List<Event> useEventsForTrigger = useEvents.get(trigger);
 			Event event = new Event(currentEventWord, currentEventParameters);
-			
+
 			if (useEventsForTrigger == null) {
 				//Make new list
 				useEventsForTrigger = new ArrayList<>();
@@ -97,23 +97,23 @@ public class ItemBuilder extends InspectableObjectBuilder {
 			}
 		}
 	}
-	
+
 	@Override
 	public void build(LevelDataStorage dataStorage) {
 		//Construct new item
 		result = new Item(name, description);
-		
+
 		//Add inspect events
-		for (Event event: inspectEvents) {
+		for (Event event : inspectEvents) {
 			result.addInspectEvent(event);
 		}
-		
+
 		//Add use events
-		for (Entry<String, List<Event>> entry: useEvents.entrySet()) {
+		for (Entry<String, List<Event>> entry : useEvents.entrySet()) {
 			((Item) result).addObjectInteraction(entry.getKey(), entry.getValue());
 		}
 	}
-	
+
 	@Override
 	public Item getResult() {
 		//We know that it is safe to cast result to item, unless the super class

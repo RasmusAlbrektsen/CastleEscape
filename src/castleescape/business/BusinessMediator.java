@@ -10,6 +10,7 @@ import castleescape.business.command.CommandWord;
 import castleescape.business.framework.Character;
 import castleescape.business.framework.Game;
 import castleescape.business.object.InspectableObject;
+import castleescape.data.DataMediator;
 import java.util.ArrayList;
 
 import java.util.HashMap;
@@ -33,21 +34,32 @@ public class BusinessMediator {
 	private Game game;
 
 	/**
+	 * The data mediator used to communicate with the data layer.
+	 */
+	private final DataMediator dataMediator;
+
+	/**
 	 * Constructs a new mediator for connecting the user interface with the
 	 * business code.
 	 */
 	public BusinessMediator() {
-		
+		//Construct data mediator for performing operations on files
+		dataMediator = new DataMediator();
 	}
 
 	/* Methods for notifying the business layer of the state of execution */
 	/**
-	 * Notify the game that it should start playing the level with the specified name.
-	 * 
+	 * Notify the game that it should start playing the level with the specified
+	 * name.
+	 *
 	 * @param levelName the name of the level to play
 	 */
 	public void start(String levelName) {
-		game = new Game(levelName);
+		//Construct new game. This way we don't have to worry about resetting
+		//variables if the user intends to start a new game.
+		game = new Game(dataMediator, levelName);
+		
+		//Start the game
 		game.start();
 	}
 
@@ -162,6 +174,16 @@ public class BusinessMediator {
 		}
 
 		return characterMap;
+	}
+	
+	/* Getters for retrieving data from the data layer */
+	/**
+	 * Get the names of the playable levels.
+	 *
+	 * @return the names of the playable levels
+	 */
+	public String[] getLevels() {
+		return dataMediator.getLevels();
 	}
 
 	/* Methods for notifying the business layer that an action was performed */
@@ -353,6 +375,19 @@ public class BusinessMediator {
 		//No match found, so the user somehow entered an illegal choice, so we
 		//throw an exception
 		throw new IllegalArgumentException("No such player character: " + choice);
+	}
+	
+	/**
+	 * Notify the game that the suer wishes to see the highscores.
+	 * 
+	 * @return true if the game is still running, false otherwise
+	 */
+	public boolean printHighscores() {
+		//Write at most 10 scores to the console
+		game.getScoreManager().writeScoreTable(10);
+		
+		//Return whether the game is still running
+		return game.isRunning();
 	}
 
 	/**

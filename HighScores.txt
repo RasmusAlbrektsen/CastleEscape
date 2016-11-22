@@ -6,3 +6,5 @@ DAN:5
 KAS:17
 ALX:10
 XIT:24
+XIT:10
+Hej:10

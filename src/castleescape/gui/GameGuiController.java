@@ -7,9 +7,12 @@ package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +21,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
@@ -25,7 +29,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 
 /**
- * Controller class for the game GUI view.
+ * Controller class for the game GUI view. This class is also responsible for
+ * getting initial user input required to start the game, such as level and
+ * character selection.
  *
  * @author Kasper
  */
@@ -67,6 +73,8 @@ public class GameGuiController implements Initializable {
 	private Button helpButton;
 	@FXML
 	private Button peekButton;
+	@FXML
+	private Button highscoreButton;
 
 	/* Drop downs */
 	@FXML
@@ -122,6 +130,8 @@ public class GameGuiController implements Initializable {
 			running = helpButtonPressed();
 		} else if (source == peekButton) {
 			running = peekButtonPressed();
+		} else if (source == highscoreButton) {
+			running = highscoreButtonPressed();
 		}
 
 		//Write the text that was generated on this iteration to the console
@@ -243,6 +253,15 @@ public class GameGuiController implements Initializable {
 	private boolean peekButtonPressed() {
 		return businessMediator.notifyPeek(roomDropDown.getValue());
 	}
+	
+	/**
+	 * Called when the highscore button is pressed.
+	 *
+	 * @return true if the game is still running, false otherwise
+	 */
+	private boolean highscoreButtonPressed() {
+		return businessMediator.printHighscores();
+	}
 
 	/**
 	 * Set the business mediator to be used by this controller.
@@ -252,10 +271,8 @@ public class GameGuiController implements Initializable {
 	public void setBusinessMediator(BusinessMediator bm) {
 		this.businessMediator = bm;
 
-		//TODO
-		//Start the game using the business mediator and print the result to the
-		//GUI console
-//		businessMediator.start();
+		//Start the game and print the result to the GUI console
+		attemptGameStart();
 		writeToConsole(businessMediator.getTextOutput());
 
 		//Initialize the display of all game data now that the game has been
@@ -456,7 +473,6 @@ public class GameGuiController implements Initializable {
 
 	/**
 	 * Request the user to enter a player name and save the player's score.
-	 * After this the application will quit.
 	 */
 	private void getNameAndSaveScore() {
 		//Create a text input dialog
@@ -473,9 +489,108 @@ public class GameGuiController implements Initializable {
 			this.businessMediator.saveScore(result.get());
 		}
 
-		//Quit the game after the player's score has been set. A static call is
-		//fine, as System.exit() and Platform.exit() are static calls as well
-		CastleEscape.quit();
+		//Try to start a new game, or quit if the user wishes to
+		attemptGameStart();
+	}
+
+	/**
+	 * Ask the user which level he/she wants to play and return the name of it.
+	 * If the return value is null, that means the user did not want to play any
+	 * level and the game should quit.
+	 *
+	 * @param bm the business mediator, used to get the list of possible levels
+	 * @return the name of the level that the user wishes to play, or null if
+	 *         the user did not choose a level
+	 */
+	private String getLevelNameFromUser(BusinessMediator bm) {
+		//Get the available levels
+		String[] levelNames = bm.getLevels();
+
+		//Create choice dialog for the user to select the level he/she wants to
+		//play
+		ChoiceDialog<String> choiceDialog = new ChoiceDialog<>(levelNames[0], levelNames);
+		choiceDialog.setHeaderText("Wich level would you like to play?");
+		choiceDialog.setTitle("Level selection");
+
+		//Get the result of opening the dialog
+		Optional<String> result = choiceDialog.showAndWait();
+
+		//Return result. We use a ternary operator because result.get() will
+		//throw an exception if no result was present. The ternary operator
+		//reads:
+		//if (result.isPresent()) return result.get(); else return null;
+		return (result.isPresent() ? result.get() : null);
+	}
+
+	/**
+	 * Ask the user which character he/she wants to play as and return the name
+	 * of it. If the return value is null, that means the user did not want to
+	 * play any character and the game should quit.
+	 *
+	 * @param bm the business mediator, used to get the list of possible
+	 *           characters
+	 * @return the name of the character that the user wishes to play, or null
+	 *         if the user did not choose a character
+	 */
+	private String getCharacterNameFromUser(BusinessMediator bm) {
+		//Get the available characters and their descriptions
+		Map<String, String> characters = bm.getCharacterList();
+
+		//Create array of character names from the map above
+		String[] characterNames = new ArrayList<>(characters.keySet()).toArray(new String[0]);
+
+		//Create choice dialog for the user to select the charatcer he/she wants
+		//to play
+		ChoiceDialog<String> choiceDialog = new ChoiceDialog<>(characterNames[0], characterNames);
+		choiceDialog.setHeaderText("Wich character would you like to play as?");
+		choiceDialog.setTitle("Character selection");
+
+		//TODO: Should we include this?
+//		Label descriptionLabel = new Label();
+//		choiceDialog.getDialogPane().setExpandableContent(descriptionLabel);
+//		choiceDialog.selectedItemProperty().addListener(new ChangeListener<String>() {
+//			@Override
+//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//				descriptionLabel.setText(characters.get(newValue));
+//			}
+//		});
+		//Get the result of opening the dialog
+		Optional<String> result = choiceDialog.showAndWait();
+
+		//Return result. We use a ternary operator because result.get() will
+		//throw an exception if no result was present. The ternary operator
+		//reads:
+		//if (result.isPresent()) return result.get(); else return null;
+		return (result.isPresent() ? result.get() : null);
+	}
+
+	/**
+	 * Get the level and character that the user wants to play and start a new
+	 * game from this information. If the user dismisses these dialogs, the game
+	 * will quit.
+	 */
+	private void attemptGameStart() {
+		//Get level name
+		String levelName = getLevelNameFromUser(businessMediator);
+
+		//If level name is non-null, start a new game
+		if (levelName != null) {
+			businessMediator.start(levelName);
+		} else {
+			//Else, close the application
+			Platform.exit();
+		}
+
+		//Get character name
+		String characterName = getCharacterNameFromUser(businessMediator);
+
+		//If character name is non-null, set the character for the new game
+		if (characterName != null) {
+			businessMediator.notifyCharacterSelected(characterName);
+		} else {
+			//Else, close the application
+			Platform.exit();
+		}
 	}
 
 	/**
@@ -489,5 +604,4 @@ public class GameGuiController implements Initializable {
 		horizontalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorHorizontal.png"));
 		verticalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorVertical.png"));
 	}
-
 }

@@ -75,7 +75,7 @@ public class XMLHandler extends DefaultHandler {
 		//If the root element has not been read yet
 		if (!rootIdentified) {
 			rootIdentified = true;
-			
+
 			//Create a builder from the type of root element
 			switch (qName) {
 				case ROOM:
@@ -103,7 +103,7 @@ public class XMLHandler extends DefaultHandler {
 			//element
 			builder.notifyOfElement(qName);
 		}
-		
+
 		//Clear content accumulator at every start element to prevent characters
 		//from other elements to carry over
 		contentAccumulator.setLength(0);
@@ -130,10 +130,10 @@ public class XMLHandler extends DefaultHandler {
 	public void endDocument() throws SAXException {
 
 	}
-	
+
 	/**
 	 * Get the builder that was created while parsing the previous xml file.
-	 * 
+	 *
 	 * @return the builder that was created while parsing the previous xml file
 	 */
 	public IBuilder getBuilderResult() {

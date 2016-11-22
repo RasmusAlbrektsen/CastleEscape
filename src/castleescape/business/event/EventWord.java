@@ -12,6 +12,7 @@ public enum EventWord {
 	MAKE_NOISE("makeNoise"),
 	SET_DESCRIPTION("setDescription"),
 	ADD_EXIT("addExit"),
+	TELEPORT("teleport"),
 	QUIT("quit");
 
 	/**

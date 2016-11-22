@@ -11,11 +11,16 @@ package castleescape.data;
  * to be used by the business layer. Builders will not perform any validation of
  * the structure of the data source, and thus they assume that all data is read
  * in the correct order.
+ * <p>
+ * A downside of the implementation of IBuilder is that it does not use
+ * generics, and since IBuilder subclasses need to handle different types of
+ * models, typecasting is inevitable. Using generics would solve this problem,
+ * but that would be a future addition.
  *
  * @author Alex, Kasper
  */
 public interface IBuilder {
-	
+
 	/**
 	 * The name of a data element accepted by this builder.
 	 */
@@ -44,7 +49,7 @@ public interface IBuilder {
 	 * functional model of the type it is associated with. This method requires
 	 * a reference to the level data storage as some objects require references
 	 * to other objects to be able to build.
-	 * 
+	 *
 	 * @param dataStorage the level data that has been read
 	 */
 	public void build(LevelDataStorage dataStorage);
