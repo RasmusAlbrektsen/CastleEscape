@@ -1,0 +1,7 @@
+<configurations>
+    <startroom>Wine Cellar</startroom>
+    <saferoom>Wine Cellar</saferoom>
+    <monsterstartroom>Dining Room</monsterstartroom>
+    <monstermovechance>0.2</monstermovechance>
+    <monstermovetime>6000</monstermovetime>
+</configurations>

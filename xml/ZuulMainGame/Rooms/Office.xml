@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Office</name>
+    <description>Entering the office reveals a safe in the far corner.</description>
+    <inventory>
+        <object>safe</object>
+    </inventory>
+    <exits>
+        <south>Art Room</south>
+    </exits>
+</room>

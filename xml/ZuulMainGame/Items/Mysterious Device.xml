@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<item>
+    <name>Mysterious Device</name>
+    <description>What is this? It seems like a combination of some ancient magic and modern technology. It seems to react to human interference, making it light up and buzz slightly.
+&lt;br/&gt;
+A voice emerges from the device, saying:
+&lt;br/&gt;
+     "Hello, Dr. Shim. System  analysis reports all systems fully functional. To activate me, press the big, red button, and i will teleport you to your favorite room - let that be our little secret."
+&lt;br/&gt;&lt;br/&gt;
+The device is active. Inspect it again to use it.</description>
+    <events>
+        <event>
+            <type>addPlayerItem</type>
+            <description/>
+            <item>Teleportation Device</item>
+        </event>
+        <event>
+            <type>removePlayerItem</type>
+            <description/>
+            <item>Mysterious Device</item>
+        </event>
+        <event>
+            <type>removeRoomItem</type>
+            <description/>
+            <item>Mysterious Device</item>
+        </event>
+    </events>
+</item>

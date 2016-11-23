@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Barracks</name>
+    <description>Welcome to the tutorial level. This level will teach you all the basics of playing this game.
+&lt;br/&gt;
+Let's begin by taking a quick look at the controls to the right of this text area. Here, you will see a compass, and behind it, an overview of the room you are currently in, and the rooms that it connects to. To move to an adjacent room, press the directional indicator that points to this room. To go south, for instance, press the big S on the compass.</description>
+    <inventory/>
+    <exits>
+        <south>Training Grounds</south>
+    </exits>
+</room>

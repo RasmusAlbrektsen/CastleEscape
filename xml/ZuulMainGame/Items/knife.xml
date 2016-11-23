@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<item>
+    <name>knife</name>
+    <description>A sharp knife perfect for cutting salad and stuff.</description>
+    <events>
+        <event>
+            <trigger>rat</trigger>
+            <type>addPlayerItem</type>
+            <description>Cutting the rat in half made it possible to acquire the gold key. It is full of grease, but other than that it is undamaged.</description>
+            <item>gold key</item>
+        </event>
+        <event>
+            <trigger>rat</trigger>
+            <type>removeRoomItem</type>
+            <description/>
+            <item>rat</item>
+        </event>
+        <event>
+            <trigger>rat</trigger>
+            <type>setDescription</type>
+            <description>Entering the lab reveals nothing new. The rat is still warm to the touch.</description>
+            <room>Lab</room>
+        </event>
+    </events>
+</item>

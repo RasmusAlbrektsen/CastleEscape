@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<inspectableobject>
+    <name>main door</name>
+    <description>This door blocks the only way to freedom, but it is tightly locked! The door has three locks, but only the bronze lock is reachable. Maybe the keys are hidden around this place?</description>
+    <events/>
+</inspectableobject>

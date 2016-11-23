@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<inspectableobject>
+    <name>Orb of Completion</name>
+    <description>On the touch the orb explode and a text is revealed</description>
+    <events>
+        <event>
+            <type>quit</type>
+            <description>Congratulations on completing the game!</description>
+        </event>
+    </events>
+</inspectableobject>

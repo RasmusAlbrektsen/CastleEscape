@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Wine Cellar</name>
+    <description>You wake up in a wine cellar. The staircase to the exit up above is mostly broken with several steps missing. On the floor are several planks from broken wine barrels.</description>
+    <inventory>
+        <item>planks</item>
+        <object>staircase</object>
+    </inventory>
+    <exits/>
+</room>

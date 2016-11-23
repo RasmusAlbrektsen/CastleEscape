@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Valley</name>
+    <description>This valley has no good hiding spots! You better keep running south!</description>
+    <inventory/>
+    <exits>
+        <south>Forest</south>
+        <east>Training Grounds</east>
+    </exits>
+</room>

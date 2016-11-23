@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<inspectableobject>
+    <name>pot</name>
+    <description>A totally nonsuspicious pot.</description>
+    <events>
+        <event>
+            <type>addPlayerItem</type>
+            <description>You fucking idiot, you broke the pot! But what is that? A silver key. Maybe you are not so stupid after all...</description>
+            <item>silver key</item>
+        </event>
+        <event>
+            <type>removeRoomItem</type>
+            <description/>
+            <item>pot</item>
+        </event>
+        <event>
+            <type>setDescription</type>
+            <description>The treasury is flooding with useless gold coins and diamonds and shit. The pieces of the broken pot are still all over the floor, and the flower has surely taken a beating. What a shame, the world could use more beautiful flowers.</description>
+            <room>Treasury</room>
+        </event>
+    </events>
+</inspectableobject>

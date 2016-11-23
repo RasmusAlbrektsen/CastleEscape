@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<item>
+    <name>slip with numbers</name>
+    <description>This is the corner that you ripped from the garden painting in the art room. The slip has a number sequence on it.</description>
+    <events>
+        <event>
+            <trigger>safe</trigger>
+            <type>addRoomItem</type>
+            <description>Using the code from the garden painting unlocked the safe. The safe is now an unlocked safe.</description>
+            <item>unlocked safe</item>
+        </event>
+        <event>
+            <trigger>safe</trigger>
+            <type>removeRoomItem</type>
+            <description/>
+            <item>safe</item>
+        </event>
+        <event>
+            <trigger>safe</trigger>
+            <type>setDescription</type>
+            <description>Entering the office reveals an unlocked safe in the far corner.</description>
+            <room>Office</room>
+        </event>
+    </events>
+</item>

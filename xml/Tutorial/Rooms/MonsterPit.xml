@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Monster Pit</name>
+    <description>Oh my god! That has got to be the nastiest monster known to mankind. And it is certainly not in a good mood today, so perhaps you should consider running. And do it fast, for you do not have much time before it catches you. Well, in this tutorial you do, but never mind about that.</description>
+    <inventory/>
+    <exits>
+        <west>Training Grounds</west>
+    </exits>
+</room>

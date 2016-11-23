@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<inspectableobject>
+    <name>unlocked safe</name>
+    <description>The safe is open. Something is inside.</description>
+    <events>
+        <event>
+            <type>addPlayerItem</type>
+            <description>Inspecting the safe reveals a bronze key. The safe is now an empty safe.</description>
+            <item>bronze key</item>
+        </event>
+        <event>
+            <type>addRoomItem</type>
+            <description/>
+            <item>empty safe</item>
+        </event>
+        <event>
+            <type>removeRoomItem</type>
+            <description/>
+            <item>unlocked safe</item>
+        </event>
+        <event>
+            <type>setDescription</type>
+            <description>Entering the office reveals an empty safe in the far corner.</description>
+            <room>Office</room>
+        </event>
+    </events>
+</inspectableobject>
