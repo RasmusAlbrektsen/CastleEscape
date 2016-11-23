@@ -120,13 +120,10 @@ public class RoomBuilder implements IBuilder {
 			result.getInventory().addItem(dataStorage.getItem(item));
 		}
 	}
-
-	/**
-	 * Build the exits from the room. This method must be called after all rooms
-	 * have initially been built as it requires the ability to reference other
-	 * rooms.
-	 */
-	public void buildExits(LevelDataStorage dataStorage) {
+	
+	@Override
+	public void postBuild(LevelDataStorage dataStorage) {
+		//Build the exits of the room.
 		//Loop through all exits
 		for (Entry<String, String> exit : exits.entrySet()) {
 			//For every entry in the exit map the key is the direction and the

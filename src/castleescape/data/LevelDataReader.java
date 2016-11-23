@@ -219,7 +219,7 @@ public class LevelDataReader {
 		//Loop through all room builders
 		for (RoomBuilder builder : roomBuilders) {
 			//Build the room's exits
-			builder.buildExits(levelDataStorage);
+			builder.postBuild(levelDataStorage);
 		}
 	}
 

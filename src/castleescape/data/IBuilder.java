@@ -45,14 +45,27 @@ public interface IBuilder {
 	public void processElement(String element, String content);
 
 	/**
-	 * Finish processing the raw data in this builder and construct a fully
-	 * functional model of the type it is associated with. This method requires
-	 * a reference to the level data storage as some objects require references
-	 * to other objects to be able to build.
+	 * Finish processing the raw data in this builder and construct a functional
+	 * model of the type it is associated with. The model might still have some
+	 * data that requires building. This method requires a reference to the
+	 * level data storage as some objects require references to other objects to
+	 * be able to build.
+	 *
+	 * @param dataStorage the level data that has been read
+	 * @see #postBuild(castleescape.data.LevelDataStorage)
+	 */
+	public void build(LevelDataStorage dataStorage);
+
+	/**
+	 * Call this method if some data could not be generated at build time. This
+	 * method will then generate the remaining data. The model is guaranteed to
+	 * be fully generated after this method call. This method requires a
+	 * reference to the level data storage as some objects require references to
+	 * other objects to be able to build.
 	 *
 	 * @param dataStorage the level data that has been read
 	 */
-	public void build(LevelDataStorage dataStorage);
+	public void postBuild(LevelDataStorage dataStorage);
 
 	/**
 	 * Get the result from this builder. This method should only ever be called

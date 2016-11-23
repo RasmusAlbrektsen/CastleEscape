@@ -181,6 +181,11 @@ public class InspectableObjectBuilder implements IBuilder {
 	}
 
 	@Override
+	public void postBuild(LevelDataStorage dataStorage) {
+		//Nothing to do here
+	}
+
+	@Override
 	public InspectableObject getResult() {
 		return result;
 	}

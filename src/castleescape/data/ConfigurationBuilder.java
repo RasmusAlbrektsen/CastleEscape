@@ -91,6 +91,11 @@ public class ConfigurationBuilder implements IBuilder {
 	}
 
 	@Override
+	public void postBuild(LevelDataStorage dataStorage) {
+		//Nothing to do here
+	}
+
+	@Override
 	public Configuration getResult() {
 		return result;
 	}
