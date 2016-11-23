@@ -9,3 +9,4 @@ XIT:24
 XIT:10
 Hej:10
 FOO:14
+DIT:52
