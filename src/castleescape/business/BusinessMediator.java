@@ -11,6 +11,7 @@ import castleescape.business.framework.Character;
 import castleescape.business.framework.Game;
 import castleescape.business.object.InspectableObject;
 import castleescape.data.DataMediator;
+import castleescape.shared.GameListener;
 import java.util.ArrayList;
 
 import java.util.HashMap;
@@ -47,6 +48,12 @@ public class BusinessMediator {
 		dataMediator = new DataMediator();
 	}
 
+	public void initialize(String levelName) {
+		//Construct new game. This way we don't have to worry about resetting
+		//variables if the user intends to start a new game.
+		game = new Game(dataMediator, levelName);
+	}
+	
 	/* Methods for notifying the business layer of the state of execution */
 	/**
 	 * Notify the game that it should start playing the level with the specified
@@ -54,11 +61,7 @@ public class BusinessMediator {
 	 *
 	 * @param levelName the name of the level to play
 	 */
-	public void start(String levelName) {
-		//Construct new game. This way we don't have to worry about resetting
-		//variables if the user intends to start a new game.
-		game = new Game(dataMediator, levelName);
-		
+	public void start() {
 		//Start the game
 		game.start();
 	}
@@ -397,5 +400,9 @@ public class BusinessMediator {
 	 */
 	public void saveScore(String name) {
 		game.saveScore(name);
+	}
+	
+	public void setGameListener(GameListener listener) {
+		game.setGameListener(listener);
 	}
 }

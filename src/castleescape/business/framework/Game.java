@@ -27,8 +27,9 @@ import castleescape.business.event.TeleportEventExecuter;
 import castleescape.business.object.InspectableObject;
 import castleescape.business.object.InspectableObjectRegister;
 import castleescape.data.DataMediator;
-import java.util.ArrayList;
+import castleescape.shared.GameListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,12 +37,14 @@ import java.util.List;
  * Class defining instance behavior for setting up and running a game. This
  * includes creating the game {@link Room rooms}, processing commands, changing
  * rooms, initiating and running the game loop and quitting the game. It also
- * defines instance methods for priting a welcome message and help information.
+ * defines instance methods for printing a welcome message and help information.
  *
  * @see <a href="https://codeshare.io/vRDTN">Codeshare</a>
  */
 public class Game {
 
+	private GameListener listener;
+	
 	/**
 	 * Map of command executers. The keys are CommandWord objects and the values
 	 * are the CommandExecuters associated with these CommandWord objects.
@@ -256,6 +259,7 @@ public class Game {
 		//Print the long description of the current room, that is the starting
 		//room
 		ViewUtil.println(currentRoom.getLongDescription());
+		listener.onGameStart();
 	}
 
 	/**
@@ -358,5 +362,9 @@ public class Game {
 	 */
 	public Room getRoom(String name) {
 		return roomMap.get(name);
+	}
+	
+	public void setGameListener(GameListener listener) {
+		this.listener = listener;
 	}
 }
