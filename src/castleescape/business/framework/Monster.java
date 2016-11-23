@@ -147,10 +147,8 @@ public class Monster {
 				return;
 			} else {
 				//Otherwise warn the player
-				//TODO: Cleanup
-				ViewUtil.print("");
 				ViewUtil.printShaky(WARNING_MESSAGE);
-				ViewUtil.println("");
+				ViewUtil.newLine();
 			}
 
 			//Move the monster towards the player if enough time has passed.

@@ -253,7 +253,7 @@ public class GameGuiController implements Initializable {
 	private boolean peekButtonPressed() {
 		return businessMediator.notifyPeek(roomDropDown.getValue());
 	}
-	
+
 	/**
 	 * Called when the highscore button is pressed.
 	 *
@@ -271,13 +271,8 @@ public class GameGuiController implements Initializable {
 	public void setBusinessMediator(BusinessMediator bm) {
 		this.businessMediator = bm;
 
-		//Start the game and print the result to the GUI console
+		//Start the game
 		attemptGameStart();
-		writeToConsole(businessMediator.getTextOutput());
-
-		//Initialize the display of all game data now that the game has been
-		//properly initialized
-		updateGameDataDisplay();
 	}
 
 	/**
@@ -302,7 +297,7 @@ public class GameGuiController implements Initializable {
 				+ "</div>"
 				+ "</body>"
 				+ "</html>";
-
+		
 		//Load the html string into the web view
 		console.getEngine().loadContent(contentString);
 	}
@@ -579,6 +574,7 @@ public class GameGuiController implements Initializable {
 		} else {
 			//Else, close the application
 			Platform.exit();
+			System.exit(0);
 		}
 
 		//Get character name
@@ -590,7 +586,14 @@ public class GameGuiController implements Initializable {
 		} else {
 			//Else, close the application
 			Platform.exit();
+			System.exit(0);
 		}
+
+		//Write the result to the GUI console
+		writeToConsole(businessMediator.getTextOutput());
+
+		//Update the game display now that we have started a new game
+		updateGameDataDisplay();
 	}
 
 	/**
