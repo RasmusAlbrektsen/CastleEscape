@@ -6,6 +6,7 @@
 package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
+import castleescape.shared.GameListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +38,7 @@ import javafx.scene.web.WebView;
  *
  * @author Kasper
  */
-public class GameGuiController implements Initializable {
+public class GameGuiController implements Initializable, GameListener {
 
 	/**
 	 * Images for rendering the map part of the GUI.
@@ -273,6 +276,13 @@ public class GameGuiController implements Initializable {
 
 		//Start the game
 		attemptGameStart();
+		businessMediator.setGameListener(this);
+		businessMediator.start();
+		writeToConsole(businessMediator.getTextOutput());
+
+		//Initialize the display of all game data now that the game has been
+		//properly initialized
+		updateGameDataDisplay();
 	}
 
 	/**
@@ -540,15 +550,15 @@ public class GameGuiController implements Initializable {
 		choiceDialog.setHeaderText("Wich character would you like to play as?");
 		choiceDialog.setTitle("Character selection");
 
-		//TODO: Should we include this?
-//		Label descriptionLabel = new Label();
-//		choiceDialog.getDialogPane().setExpandableContent(descriptionLabel);
-//		choiceDialog.selectedItemProperty().addListener(new ChangeListener<String>() {
-//			@Override
-//			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//				descriptionLabel.setText(characters.get(newValue));
-//			}
-//		});
+		//TODO: Should we include this? Yes we shold.
+		Label descriptionLabel = new Label();
+		choiceDialog.getDialogPane().setExpandableContent(descriptionLabel);
+		choiceDialog.selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				descriptionLabel.setText(characters.get(newValue));
+			}
+		});
 		//Get the result of opening the dialog
 		Optional<String> result = choiceDialog.showAndWait();
 
@@ -570,7 +580,7 @@ public class GameGuiController implements Initializable {
 
 		//If level name is non-null, start a new game
 		if (levelName != null) {
-			businessMediator.start(levelName);
+			businessMediator.initialize(levelName);
 		} else {
 			//Else, close the application
 			Platform.exit();
@@ -606,5 +616,20 @@ public class GameGuiController implements Initializable {
 		roomImg = new Image(getClass().getResourceAsStream("/res/room.png"));
 		horizontalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorHorizontal.png"));
 		verticalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorVertical.png"));
+	}
+
+	@Override
+	public void onGameStart() {
+		System.out.println("Game Started");
+	}
+
+	@Override
+	public void onGameExit() {
+		System.out.println("Game Ended");
+	}
+
+	@Override
+	public void onGameIteration(String output) {
+		System.out.println("Game iteration");
 	}
 }
