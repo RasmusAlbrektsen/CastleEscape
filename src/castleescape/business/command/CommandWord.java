@@ -16,6 +16,7 @@ public enum CommandWord {
 	USE("use", "use <item> on <object or item>\nThe first item must be in the player inventory, while the second object or item must be in either the player inventory or the current room"),
 	INVENTORY("inventory", "inventory\nInventory takes no parameters"),
 	PEEK("peek", "peek <direction>"),
+	HIGHSCORES("highscores", "highscores\nHighscores takes no parameters"),
 	UNKNOWN("?", "Unknown command");
 	
 	/**

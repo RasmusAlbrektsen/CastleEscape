@@ -29,6 +29,7 @@ public class CastleEscape extends Application {
 		Parent root = (Parent) loader.load();
 		GameGuiController controller = loader.getController();
 		controller.setBusinessMediator(bm);
+		controller.startGame();
 
 		Scene scene = new Scene(root);
 

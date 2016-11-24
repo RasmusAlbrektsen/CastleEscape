@@ -48,18 +48,22 @@ public class BusinessMediator {
 		dataMediator = new DataMediator();
 	}
 
+	/* Methods for notifying the business layer of the state of execution */
+	/**
+	 * Initialize a new game from the specified level. This must be called every
+	 * time the game has to play a new level. To start the game, call
+	 * {@link #start()}.
+	 *
+	 * @param levelName the name of the level to play
+	 */
 	public void initialize(String levelName) {
 		//Construct new game. This way we don't have to worry about resetting
 		//variables if the user intends to start a new game.
 		game = new Game(dataMediator, levelName);
 	}
-	
-	/* Methods for notifying the business layer of the state of execution */
+
 	/**
-	 * Notify the game that it should start playing the level with the specified
-	 * name.
-	 *
-	 * @param levelName the name of the level to play
+	 * Notify the game that it should start playing.
 	 */
 	public void start() {
 		//Start the game
@@ -70,7 +74,10 @@ public class BusinessMediator {
 	 * Notify the game that it should end.
 	 */
 	public void end() {
-		//TODO: Quit method
+		//TODO: No usages yet
+		//Construct command object and request that the game processes it
+		Command command = new Command(CommandWord.QUIT, null);
+		game.processCommand(command);
 	}
 
 	/* Getters for retrieving game data from the business layer */
@@ -150,16 +157,6 @@ public class BusinessMediator {
 	}
 
 	/**
-	 * Get the text output that was generated on the last game iteration. This
-	 * will clear the text output buffer.
-	 *
-	 * @return the buffered text output
-	 */
-	public String getTextOutput() {
-		return ViewUtil.getString();
-	}
-
-	/**
 	 * Request all possible player characters from the game along with their
 	 * descriptions as a map, where the key is the character name and the value
 	 * is the description of that character.
@@ -178,7 +175,7 @@ public class BusinessMediator {
 
 		return characterMap;
 	}
-	
+
 	/* Getters for retrieving data from the data layer */
 	/**
 	 * Get the names of the playable levels.
@@ -195,9 +192,8 @@ public class BusinessMediator {
 	 * item.
 	 *
 	 * @param toTake the name of the item that the user atempted to take
-	 * @return true if the game is still running, false otherwise
 	 */
-	public boolean notifyTake(String toTake) {
+	public void notifyTake(String toTake) {
 		//Construct map to store character information
 		Map<String, String> params = new HashMap<>();
 
@@ -207,9 +203,6 @@ public class BusinessMediator {
 		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.TAKE, params);
 		game.processCommand(command);
-
-		//Return whether the game is still running
-		return game.isRunning();
 	}
 
 	/**
@@ -217,9 +210,8 @@ public class BusinessMediator {
 	 * item.
 	 *
 	 * @param toDrop the name of the item that the user attempted to drop
-	 * @return true if the game is still running, false otherwise
 	 */
-	public boolean notifyDrop(String toDrop) {
+	public void notifyDrop(String toDrop) {
 		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
@@ -229,9 +221,6 @@ public class BusinessMediator {
 		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.DROP, params);
 		game.processCommand(command);
-
-		//Return whether the game is still running
-		return game.isRunning();
 	}
 
 	/**
@@ -240,9 +229,8 @@ public class BusinessMediator {
 	 *
 	 * @param toInspect the name of the inspectable object that the user
 	 *                  attempted to inspect
-	 * @return true if the game is still running, false otherwise
 	 */
-	public boolean notifyInspect(String toInspect) {
+	public void notifyInspect(String toInspect) {
 		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
@@ -252,9 +240,6 @@ public class BusinessMediator {
 		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.INSPECT, params);
 		game.processCommand(command);
-
-		//Return whether the game is still running
-		return game.isRunning();
 	}
 
 	/**
@@ -264,9 +249,8 @@ public class BusinessMediator {
 	 * @param useItem the name of the item that the user attempted to use
 	 * @param useOn   the name of the inspectable object that the user attempted
 	 *                to use the item on
-	 * @return true if the game is still running, false otherwise
 	 */
-	public boolean notifyUse(String useItem, String useOn) {
+	public void notifyUse(String useItem, String useOn) {
 		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
@@ -280,9 +264,6 @@ public class BusinessMediator {
 		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.USE, params);
 		game.processCommand(command);
-
-		//Return whether the game is still running
-		return game.isRunning();
 	}
 
 	/**
@@ -290,9 +271,8 @@ public class BusinessMediator {
 	 * specified direction.
 	 *
 	 * @param direction the direction that the user attempted to peek in
-	 * @return true if the game is still running, false otherwise
 	 */
-	public boolean notifyPeek(String direction) {
+	public void notifyPeek(String direction) {
 		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
@@ -302,9 +282,6 @@ public class BusinessMediator {
 		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.PEEK, params);
 		game.processCommand(command);
-
-		//Return whether the game is still running
-		return game.isRunning();
 	}
 
 	/**
@@ -312,9 +289,8 @@ public class BusinessMediator {
 	 * specified direction.
 	 *
 	 * @param direction the direction that the user attempted to walk in
-	 * @return true if the game is still running, false otherwise
 	 */
-	public boolean notifyGo(String direction) {
+	public void notifyGo(String direction) {
 		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
@@ -324,37 +300,33 @@ public class BusinessMediator {
 		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.GO, params);
 		game.processCommand(command);
-
-		//Return whether the game is still running
-		return game.isRunning();
 	}
 
 	/**
 	 * Notify the business layer that the user asked for help.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	public boolean notifyHelp() {
+	public void notifyHelp() {
 		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.HELP, null);
 		game.processCommand(command);
-
-		//Return whether the game is still running
-		return game.isRunning();
 	}
 
 	/**
 	 * Notify the business layer that the user wishes to view the inventory.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	public boolean notifyInventory() {
+	public void notifyInventory() {
 		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.INVENTORY, null);
 		game.processCommand(command);
+	}
 
-		//Return whether the game is still running
-		return game.isRunning();
+	/**
+	 * Notify the game that the user wishes to see the highscores.
+	 */
+	public void notifyHighscores() {
+		//Construct command object and request that the game processes it
+		Command command = new Command(CommandWord.HIGHSCORES, null);
+		game.processCommand(command);
 	}
 
 	/**
@@ -379,29 +351,21 @@ public class BusinessMediator {
 		//throw an exception
 		throw new IllegalArgumentException("No such player character: " + choice);
 	}
-	
-	/**
-	 * Notify the game that the suer wishes to see the highscores.
-	 * 
-	 * @return true if the game is still running, false otherwise
-	 */
-	public boolean printHighscores() {
-		//Write at most 10 scores to the console
-		game.getScoreManager().writeScoreTable(10);
-		
-		//Return whether the game is still running
-		return game.isRunning();
-	}
 
 	/**
-	 * Save the current score under the specified name.
+	 * Save the current score under the specified player name.
 	 *
 	 * @param name the name of the player
 	 */
 	public void saveScore(String name) {
 		game.saveScore(name);
 	}
-	
+
+	/**
+	 * Subscribe to events from the game.
+	 *
+	 * @param listener the listener to subscribe
+	 */
 	public void setGameListener(GameListener listener) {
 		game.setGameListener(listener);
 	}

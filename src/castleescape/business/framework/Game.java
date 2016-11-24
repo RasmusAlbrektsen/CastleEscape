@@ -9,6 +9,8 @@ import castleescape.business.event.SetDescriptionEventExecuter;
 import castleescape.business.event.MakeNoiseEventExecuter;
 import castleescape.business.event.RemoveRoomItemEventExecuter;
 import castleescape.business.event.AddPlayerItemEventExecuter;
+import castleescape.business.event.QuitEventExecuter;
+import castleescape.business.event.TeleportEventExecuter;
 import castleescape.business.command.Command;
 import castleescape.business.command.QuitCommandExecuter;
 import castleescape.business.command.InventoryCommandExecuter;
@@ -20,10 +22,9 @@ import castleescape.business.command.UseCommandExecuter;
 import castleescape.business.command.DropCommandExecuter;
 import castleescape.business.command.PeekCommandExecuter;
 import castleescape.business.command.InspectCommandExecuter;
+import castleescape.business.command.HighscoresCommandExecuter;
 import castleescape.business.command.CommandExecuter;
 import castleescape.business.ViewUtil;
-import castleescape.business.event.QuitEventExecuter;
-import castleescape.business.event.TeleportEventExecuter;
 import castleescape.business.object.InspectableObject;
 import castleescape.business.object.InspectableObjectRegister;
 import castleescape.data.DataMediator;
@@ -43,6 +44,9 @@ import java.util.List;
  */
 public class Game {
 
+	/**
+	 * The object that listens for game events.
+	 */
 	private GameListener listener;
 	
 	/**
@@ -143,6 +147,7 @@ public class Game {
 		commandExecuters.put(CommandWord.USE, new UseCommandExecuter());
 		commandExecuters.put(CommandWord.QUIT, new QuitCommandExecuter());
 		commandExecuters.put(CommandWord.PEEK, new PeekCommandExecuter());
+		commandExecuters.put(CommandWord.HIGHSCORES, new HighscoresCommandExecuter());
 
 		//Add event executers and associate them with event words
 		eventExecuters = new HashMap<>();
@@ -259,7 +264,9 @@ public class Game {
 		//Print the long description of the current room, that is the starting
 		//room
 		ViewUtil.println(currentRoom.getLongDescription());
-		listener.onGameStart();
+		
+		//Notify the listener that the game has started
+		listener.onGameStart(ViewUtil.getString());
 	}
 
 	/**
@@ -270,6 +277,11 @@ public class Game {
 	 * @param command the command to process
 	 */
 	public void processCommand(Command command) {
+		//If the game has ended, do nothing
+		if (! running) {
+			return;
+		}
+		
 		//If the player is caught by the monster, game over
 		if (monster.isPlayerCaught()) {
 			ViewUtil.println("The monster caught you and shredded you to pieces!");
@@ -277,6 +289,10 @@ public class Game {
 
 			//Game over, so we quit
 			end();
+			
+			//We notify the listener now, as we don't want to execute more code
+			//in the special case that the user was caught by the monster
+			listener.onGameExit(ViewUtil.getString());
 			return;
 		}
 
@@ -297,6 +313,15 @@ public class Game {
 
 		//Notify the monster that a command has been entered.
 		monster.notifyOfCommand(this);
+		
+		//Notify the listener that an iteration has been made
+		listener.onGameIteration(ViewUtil.getString());
+		
+		//If the game is no longer running after this iteration, notify the
+		//listener that the game has ended
+		if (! running) {
+			listener.onGameExit(ViewUtil.getString());
+		}
 	}
 
 	/**
@@ -304,6 +329,9 @@ public class Game {
 	 */
 	public void end() {
 		running = false;
+		
+		//We do not notify the listener yet, as there may still be some stuff to
+		//do in the processCommand() method
 	}
 
 	/**
@@ -364,6 +392,11 @@ public class Game {
 		return roomMap.get(name);
 	}
 	
+	/**
+	 * Subscribe to events from the game.
+	 * 
+	 * @param listener the listener to subscribe
+	 */
 	public void setGameListener(GameListener listener) {
 		this.listener = listener;
 	}

@@ -6,15 +6,32 @@
 package castleescape.shared;
 
 /**
+ * A game listener is an object that can receive events from the game.
  *
  * @author Christian Schou
  */
 public interface GameListener {
-	
-	void onGameStart();
-	
-	void onGameExit();
-	
+
+	/**
+	 * Called right after the game has started playing a new level.
+	 *
+	 * @param output the textual output that the game generated on startup
+	 */
+	void onGameStart(String output);
+
+	/**
+	 * Called right after the game has ended.
+	 * 
+	 * @param output the textual output that the game generated on exit
+	 */
+	void onGameExit(String output);
+
+	/**
+	 * Called every time the game has made an iteration (getting user input,
+	 * executing it and generating some output).
+	 *
+	 * @param output the textual output that the game generated on this
+	 *               iteration
+	 */
 	void onGameIteration(String output);
-	
 }

@@ -99,171 +99,109 @@ public class GameGuiController implements Initializable, GameListener {
 	@FXML
 	private Label scoreLabel;
 
-	/* Action events */
-	@FXML
-	private void commandButtonOnAction(ActionEvent event) {
-		//Get the source of the button action
-		Object source = event.getSource();
-
-		//By now, we assume that the game is still running.
-		boolean running = true;
-
-		//Carry out the operations associated with the pressed button. These
-		//methods return booleans indicating whether the game has ended, which
-		//we use to update the value of running
-		if (source == northButton) {
-			running = northButtonPressed();
-		} else if (source == southButton) {
-			running = southButtonPressed();
-		} else if (source == eastButton) {
-			running = eastButtonPressed();
-		} else if (source == westButton) {
-			running = westButtonPressed();
-		} else if (source == takeButton) {
-			running = takeButtonPressed();
-		} else if (source == dropButton) {
-			running = dropButtonPressed();
-		} else if (source == useButton) {
-			running = useButtonPressed();
-		} else if (source == inspectButton) {
-			running = inspectButtonPressed();
-		} else if (source == inventoryButton) {
-			running = inventoryButtonPressed();
-		} else if (source == helpButton) {
-			running = helpButtonPressed();
-		} else if (source == peekButton) {
-			running = peekButtonPressed();
-		} else if (source == highscoreButton) {
-			running = highscoreButtonPressed();
-		}
-
-		//Write the text that was generated on this iteration to the console
-		writeToConsole(businessMediator.getTextOutput());
-
-		//Update data display, as something might have changed now
-		updateGameDataDisplay();
-
-		//If the game is no longer running, get the players score and quit
-		if (!running) {
-			this.getNameAndSaveScore();
-		}
-	}
-
 	/**
 	 * Called when the north button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean northButtonPressed() {
-		return businessMediator.notifyGo("north");
+	@FXML
+	private void onNorthButtonAction() {
+		businessMediator.notifyGo("north");
 	}
 
 	/**
 	 * Called when the south button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean southButtonPressed() {
-		return businessMediator.notifyGo("south");
+	@FXML
+	private void onSouthButtonAction() {
+		businessMediator.notifyGo("south");
 	}
 
 	/**
 	 * Called when the east button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean eastButtonPressed() {
-		return businessMediator.notifyGo("east");
+	@FXML
+	private void onEastButtonAction() {
+		businessMediator.notifyGo("east");
 	}
 
 	/**
 	 * Called when the west button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean westButtonPressed() {
-		return businessMediator.notifyGo("west");
+	@FXML
+	private void onWestButtonAction() {
+		businessMediator.notifyGo("west");
 	}
 
 	/**
 	 * Called when the take button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean takeButtonPressed() {
-		return businessMediator.notifyTake(roomContentDropDown.getValue());
+	@FXML
+	private void onTakeButtonAction() {
+		businessMediator.notifyTake(roomContentDropDown.getValue());
 	}
 
 	/**
 	 * Called when the drop button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean dropButtonPressed() {
-		return businessMediator.notifyDrop(inventoryDropDown.getValue());
+	@FXML
+	private void onDropButtonAction() {
+		businessMediator.notifyDrop(inventoryDropDown.getValue());
 	}
 
 	/**
 	 * Called when the use button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean useButtonPressed() {
-		return businessMediator.notifyUse(
+	@FXML
+	private void onUseButtonAction() {
+		businessMediator.notifyUse(
 				inventoryDropDown.getValue(),
 				roomContentDropDown.getValue());
 	}
 
 	/**
 	 * Called when the inspect button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean inspectButtonPressed() {
+	@FXML
+	private void onInspectButtonAction() {
 		String inventorySelection = inventoryDropDown.getValue();
 		String roomSelection = roomContentDropDown.getValue();
 
 		if (inventorySelection != null) {
-			return businessMediator.notifyInspect(inventorySelection);
+			businessMediator.notifyInspect(inventorySelection);
 		} else {
-			return businessMediator.notifyInspect(roomSelection);
+			businessMediator.notifyInspect(roomSelection);
 		}
 	}
 
 	/**
 	 * Called when the inventory button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean inventoryButtonPressed() {
-		return businessMediator.notifyInventory();
+	@FXML
+	private void onInventoryButtonAction() {
+		businessMediator.notifyInventory();
 	}
 
 	/**
 	 * Called when the help button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean helpButtonPressed() {
-		return businessMediator.notifyHelp();
+	@FXML
+	private void onHelpButtonAction() {
+		businessMediator.notifyHelp();
 	}
 
 	/**
 	 * Called when the peek button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean peekButtonPressed() {
-		return businessMediator.notifyPeek(roomDropDown.getValue());
+	@FXML
+	private void onPeekButtonAction() {
+		businessMediator.notifyPeek(roomDropDown.getValue());
 	}
 
 	/**
 	 * Called when the highscore button is pressed.
-	 *
-	 * @return true if the game is still running, false otherwise
 	 */
-	private boolean highscoreButtonPressed() {
-		return businessMediator.printHighscores();
+	@FXML
+	private void onHighscoreButtonAction() {
+		businessMediator.notifyHighscores();
 	}
 
 	/**
@@ -273,16 +211,21 @@ public class GameGuiController implements Initializable, GameListener {
 	 */
 	public void setBusinessMediator(BusinessMediator bm) {
 		this.businessMediator = bm;
+	}
 
-		//Start the game
-		attemptGameStart();
+	/**
+	 * Start a new game. This method can be called at any time to start a new
+	 * game.
+	 */
+	public void startGame() {
+		//Initialize the new game
+		attemptGameInitialization();
+
+		//Subscribe to game events
 		businessMediator.setGameListener(this);
+		
+		//Start the game
 		businessMediator.start();
-		writeToConsole(businessMediator.getTextOutput());
-
-		//Initialize the display of all game data now that the game has been
-		//properly initialized
-		updateGameDataDisplay();
 	}
 
 	/**
@@ -307,7 +250,7 @@ public class GameGuiController implements Initializable, GameListener {
 				+ "</div>"
 				+ "</body>"
 				+ "</html>";
-		
+
 		//Load the html string into the web view
 		console.getEngine().loadContent(contentString);
 	}
@@ -493,9 +436,6 @@ public class GameGuiController implements Initializable, GameListener {
 		if (result.isPresent()) {
 			this.businessMediator.saveScore(result.get());
 		}
-
-		//Try to start a new game, or quit if the user wishes to
-		attemptGameStart();
 	}
 
 	/**
@@ -550,15 +490,24 @@ public class GameGuiController implements Initializable, GameListener {
 		choiceDialog.setHeaderText("Wich character would you like to play as?");
 		choiceDialog.setTitle("Character selection");
 
-		//TODO: Should we include this? Yes we shold.
+		//We also want to display the character's description, so we create a
+		//new label control to display the character's description 
 		Label descriptionLabel = new Label();
+
+		//The 'expendable content' of the choice dialog is set to our label
 		choiceDialog.getDialogPane().setExpandableContent(descriptionLabel);
+
+		//We add a listener to the current selection in the choice dialog
 		choiceDialog.selectedItemProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				//When we receive an event that the user has made a new
+				//selection we update the label's text to the character's
+				//description from the character map
 				descriptionLabel.setText(characters.get(newValue));
 			}
 		});
+
 		//Get the result of opening the dialog
 		Optional<String> result = choiceDialog.showAndWait();
 
@@ -570,15 +519,15 @@ public class GameGuiController implements Initializable, GameListener {
 	}
 
 	/**
-	 * Get the level and character that the user wants to play and start a new
-	 * game from this information. If the user dismisses these dialogs, the game
-	 * will quit.
+	 * Get the level and character that the user wants to play and construct a
+	 * new game from this information. If the user dismisses these dialogs, the
+	 * game will quit before it even has a chance to start.
 	 */
-	private void attemptGameStart() {
+	private void attemptGameInitialization() {
 		//Get level name
 		String levelName = getLevelNameFromUser(businessMediator);
 
-		//If level name is non-null, start a new game
+		//If level name is non-null, initialize a new game with this level
 		if (levelName != null) {
 			businessMediator.initialize(levelName);
 		} else {
@@ -598,11 +547,36 @@ public class GameGuiController implements Initializable, GameListener {
 			Platform.exit();
 			System.exit(0);
 		}
+	}
 
-		//Write the result to the GUI console
-		writeToConsole(businessMediator.getTextOutput());
+	/* Event received from the business layer */
+	@Override
+	public void onGameStart(String output) {
+		//Write the text that was generated on game start
+		writeToConsole(output);
 
-		//Update the game display now that we have started a new game
+		//Update data display, to show the game's initial state
+		updateGameDataDisplay();
+	}
+
+	@Override
+	public void onGameExit(String output) {
+		//Write the text that was generated on game exit
+		writeToConsole(output);
+
+		//If the game is no longer running, get the players score
+		this.getNameAndSaveScore();
+		
+		//Try to start a new game, or quit if the user wishes to
+		startGame();
+	}
+
+	@Override
+	public void onGameIteration(String output) {
+		//Write the text that was generated on this iteration to the console
+		writeToConsole(output);
+
+		//Update data display, as something might have changed now
 		updateGameDataDisplay();
 	}
 
@@ -616,20 +590,5 @@ public class GameGuiController implements Initializable, GameListener {
 		roomImg = new Image(getClass().getResourceAsStream("/res/room.png"));
 		horizontalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorHorizontal.png"));
 		verticalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorVertical.png"));
-	}
-
-	@Override
-	public void onGameStart() {
-		System.out.println("Game Started");
-	}
-
-	@Override
-	public void onGameExit() {
-		System.out.println("Game Ended");
-	}
-
-	@Override
-	public void onGameIteration(String output) {
-		System.out.println("Game iteration");
 	}
 }
