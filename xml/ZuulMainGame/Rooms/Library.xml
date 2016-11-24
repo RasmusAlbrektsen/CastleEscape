@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Library</name>
+    <description>The library is old and dusty. It’s filled with an endless amount of antique bookshelves, pantings and furniture. In the middle of the room is an old desk with a giant book. Next to the book lies a pair of glasses. The glasses are attached to a chain on the desk. They can’t be removed.</description>
+    <inventory>
+        <object>glasses</object>
+    </inventory>
+    <exits>
+        <west>Great Hall</west>
+        <north>Lab</north>
+    </exits>
+</room>

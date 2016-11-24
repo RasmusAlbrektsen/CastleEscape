@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<item>
+    <name>corner of painting</name>
+    <description>There are indications of numbers on this piece of the painting, but they are so small that they are almost impossible to read without glasses.</description>
+    <events>
+        <event>
+            <trigger>glasses</trigger>
+            <type>addPlayerItem</type>
+            <description>Looking at the painting through the glasses reveals a strange number sequence. What might it be for?</description>
+            <item>slip with numbers</item>
+        </event>
+        <event>
+            <trigger>glasses</trigger>
+            <type>removePlayerItem</type>
+            <description/>
+            <item>corner of painting</item>
+        </event>
+    </events>
+</item>

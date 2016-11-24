@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Dining Room</name>
+    <description>The dining room is a beautiful room, with a giant antique table made of solid oak</description>
+    <inventory/>
+    <exits>
+        <east>Kitchen</east>
+        <south>Smoking Room</south>
+        <north>Great Hall</north>
+    </exits>
+</room>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Treasury</name>
+    <description>Congratulations on making it to the treasury. You have made great progress so far!
+&lt;br/&gt;
+I have left a key for you around here. You can use it to unlock the cage in the Training Grounds. By now, you should be aware of how to take and use items. If not, read on.
+&lt;br/&gt;
+Remember that to take an item, select the item in the world selection box, the one on the right, and press the take button. To use an item, select it in your inventory selection box, the one on the left, and the item or object that you wish to use it on in the world selection box and press use.</description>
+    <inventory>
+        <item>Key</item>
+    </inventory>
+    <exits>
+        <north>Training Grounds</north>
+    </exits>
+</room>

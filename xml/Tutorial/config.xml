@@ -1,0 +1,7 @@
+<configurations>
+    <startroom>Barracks</startroom>
+    <saferoom>Dense Forest</saferoom>
+    <monsterstartroom>Monster Pit</monsterstartroom>
+    <monstermovechance>0.2</monstermovechance>
+    <monstermovetime>120000</monstermovetime>
+</configurations>

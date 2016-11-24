@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Lab</name>
+    <description>Entering the room reveals a rat in the process of eating a precious gold key. This key might be important.</description>
+    <inventory>
+        <item>Mysterious Device</item>
+        <object>rat</object>
+    </inventory>
+    <exits>
+        <south>Library</south>
+    </exits>
+</room>

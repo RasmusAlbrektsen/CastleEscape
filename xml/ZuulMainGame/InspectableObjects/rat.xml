@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<inspectableobject>
+    <name>rat</name>
+    <description>This rat has eaten a gold key, which might be useful. How does one get the key out of that little bugger?</description>
+    <events>
+        <event>
+            <type>setDescription</type>
+            <description>Entering the lab reveals nothing new. The rat looks so full after having eaten that gold key.</description>
+            <room>Lab</room>
+        </event>
+    </events>
+</inspectableobject>

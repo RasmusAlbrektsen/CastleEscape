@@ -29,6 +29,14 @@ div.webview {
 	display: block;
 }
 
+.boldText {
+	/* Issue, font does not support bold text */
+	font-weight: bold;
+	
+	/* Fix: We just make is larger to make up for this */
+	font-size: 1.2em;
+}
+
 .shakyText {
 	display:block;
 	-webkit-animation-name: shake;

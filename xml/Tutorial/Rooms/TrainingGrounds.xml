@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Training Grounds</name>
+    <description>Congratulations on successfully moving out of the barracks. You are now in the training grounds, and here you will get a lesson in interacting with the world around you.
+&lt;br/&gt;
+Let's take a look at the controls below. Here you will see two choice boxes and a series of buttons. The first choice box allows you to select an item from your inventory while the second choice box allows you to select an item in the world. To interact with one or more selected items, press the button associated with the desired action. To take a closer look at something, inspect will be the action of choice.
+&lt;br/&gt;
+There is a big goddamn hole in the ground, maybe you should take a closer look at it?</description>
+    <inventory>
+        <object>Locked Cage</object>
+        <object>Deep Hole</object>
+    </inventory>
+    <exits>
+        <north>Barracks</north>
+    </exits>
+</room>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Checkpoint</name>
+    <description>The room contains a grindstone for sharpening weapons and the like.</description>
+    <inventory>
+        <object>grindstone</object>
+    </inventory>
+    <exits>
+        <south>Treasury</south>
+        <north>Art Room</north>
+    </exits>
+</room>

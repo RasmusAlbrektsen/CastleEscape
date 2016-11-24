@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Dense Forest</name>
+    <description>Finally! no way the monster can get to you here. You are safe now, and know this - every game that features a monster also has a safe room. Knowing the location of this room is vital, as it is your only chance of surviving the monster, if it chooses to hunt you.
+&lt;br/&gt;
+Furthermore, each time you run away from the monster you get more time to escape it, but if you run towards it, however, you loose valuable time, and might risk getting caught.
+&lt;br/&gt;
+Also, when the monster is set free it will roam around the map in a random manner. You should therefore always look out for it, as it might enter your room while you are in the process of doing something else!
+&lt;br/&gt;
+Thanks for playing the tutorial level, and have fun with the rest of the game!</description>
+    <inventory/>
+    <exits>
+        <north>Forest</north>
+    </exits>
+</room>

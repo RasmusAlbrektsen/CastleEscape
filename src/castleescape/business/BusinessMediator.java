@@ -9,6 +9,10 @@ import castleescape.business.command.Command;
 import castleescape.business.command.CommandWord;
 import castleescape.business.framework.Character;
 import castleescape.business.framework.Game;
+import castleescape.business.object.InspectableObject;
+import castleescape.data.DataMediator;
+import castleescape.shared.GameListener;
+import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +20,10 @@ import java.util.Map;
 
 /**
  * The mediator class for connecting the user interface with the business code.
+ * All data exchange is in the form of simple and standard data types to ensure
+ * that no part of the presentation layer is dependent on model representations
+ * in the business layer. This requires a fair bit of mapping, which is also
+ * performed by this class.
  *
  * @author Kasper
  */
@@ -24,56 +32,83 @@ public class BusinessMediator {
 	/**
 	 * The game instance.
 	 */
-	private final Game game;
+	private Game game;
+
+	/**
+	 * The data mediator used to communicate with the data layer.
+	 */
+	private final DataMediator dataMediator;
 
 	/**
 	 * Constructs a new mediator for connecting the user interface with the
 	 * business code.
 	 */
 	public BusinessMediator() {
-		this.game = new Game();
-
+		//Construct data mediator for performing operations on files
+		dataMediator = new DataMediator();
 	}
 
 	/* Methods for notifying the business layer of the state of execution */
 	/**
-	 * Notify the game that it should start over.
+	 * Initialize a new game from the specified level. This must be called every
+	 * time the game has to play a new level. To start the game, call
+	 * {@link #start()}.
 	 *
-	 * @return the message to print as a result
+	 * @param levelName the name of the level to play
 	 */
-	public String start() {
-		game.start();
-
-		return ViewUtil.getString();
+	public void initialize(String levelName) {
+		//Construct new game. This way we don't have to worry about resetting
+		//variables if the user intends to start a new game.
+		game = new Game(dataMediator, levelName);
 	}
 
 	/**
-	 * Notify the game that it should quit.
-	 *
-	 * @return the message to print as a result
+	 * Notify the game that it should start playing.
 	 */
-	public String quit() {
-		//TODO
-		return "TODO: Quit method";
+	public void start() {
+		//Start the game
+		game.start();
+	}
+
+	/**
+	 * Notify the game that it should end.
+	 */
+	public void end() {
+		//TODO: No usages yet
+		//Construct command object and request that the game processes it
+		Command command = new Command(CommandWord.QUIT, null);
+		game.processCommand(command);
 	}
 
 	/* Getters for retrieving game data from the business layer */
 	/**
-	 * Get the exits from the current room.
+	 * Get the exit directions from the current room.
 	 *
-	 * @return the exits from the current room.
+	 * @return the exit directions from the current room.
 	 */
-	public Map<String, String> getCurrentExits() {
-		return game.getCurrentRoom().getExitView();
+	public List<String> getExitDirections() {
+		//The keyset of the exits map specifies the direction strings of the
+		//exits. The contents of this KeySet are put in an array list to be
+		//returned.
+		return new ArrayList(game.getCurrentRoom().getExits().keySet());
 	}
 
 	/**
 	 * Get the items in the current room.
 	 *
-	 * @return the items in the current room.
+	 * @return the items in the current room
 	 */
 	public List<String> getRoomItems() {
-		return game.getCurrentRoom().getInventory().getContentView();
+		//Construct array list to store the item names
+		List<String> itemList = new ArrayList<>();
+
+		//Loop over all items in the current room's inventory and save their
+		//names in the array list constructed above
+		for (int i = 0; i < game.getCurrentRoom().getInventory().getItemCount(); i++) {
+			itemList.add(game.getCurrentRoom().getInventory().getItemByIndex(i).getName());
+		}
+
+		return itemList;
 	}
 
 	/**
@@ -82,7 +117,16 @@ public class BusinessMediator {
 	 * @return the inspectable objects in the current room
 	 */
 	public List<String> getRoomObjects() {
-		return game.getCurrentRoom().getInspectableObjectView();
+		//Construct array list to store the inspectable object names
+		List<String> objectList = new ArrayList<>();
+
+		//Loop over all inspectable objects in the current room and save their
+		//names in the array list constructed above
+		for (InspectableObject object : game.getCurrentRoom().getInspectableObjects()) {
+			objectList.add(object.getName());
+		}
+
+		return objectList;
 	}
 
 	/**
@@ -91,12 +135,21 @@ public class BusinessMediator {
 	 * @return the items in the player's inventory
 	 */
 	public List<String> getPlayerItems() {
-		return game.getPlayer().getInventory().getContentView();
+		//Construct array list to store the item names
+		List<String> itemList = new ArrayList<>();
+
+		//Loop over all items in the player's inventory and save their names in
+		//the array list constructed above
+		for (int i = 0; i < game.getPlayer().getInventory().getItemCount(); i++) {
+			itemList.add(game.getPlayer().getInventory().getItemByIndex(i).getName());
+		}
+
+		return itemList;
 	}
-	
+
 	/**
 	 * Get the player's current score.
-	 * 
+	 *
 	 * @return the player's current score
 	 */
 	public int getCurrentScore() {
@@ -104,22 +157,33 @@ public class BusinessMediator {
 	}
 
 	/**
-	 * Get the text output that was generated on the last game iteration. This
-	 * will clear the text output buffer.
+	 * Request all possible player characters from the game along with their
+	 * descriptions as a map, where the key is the character name and the value
+	 * is the description of that character.
 	 *
-	 * @return the buffered text output
+	 * @return all possible player characters along with their descriptions
 	 */
-	public String getTextOutput() {
-		return ViewUtil.getString();
+	public Map<String, String> getCharacterList() {
+		//Construct map to store character information
+		Map<String, String> characterMap = new HashMap<>();
+
+		//Loop over all possible characters and store their names and
+		//descriptions in the map constructed above
+		for (Character character : game.getCharacters()) {
+			characterMap.put(character.getName(), character.getDescription());
+		}
+
+		return characterMap;
 	}
 
+	/* Getters for retrieving data from the data layer */
 	/**
-	 * Request an arry of possible player characters from the game.
+	 * Get the names of the playable levels.
 	 *
-	 * @return an arry of possible player characters from the game
+	 * @return the names of the playable levels
 	 */
-	public Character[] getCharacterList() {
-		return game.getCharacters();
+	public String[] getLevels() {
+		return dataMediator.getLevels();
 	}
 
 	/* Methods for notifying the business layer that an action was performed */
@@ -128,17 +192,17 @@ public class BusinessMediator {
 	 * item.
 	 *
 	 * @param toTake the name of the item that the user atempted to take
-	 * @return the message to print as a result
 	 */
-	public boolean notifyTake(String toTake) {
+	public void notifyTake(String toTake) {
+		//Construct map to store character information
 		Map<String, String> params = new HashMap<>();
 
+		//Add parameter describing which item whould be taken
 		params.put(Command.ITEM, toTake);
 
+		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.TAKE, params);
 		game.processCommand(command);
-
-		return game.isRunning();
 	}
 
 	/**
@@ -146,17 +210,17 @@ public class BusinessMediator {
 	 * item.
 	 *
 	 * @param toDrop the name of the item that the user attempted to drop
-	 * @return the message to print as a result
 	 */
-	public boolean notifyDrop(String toDrop) {
+	public void notifyDrop(String toDrop) {
+		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
+		//Add parameter describing which item whould be dropped
 		params.put(Command.ITEM, toDrop);
 
+		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.DROP, params);
 		game.processCommand(command);
-
-		return game.isRunning();
 	}
 
 	/**
@@ -165,17 +229,17 @@ public class BusinessMediator {
 	 *
 	 * @param toInspect the name of the inspectable object that the user
 	 *                  attempted to inspect
-	 * @return the message to print as a result
 	 */
-	public boolean notifyInspect(String toInspect) {
+	public void notifyInspect(String toInspect) {
+		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
+		//Add parameter describing which inspectable object whould be inspected
 		params.put(Command.OBJECT, toInspect);
 
+		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.INSPECT, params);
 		game.processCommand(command);
-
-		return game.isRunning();
 	}
 
 	/**
@@ -185,18 +249,21 @@ public class BusinessMediator {
 	 * @param useItem the name of the item that the user attempted to use
 	 * @param useOn   the name of the inspectable object that the user attempted
 	 *                to use the item on
-	 * @return the message to print as a result
 	 */
-	public boolean notifyUse(String useItem, String useOn) {
+	public void notifyUse(String useItem, String useOn) {
+		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
+		//Add parameter describing which item whould be used
 		params.put(Command.ITEM, useItem);
+
+		//Add parameter describing which inspectable object the item should be
+		//used on
 		params.put(Command.OBJECT, useOn);
 
+		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.USE, params);
 		game.processCommand(command);
-
-		return game.isRunning();
 	}
 
 	/**
@@ -204,17 +271,17 @@ public class BusinessMediator {
 	 * specified direction.
 	 *
 	 * @param direction the direction that the user attempted to peek in
-	 * @return the message to print as a result
 	 */
-	public boolean notifyPeek(String direction) {
+	public void notifyPeek(String direction) {
+		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
+		//Add parameter describing which direction to peek in
 		params.put(Command.DIRECTION, direction);
 
+		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.PEEK, params);
 		game.processCommand(command);
-
-		return game.isRunning();
 	}
 
 	/**
@@ -222,58 +289,84 @@ public class BusinessMediator {
 	 * specified direction.
 	 *
 	 * @param direction the direction that the user attempted to walk in
-	 * @return the message to print as a result
 	 */
-	public boolean notifyGo(String direction) {
+	public void notifyGo(String direction) {
+		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
+		//Add parameter describing which direction to go in
 		params.put(Command.DIRECTION, direction);
 
+		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.GO, params);
 		game.processCommand(command);
-
-		return game.isRunning();
 	}
 
 	/**
 	 * Notify the business layer that the user asked for help.
-	 *
-	 * @return the help message to display
 	 */
-	public boolean notifyHelp() {
+	public void notifyHelp() {
+		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.HELP, null);
 		game.processCommand(command);
-
-		return game.isRunning();
 	}
 
 	/**
 	 * Notify the business layer that the user wishes to view the inventory.
-	 *
-	 * @return the help message to display
 	 */
-	public boolean notifyInventory() {
+	public void notifyInventory() {
+		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.INVENTORY, null);
 		game.processCommand(command);
+	}
 
-		return game.isRunning();
+	/**
+	 * Notify the game that the user wishes to see the highscores.
+	 */
+	public void notifyHighscores() {
+		//Construct command object and request that the game processes it
+		Command command = new Command(CommandWord.HIGHSCORES, null);
+		game.processCommand(command);
 	}
 
 	/**
 	 * Notify the game that the user selected a player character.
 	 *
-	 * @param choice the chosen player character
+	 * @param choice the name of the chosen player character
+	 * @throws IllegalArgumentException if no such character exists
 	 */
-	public void notifyCharacterSelected(Character choice) {
-		game.setPlayer(choice);
+	public void notifyCharacterSelected(String choice) {
+		//Loop over all possible player characters until a match with the user
+		//choice is found
+		for (Character character : game.getCharacters()) {
+			if (character.getName().equals(choice)) {
+
+				//Once a match is found, set the player character and return
+				game.setPlayer(character);
+				return;
+			}
+		}
+
+		//No match found, so the user somehow entered an illegal choice, so we
+		//throw an exception
+		throw new IllegalArgumentException("No such player character: " + choice);
 	}
 
 	/**
-	 * Save the current score under the specified name.
+	 * Save the current score under the specified player name.
 	 *
 	 * @param name the name of the player
 	 */
 	public void saveScore(String name) {
 		game.saveScore(name);
+	}
+
+	/**
+	 * Subscribe to events from the game.
+	 *
+	 * @param listener the listener to subscribe
+	 */
+	public void setGameListener(GameListener listener) {
+		game.setGameListener(listener);
 	}
 }

@@ -24,8 +24,8 @@ public class HelpCommandExecuter implements CommandExecuter {
 			//No parameters, so just print the standard help message.
 			ViewUtil.println("Are you lost? Here are some hints for you.");
 			ViewUtil.newLine();
-			ViewUtil.println("Use the directional buttons on the right to move between rooms.");
-			ViewUtil.println("Use the drop down boxes to select an item in your inventory and an object in the room to interact with.");
+			ViewUtil.println("Use the compass on the right to move between rooms. Simply press a room to move to it.");
+			ViewUtil.println("Use the drop down boxes to select an item in your inventory (left) and an object in the room to interact with (right).");
 			ViewUtil.println("Press the buttons below the drop down boxes to perform the interaction.");
 		}
 	}

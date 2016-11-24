@@ -2,7 +2,6 @@ package castleescape.business.event;
 
 import castleescape.business.framework.Game;
 import castleescape.business.framework.Room;
-import util.InvalidXMLException;
 import castleescape.business.ViewUtil;
 
 /**
@@ -25,7 +24,6 @@ public class AddExitEventExecuter implements EventExecuter {
 		Room otherRoom = game.getRoom(event.getEventParam(Event.DESTINATION));
 		if (otherRoom == null) {
 			System.out.println("The room with the name " + Event.DESTINATION + " does not exist");
-			throw new InvalidXMLException("An addExit event tried to add a non-existent room");
 		}
 
 		//print the description, if one is present

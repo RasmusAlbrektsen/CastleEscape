@@ -23,6 +23,7 @@ public class ViewUtil {
 			PARAGRAPH_START_ELEMENT = "<p>",
 			PARAGRAPH_END_ELEMENT = "</p>",
 			SHAKY_SPAN_ELEMENT_START = "<span class=\"shakyText\">",
+			BOLD_SPAN_ELEMENT_START = "<span class=\"boldText\">",
 			SPAN_ELEMENT_END = "</span>";
 
 	/**
@@ -143,20 +144,23 @@ public class ViewUtil {
 	}
 
 	/**
-	 * Print a newline to the user interface.
+	 * Print a newline to the user interface. This will reset the current
+	 * formatting, meaning that the new line must be formatted anew.
 	 */
 	public static void newLine() {
-		if (! isPrintingLine) {
-			string.append(PARAGRAPH_START_ELEMENT);
+		if (!isPrintingLine) {
+			//We need to add a line break element between the opening and
+			//closing elements to avoid auto removal of empty paragraphs
+			string.append(PARAGRAPH_START_ELEMENT).append(LINE_BREAK_ELEMENT);
 		}
-		
+
 		string.append(PARAGRAPH_END_ELEMENT);
 		isPrintingLine = false;
 	}
 
 	/**
-	 * Add a line break to the currently buffered text. A line break will be
-	 * smaller than a newline.
+	 * Add a line break to the currently buffered text. A line break will not
+	 * reset the current formatting.
 	 */
 	public static void lineBreak() {
 		string.append(LINE_BREAK_ELEMENT);
@@ -165,14 +169,27 @@ public class ViewUtil {
 	/**
 	 * Print the specified string so that it will be shaking in the user
 	 * interface. The user interface is free to define the specifics of this
-	 * effect, at whether it wants to support it at all.
+	 * effect, and whether it wants to support it at all.
 	 *
 	 * @param s the string to print
 	 */
 	public static void printShaky(String s) {
-		string.append(SHAKY_SPAN_ELEMENT_START)
-				.append(s)
-				.append(SPAN_ELEMENT_END);
+		print(SHAKY_SPAN_ELEMENT_START);
+		print(s);
+		print(SPAN_ELEMENT_END);
+	}
+
+	/**
+	 * Print the specified string so that it will be bold in the user interface.
+	 * The user interface is free to define the specifics of this effect, and
+	 * whether it wants to support it at all.
+	 *
+	 * @param s
+	 */
+	public static void printBold(String s) {
+		print(BOLD_SPAN_ELEMENT_START);
+		print(s);
+		print(SPAN_ELEMENT_END);
 	}
 
 	/**

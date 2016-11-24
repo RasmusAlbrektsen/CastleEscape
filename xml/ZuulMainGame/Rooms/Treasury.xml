@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Treasury</name>
+    <description>The treasury is flooding with useless gold coins and diamonds and shit. In the back of the room, however, is a fantastic pot with the most beautiful flower ever seen to man!</description>
+    <inventory>
+        <object>pot</object>
+    </inventory>
+    <exits>
+        <north>Checkpoint</north>
+    </exits>
+</room>

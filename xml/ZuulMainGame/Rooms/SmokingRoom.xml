@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Smoking Room</name>
+    <description>The room is dense of smoke, making it hard to see anything in here. The fireplace must have gone out recently as the embers are still lit.</description>
+    <inventory>
+        <item>poker</item>
+    </inventory>
+    <exits>
+        <north>Dining Room</north>
+    </exits>
+</room>

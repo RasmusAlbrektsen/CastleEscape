@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Garden</name>
+    <description>The garden is lush and lively. Near the fountain, a big bright floating orb shines in the distance. Wonder what kind of magic it beholds?</description>
+    <inventory>
+        <object>Orb of Completion</object>
+    </inventory>
+    <exits>
+        <south>Great Hall</south>
+    </exits>
+</room>

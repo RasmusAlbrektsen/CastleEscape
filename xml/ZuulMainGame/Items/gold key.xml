@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<item>
+    <name>gold key</name>
+    <description>The gold key looks new and shiny, it would be a pretty souvenir, but it could probably also be used to open up the gold lock.</description>
+    <events>
+        <event>
+            <trigger>gold lock</trigger>
+            <type>removeRoomItem</type>
+            <description>The gold lock opens with a big clank. The main door finally seems unlocked. Or is it?</description>
+            <item>gold lock</item>
+        </event>
+        <event>
+            <trigger>gold lock</trigger>
+            <type>addRoomItem</type>
+            <description/>
+            <item>barred door</item>
+        </event>
+        <event>
+            <trigger>gold lock</trigger>
+            <type>makeNoise</type>
+            <description/>
+            <weight>0.98</weight>
+        </event>
+        <event>
+            <trigger>gold lock</trigger>
+            <type>setDescription</type>
+            <description>The great hall is mighty big. There is a staircase to the upper floor, but it has been barricaded by lots of old furniture and statues. The main door can still not be opened, it is barricaded from the other side.</description>
+            <room>Great Hall</room>
+        </event>
+        <event>
+            <trigger>gold lock</trigger>
+            <type>removeRoomItem</type>
+            <description/>
+            <item>main door</item>
+        </event>
+    </events>
+</item>

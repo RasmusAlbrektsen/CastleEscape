@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<inspectableobject>
+    <name>garden painting</name>
+    <description>A painting of a flowery garden. The corner seems suspicious.</description>
+    <events>
+        <event>
+            <type>addPlayerItem</type>
+            <description>The corner of the painting seems suspicious. Perhaps it should be inspected further. Better rip it off for now.</description>
+            <item>corner of painting</item>
+        </event>
+        <event>
+            <type>removeRoomItem</type>
+            <description/>
+            <item>garden painting</item>
+        </event>
+    </events>
+</inspectableobject>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Forest</name>
+    <description>The vegetation is getting denser, but the monster still does not seem to have any trouble following you. Keep running!</description>
+    <inventory/>
+    <exits>
+        <south>Dense Forest</south>
+        <north>Valley</north>
+    </exits>
+</room>

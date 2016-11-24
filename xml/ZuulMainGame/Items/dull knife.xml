@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<item>
+    <name>dull knife</name>
+    <description>This knife is not of much use until it has been sharpened.</description>
+    <events>
+        <event>
+            <trigger>grindstone</trigger>
+            <type>addPlayerItem</type>
+            <description>Sharpening the dull knife on the grindstone was a success. The knife is now perfectly sharp.</description>
+            <item>knife</item>
+        </event>
+        <event>
+            <trigger>grindstone</trigger>
+            <type>removePlayerItem</type>
+            <description/>
+            <item>dull knife</item>
+        </event>
+    </events>
+</item>

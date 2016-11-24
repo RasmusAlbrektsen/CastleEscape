@@ -6,7 +6,6 @@
 package castleescape.business.framework;
 
 import java.util.ArrayDeque;
-import castleescape.business.Configurations;
 import castleescape.business.ViewUtil;
 
 import java.util.ArrayList;
@@ -41,6 +40,16 @@ public class Monster {
 	private boolean waitingForPlayer = true;
 
 	/**
+	 * The chance of the monster moving, in percent.
+	 */
+	private final double moveChance;
+
+	/**
+	 * the time that it takes the monster to move one room, in milliseconds.
+	 */
+	private final int moveTime;
+
+	/**
 	 * The time at which the monster last began hunting the player, in
 	 * milliseconds.
 	 */
@@ -64,6 +73,11 @@ public class Monster {
 	private Room currentRoom;
 
 	/**
+	 * The safe room.
+	 */
+	private final Room safeRoom;
+
+	/**
 	 * The path that the monster has to follow to chase the player.
 	 */
 	private Deque<Room> chasePath;
@@ -71,10 +85,17 @@ public class Monster {
 	/**
 	 * Constructs a new monster that starts in the specified room.
 	 *
-	 * @param location the room that the monster is in initially
+	 * @param location   the room that the monster is in initially
+	 * @param safeRoom   the safe room, the monster cannot enter this
+	 * @param moveChance the chance of the monster moving, in percent
+	 * @param moveTime   the time that it takes the monster to move one room, in
+	 *                   milliseconds
 	 */
-	public Monster(Room location) {
+	public Monster(Room location, Room safeRoom, double moveChance, int moveTime) {
 		currentRoom = location;
+		this.safeRoom = safeRoom;
+		this.moveChance = moveChance;
+		this.moveTime = moveTime;
 	}
 
 	/**
@@ -100,7 +121,7 @@ public class Monster {
 		//Set escape time based on distance between monster and player
 		startTime = System.currentTimeMillis(); //The amount of milliseconds since midnight, January 1, 1970 UTC
 		lastMove = startTime;
-		countDown = chasePath.size() * Configurations.getMonsterMoveRoomTime();
+		countDown = chasePath.size() * moveTime;
 	}
 
 	/**
@@ -114,37 +135,35 @@ public class Monster {
 	public void notifyOfCommand(Game game) {
 		//If the monster is hunting the player, warn the player
 		if (isHunting()) {
-			
+
 			//If the player entered the safe room as a result of the command,
 			//stop hunting
-			if (game.getCurrentRoom().getRoomName().equals(Configurations.getSafeRoomName())) {
+			if (game.getCurrentRoom() == safeRoom) {
 				ViewUtil.println("You escaped the monster.");
 				ViewUtil.newLine();
 				setIdle();
-				
+
 				//No more to do for now, so we return
 				return;
 			} else {
 				//Otherwise warn the player
-				//TODO: Cleanup
-				ViewUtil.print("");
 				ViewUtil.printShaky(WARNING_MESSAGE);
-				ViewUtil.println("");
+				ViewUtil.newLine();
 			}
-			
+
 			//Move the monster towards the player if enough time has passed.
 			//This may need to happen multiple times. Stop moving if the monster
 			//has reached the player (chasePath.size() is 1)
 			long now = System.currentTimeMillis();
-			while (now - lastMove >= Configurations.getMonsterMoveRoomTime() && chasePath.size() > 1) {
-				lastMove += Configurations.getMonsterMoveRoomTime();
+			while (now - lastMove >= moveTime && chasePath.size() > 1) {
+				lastMove += moveTime;
 
 				//Move to the next room along the path, and remove the current
 				//room from the path
 				chasePath.pop();
 				currentRoom = chasePath.peekFirst();
 			}
-			
+
 			//No more to do for now, so we return
 			return;
 		}
@@ -156,7 +175,7 @@ public class Monster {
 
 			//Roll a random number to determine if the monster should move to
 			//another room
-			if (Math.random() < Configurations.getMonsterMoveChance()) {
+			if (Math.random() < moveChance) {
 
 				//Choose a random room among the exits from the current room. If
 				//no exits are present, do nothing
@@ -171,7 +190,7 @@ public class Monster {
 					//the requirements.
 					do {
 						newRoom = exits[(int) (Math.random() * exits.length)];
-					} while (newRoom.getRoomName().equals(Configurations.getSafeRoomName()));
+					} while (newRoom == safeRoom);
 
 					currentRoom = newRoom;
 
@@ -212,10 +231,10 @@ public class Monster {
 
 			if (chasePath.size() > lastDistance) {
 				//Player ran away from the monster, get more time
-				addEscapeTime(Configurations.getMonsterMoveRoomTime());
+				addEscapeTime(moveTime);
 			} else if (chasePath.size() < lastDistance) {
 				//Player ran towards the monster, loose time
-				addEscapeTime(-Configurations.getMonsterMoveRoomTime());
+				addEscapeTime(-moveTime);
 			} //Else no difference in distance, no time change
 		}
 	}

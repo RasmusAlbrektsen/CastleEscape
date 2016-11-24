@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<item>
+    <name>Key</name>
+    <description>The key to the cage in the Training Grounds.</description>
+    <events>
+        <event>
+            <trigger>Locked Cage</trigger>
+            <type>removeRoomItem</type>
+            <description>You used the key to unlock the cage to the east. Good job. If you wish to have a look inside the cage before entering it, you must select the direction, in this case east, in the choice box below the compass, and then press peek. For now, you probably won't believe your own eyes, but as you become accustomed to this world, your eyes will see clearer.
+&lt;br/&gt;
+Oh, and don't go west yet, there is nothing to see there for now.</description>
+            <item>Locked Cage</item>
+        </event>
+        <event>
+            <trigger>Locked Cage</trigger>
+            <type>addExit</type>
+            <description/>
+            <destination>Monster Pit</destination>
+            <direction>east</direction>
+        </event>
+        <event>
+            <trigger>Locked Cage</trigger>
+            <type>setDescription</type>
+            <description>Nothing more to do here. Maybe you have other, more pressing matters?</description>
+            <room>Training Grounds</room>
+        </event>
+        <event>
+            <trigger>Locked Cage</trigger>
+            <type>setDescription</type>
+            <description>Wrong way...</description>
+            <room>Treasury</room>
+        </event>
+        <event>
+            <trigger>Locked Cage</trigger>
+            <type>setDescription</type>
+            <description>Wrong way...</description>
+            <room>Barracks</room>
+        </event>
+        <event>
+            <trigger>Locked Cage</trigger>
+            <type>addExit</type>
+            <description/>
+            <destination>Valley</destination>
+            <direction>west</direction>
+        </event>
+    </events>
+</item>

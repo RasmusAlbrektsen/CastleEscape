@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<item>
+    <name>Teleportation Device</name>
+    <description>The teleportation device makes a loud bang, and the current room is quickly replaced with the wine cellar!</description>
+    <events>
+        <event>
+            <type>teleport</type>
+            <description/>
+            <destination>Wine Cellar</destination>
+        </event>
+    </events>
+</item>

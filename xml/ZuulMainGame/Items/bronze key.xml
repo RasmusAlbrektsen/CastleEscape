@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<item>
+    <name>bronze key</name>
+    <description>The bronze key looks like an old and fragile key. Besides that, it looks like it would fit perfectly with the bronze lock.</description>
+    <events>
+        <event>
+            <trigger>bronze lock</trigger>
+            <type>addRoomItem</type>
+            <description>The bronze lock opens up with a big clank. Behind it, a silver lock appears.</description>
+            <item>silver lock</item>
+        </event>
+        <event>
+            <trigger>bronze lock</trigger>
+            <type>removeRoomItem</type>
+            <description/>
+            <item>bronze lock</item>
+        </event>
+        <event>
+            <trigger>bronze lock</trigger>
+            <type>makeNoise</type>
+            <description/>
+            <weight>0.98</weight>
+        </event>
+        <event>
+            <trigger>bronze lock</trigger>
+            <type>setDescription</type>
+            <description>The great hall is mighty big. There is a staircase to the upper floor, but it has been barricaded by lots of old furniture and statues. The main door is locked tightly by two locks now, the only reachable lock being a silver lock.</description>
+            <room>Great Hall</room>
+        </event>
+        <event>
+            <trigger>bronze lock</trigger>
+            <type>setDescription</type>
+            <description>This door blocks the only way to freedom, but it is tightly locked! The door has two locks, but only the silver lock is reachable. Maybe the keys are hidden around this place?</description>
+            <object>main door</object>
+        </event>
+    </events>
+</item>

@@ -205,10 +205,12 @@ public class ScoreManager {
 		}
 
 		//Print highscore and table header
-		ViewUtil.println("Highscore:\n\t" + highscore);
+		ViewUtil.printBold("Highscore:");
 		ViewUtil.newLine();
-		ViewUtil.println(" Name | Score");
-		ViewUtil.println("------|-------");
+		ViewUtil.println(highscore);
+		ViewUtil.newLine();
+		ViewUtil.printBold("Top " + scoreCount + " scores:");
+		ViewUtil.newLine();
 
 		//If we are requested to print all scores (scoreCount == -1) then set
 		//scoreCount to the size og the scores list. The reasoning behind this
@@ -225,12 +227,10 @@ public class ScoreManager {
 			//Get the score that we have reached
 			Score currentScore = scores.get(i);
 
-			//Print the score so that it looks good
-			//Make player name take up 5 characters by padding with spaces to
-			//the left
-			ViewUtil.print(String.format("%5s", currentScore.getPlayerName()));
-			ViewUtil.print(" | ");
-			ViewUtil.println(currentScore.getPlayerScore());
+			//Print the score along with its rank (the value of i + 1, as we
+			//want to start from 1, not 0)
+			ViewUtil.print((i + 1) + ". ");
+			ViewUtil.println(currentScore);
 		}
 	}
 
@@ -283,7 +283,7 @@ public class ScoreManager {
 
 		@Override
 		public String toString() {
-			return playerName + ": " + playerScore;
+			return playerName + ", " + playerScore + " points";
 		}
 	}
 }

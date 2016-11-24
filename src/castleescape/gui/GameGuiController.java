@@ -6,13 +6,16 @@
 package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
+import castleescape.shared.GameListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +24,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
@@ -28,11 +32,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.web.WebView;
 
 /**
- * Controller class for the game GUI view.
+ * Controller class for the game GUI view. This class is also responsible for
+ * getting initial user input required to start the game, such as level and
+ * character selection.
  *
  * @author Kasper
  */
-class GameGuiController implements Initializable {
+public class GameGuiController implements Initializable, GameListener {
 
 	/**
 	 * Images for rendering the map part of the GUI.
@@ -70,6 +76,8 @@ class GameGuiController implements Initializable {
 	private Button helpButton;
 	@FXML
 	private Button peekButton;
+	@FXML
+	private Button highscoreButton;
 
 	/* Drop downs */
 	@FXML
@@ -91,105 +99,109 @@ class GameGuiController implements Initializable {
 	@FXML
 	private Label scoreLabel;
 
-	/* Action events */
+	/**
+	 * Called when the north button is pressed.
+	 */
 	@FXML
-	private void commandButtonOnAction(ActionEvent event) {
-		//Get the source of the button action
-		Object source = event.getSource();
-
-		//By now, we assume that the game is still running.
-		boolean running = true;
-
-		//Carry out the operations associated with the pressed button. These
-		//methods return booleans indicating whether the game has ended, which
-		//we use to update the value of running
-		if (source == northButton) {
-			running = northButtonPressed();
-		} else if (source == southButton) {
-			running = southButtonPressed();
-		} else if (source == eastButton) {
-			running = eastButtonPressed();
-		} else if (source == westButton) {
-			running = westButtonPressed();
-		} else if (source == takeButton) {
-			running = takeButtonPressed();
-		} else if (source == dropButton) {
-			running = dropButtonPressed();
-		} else if (source == useButton) {
-			running = useButtonPressed();
-		} else if (source == inspectButton) {
-			running = inspectButtonPressed();
-		} else if (source == inventoryButton) {
-			running = inventoryButtonPressed();
-		} else if (source == helpButton) {
-			running = helpButtonPressed();
-		} else if (source == peekButton) {
-			running = peekButtonPressed();
-		}
-
-		//Write the text that was generated on this iteration to the console
-		writeToConsole(businessMediator.getTextOutput());
-
-		//Update data display, as something might have changed now
-		updateGameDataDisplay();
-
-		//If the game is no longer running, get the players score and quit
-		if (!running) {
-			this.getNameAndSaveScore();
-		}
+	private void onNorthButtonAction() {
+		businessMediator.notifyGo("north");
 	}
 
-	private boolean northButtonPressed() {
-		return businessMediator.notifyGo("north");
+	/**
+	 * Called when the south button is pressed.
+	 */
+	@FXML
+	private void onSouthButtonAction() {
+		businessMediator.notifyGo("south");
 	}
 
-	private boolean southButtonPressed() {
-		return businessMediator.notifyGo("south");
+	/**
+	 * Called when the east button is pressed.
+	 */
+	@FXML
+	private void onEastButtonAction() {
+		businessMediator.notifyGo("east");
 	}
 
-	private boolean eastButtonPressed() {
-		return businessMediator.notifyGo("east");
+	/**
+	 * Called when the west button is pressed.
+	 */
+	@FXML
+	private void onWestButtonAction() {
+		businessMediator.notifyGo("west");
 	}
 
-	private boolean westButtonPressed() {
-		return businessMediator.notifyGo("west");
+	/**
+	 * Called when the take button is pressed.
+	 */
+	@FXML
+	private void onTakeButtonAction() {
+		businessMediator.notifyTake(roomContentDropDown.getValue());
 	}
 
-	private boolean takeButtonPressed() {
-		return businessMediator.notifyTake(roomContentDropDown.getValue());
+	/**
+	 * Called when the drop button is pressed.
+	 */
+	@FXML
+	private void onDropButtonAction() {
+		businessMediator.notifyDrop(inventoryDropDown.getValue());
 	}
 
-	private boolean dropButtonPressed() {
-		return businessMediator.notifyDrop(inventoryDropDown.getValue());
-	}
-
-	private boolean useButtonPressed() {
-		return businessMediator.notifyUse(
+	/**
+	 * Called when the use button is pressed.
+	 */
+	@FXML
+	private void onUseButtonAction() {
+		businessMediator.notifyUse(
 				inventoryDropDown.getValue(),
 				roomContentDropDown.getValue());
 	}
 
-	private boolean inspectButtonPressed() {
+	/**
+	 * Called when the inspect button is pressed.
+	 */
+	@FXML
+	private void onInspectButtonAction() {
 		String inventorySelection = inventoryDropDown.getValue();
 		String roomSelection = roomContentDropDown.getValue();
 
 		if (inventorySelection != null) {
-			return businessMediator.notifyInspect(inventorySelection);
+			businessMediator.notifyInspect(inventorySelection);
 		} else {
-			return businessMediator.notifyInspect(roomSelection);
+			businessMediator.notifyInspect(roomSelection);
 		}
 	}
 
-	private boolean inventoryButtonPressed() {
-		return businessMediator.notifyInventory();
+	/**
+	 * Called when the inventory button is pressed.
+	 */
+	@FXML
+	private void onInventoryButtonAction() {
+		businessMediator.notifyInventory();
 	}
 
-	private boolean helpButtonPressed() {
-		return businessMediator.notifyHelp();
+	/**
+	 * Called when the help button is pressed.
+	 */
+	@FXML
+	private void onHelpButtonAction() {
+		businessMediator.notifyHelp();
 	}
 
-	private boolean peekButtonPressed() {
-		return businessMediator.notifyPeek(roomDropDown.getValue());
+	/**
+	 * Called when the peek button is pressed.
+	 */
+	@FXML
+	private void onPeekButtonAction() {
+		businessMediator.notifyPeek(roomDropDown.getValue());
+	}
+
+	/**
+	 * Called when the highscore button is pressed.
+	 */
+	@FXML
+	private void onHighscoreButtonAction() {
+		businessMediator.notifyHighscores();
 	}
 
 	/**
@@ -199,15 +211,21 @@ class GameGuiController implements Initializable {
 	 */
 	public void setBusinessMediator(BusinessMediator bm) {
 		this.businessMediator = bm;
+	}
 
-		//Start the game using the business mediator and print the result to the
-		//GUI console
-		String msg = businessMediator.start();
-		writeToConsole(msg);
+	/**
+	 * Start a new game. This method can be called at any time to start a new
+	 * game.
+	 */
+	public void startGame() {
+		//Initialize the new game
+		attemptGameInitialization();
 
-		//Initialize the display of all game data now that the game has been
-		//properly initialized
-		updateGameDataDisplay();
+		//Subscribe to game events
+		businessMediator.setGameListener(this);
+		
+		//Start the game
+		businessMediator.start();
 	}
 
 	/**
@@ -273,10 +291,7 @@ class GameGuiController implements Initializable {
 		}
 
 		//Update exits
-		//We want to get the exit directions as a separate list that is not
-		//backed by the exits Map. This is to allow for inserting a null element
-		//into the collection - an operation not supported by KeySet
-		List<String> exitDirections = new ArrayList<>(businessMediator.getCurrentExits().keySet());
+		List<String> exitDirections = businessMediator.getExitDirections();
 		exitDirections.add(0, null);
 		item = roomDropDown.getValue();
 		roomDropDown.setItems(FXCollections.observableArrayList(exitDirections));
@@ -284,7 +299,7 @@ class GameGuiController implements Initializable {
 		if (exitDirections.contains(item)) {
 			roomDropDown.setValue(item);
 		}
-		
+
 		//Update score label
 		scoreLabel.setText(String.valueOf(businessMediator.getCurrentScore()));
 
@@ -321,19 +336,19 @@ class GameGuiController implements Initializable {
 
 		//Get the exits from the current room. A connection to all neighbor
 		//rooms should be drawn
-		Map<String, String> exits = businessMediator.getCurrentExits();
+		List<String> exitDirections = businessMediator.getExitDirections();
 
 		//For every neighbor, figure out in which direction it is located
 		//relative to the current room. For instance, a room to the north is
 		//offset along the y axis in the negative direction (thus dx = 0 and
 		//dy = -1), and a room to the east is offset along the x axis in the
 		//positive direction (thus dx = 1 and dy = 0).
-		for (Entry<String, String> neighbor : exits.entrySet()) {
+		for (String direction : exitDirections) {
 			int dx = 0;
 			int dy = 0;
 
 			//The key is the direction in which the neighbor is located
-			switch (neighbor.getKey()) {
+			switch (direction) {
 				case "north":
 					dy = -1;
 					break;
@@ -406,7 +421,6 @@ class GameGuiController implements Initializable {
 
 	/**
 	 * Request the user to enter a player name and save the player's score.
-	 * After this the application will quit.
 	 */
 	private void getNameAndSaveScore() {
 		//Create a text input dialog
@@ -422,10 +436,148 @@ class GameGuiController implements Initializable {
 		if (result.isPresent()) {
 			this.businessMediator.saveScore(result.get());
 		}
+	}
 
-		//Quit the game after the player's score has been set. A static call is
-		//fine, as System.exit() and Platform.exit() are static calls as well
-		CastleEscape.quit();
+	/**
+	 * Ask the user which level he/she wants to play and return the name of it.
+	 * If the return value is null, that means the user did not want to play any
+	 * level and the game should quit.
+	 *
+	 * @param bm the business mediator, used to get the list of possible levels
+	 * @return the name of the level that the user wishes to play, or null if
+	 *         the user did not choose a level
+	 */
+	private String getLevelNameFromUser(BusinessMediator bm) {
+		//Get the available levels
+		String[] levelNames = bm.getLevels();
+
+		//Create choice dialog for the user to select the level he/she wants to
+		//play
+		ChoiceDialog<String> choiceDialog = new ChoiceDialog<>(levelNames[0], levelNames);
+		choiceDialog.setHeaderText("Wich level would you like to play?");
+		choiceDialog.setTitle("Level selection");
+
+		//Get the result of opening the dialog
+		Optional<String> result = choiceDialog.showAndWait();
+
+		//Return result. We use a ternary operator because result.get() will
+		//throw an exception if no result was present. The ternary operator
+		//reads:
+		//if (result.isPresent()) return result.get(); else return null;
+		return (result.isPresent() ? result.get() : null);
+	}
+
+	/**
+	 * Ask the user which character he/she wants to play as and return the name
+	 * of it. If the return value is null, that means the user did not want to
+	 * play any character and the game should quit.
+	 *
+	 * @param bm the business mediator, used to get the list of possible
+	 *           characters
+	 * @return the name of the character that the user wishes to play, or null
+	 *         if the user did not choose a character
+	 */
+	private String getCharacterNameFromUser(BusinessMediator bm) {
+		//Get the available characters and their descriptions
+		Map<String, String> characters = bm.getCharacterList();
+
+		//Create array of character names from the map above
+		String[] characterNames = new ArrayList<>(characters.keySet()).toArray(new String[0]);
+
+		//Create choice dialog for the user to select the charatcer he/she wants
+		//to play
+		ChoiceDialog<String> choiceDialog = new ChoiceDialog<>(characterNames[0], characterNames);
+		choiceDialog.setHeaderText("Wich character would you like to play as?");
+		choiceDialog.setTitle("Character selection");
+
+		//We also want to display the character's description, so we create a
+		//new label control to display the character's description 
+		Label descriptionLabel = new Label();
+
+		//The 'expendable content' of the choice dialog is set to our label
+		choiceDialog.getDialogPane().setExpandableContent(descriptionLabel);
+
+		//We add a listener to the current selection in the choice dialog
+		choiceDialog.selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				//When we receive an event that the user has made a new
+				//selection we update the label's text to the character's
+				//description from the character map
+				descriptionLabel.setText(characters.get(newValue));
+			}
+		});
+
+		//Get the result of opening the dialog
+		Optional<String> result = choiceDialog.showAndWait();
+
+		//Return result. We use a ternary operator because result.get() will
+		//throw an exception if no result was present. The ternary operator
+		//reads:
+		//if (result.isPresent()) return result.get(); else return null;
+		return (result.isPresent() ? result.get() : null);
+	}
+
+	/**
+	 * Get the level and character that the user wants to play and construct a
+	 * new game from this information. If the user dismisses these dialogs, the
+	 * game will quit before it even has a chance to start.
+	 */
+	private void attemptGameInitialization() {
+		//Get level name
+		String levelName = getLevelNameFromUser(businessMediator);
+
+		//If level name is non-null, initialize a new game with this level
+		if (levelName != null) {
+			businessMediator.initialize(levelName);
+		} else {
+			//Else, close the application
+			Platform.exit();
+			System.exit(0);
+		}
+
+		//Get character name
+		String characterName = getCharacterNameFromUser(businessMediator);
+
+		//If character name is non-null, set the character for the new game
+		if (characterName != null) {
+			businessMediator.notifyCharacterSelected(characterName);
+		} else {
+			//Else, close the application
+			Platform.exit();
+			System.exit(0);
+		}
+	}
+
+	/* Event received from the business layer */
+	@Override
+	public void onGameStart(String output) {
+		//Write the text that was generated on game start
+		writeToConsole(output);
+
+		//Update data display, to show the game's initial state
+		updateGameDataDisplay();
+	}
+
+	@Override
+	public void onGameExit(String output) {
+		//Write the text that was generated on game exit
+		writeToConsole(output);
+
+		//If the game is no longer running, get the players score
+		this.getNameAndSaveScore();
+		
+		//Try to start a new game, or quit if the user wishes to
+		startGame();
+	}
+
+	@Override
+	public void onGameIteration(String output) {
+		//Write the text that was generated on this iteration to the console
+		writeToConsole(output);
+
+		//Update data display, as something might have changed now
+		updateGameDataDisplay();
 	}
 
 	/**
@@ -439,5 +591,4 @@ class GameGuiController implements Initializable {
 		horizontalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorHorizontal.png"));
 		verticalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorVertical.png"));
 	}
-
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Kitchen</name>
+    <description>The kitchen is pitch black except from some embers in the fireplace.</description>
+    <inventory>
+        <item>dull knife</item>
+        <object>embers</object>
+    </inventory>
+    <exits>
+        <south>Wine Cellar</south>
+    </exits>
+</room>

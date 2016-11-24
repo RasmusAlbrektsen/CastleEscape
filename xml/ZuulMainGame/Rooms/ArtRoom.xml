@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<room>
+    <name>Art Room</name>
+    <description>The room is full of lively paintings and statues. A specific painting seems to stand out more than the others, the garden painting.</description>
+    <inventory>
+        <object>garden painting</object>
+    </inventory>
+    <exits>
+        <east>Great Hall</east>
+        <south>Checkpoint</south>
+        <north>Office</north>
+    </exits>
+</room>
