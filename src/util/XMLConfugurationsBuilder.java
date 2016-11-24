@@ -11,11 +11,11 @@ public class XMLConfugurationsBuilder implements IBuilder {
 
 	}
 
-	int monsterMoveTime;
-	double monsterMoveChance;
-	String safeRoom;
-	String startRoom;
-	String monsterStartRoom;
+	private int monsterMoveTime;
+	private double monsterMoveChance;
+	private String safeRoom;
+	private String startRoom;
+	private String monsterStartRoom;
 
 	public void addConfiguration(String name,String data){
 		switch (name.toLowerCase()){

@@ -85,7 +85,7 @@ public class Monster {
 	 */
 	public void setHunting(Room playerRoom) {
 		//Do nothing if the player is already being hunted
-		if (hunting == true) {
+		if (hunting) {
 			return;
 		}
 
@@ -287,7 +287,7 @@ public class Monster {
 	 * @param extraTime the amount of extra time for the player to escape the
 	 *                  monster, in milliseconds
 	 */
-	public void addEscapeTime(int extraTime) {
+	private void addEscapeTime(int extraTime) {
 		countDown += extraTime; //Add more time for the player to escape
 	}
 

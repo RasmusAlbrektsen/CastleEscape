@@ -29,7 +29,7 @@ public class InspectableObject {
 	 */
 	private String description;
 
-	private List<Event> inspectEvents;
+	private final List<Event> inspectEvents;
 
 	/**
 	 * Constructs a new inspectable object, giving it a name and a description.

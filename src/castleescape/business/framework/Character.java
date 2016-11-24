@@ -29,9 +29,9 @@ public class Character {
 	 */
 	private final Inventory inventory;
 
-	private String name;
+	private final String name;
 
-	private String description;
+	private final String description;
 	/**
 	 * Constructs a new character with the specified clumsiness and carry
 	 * capacity.

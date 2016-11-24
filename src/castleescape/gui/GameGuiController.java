@@ -32,7 +32,7 @@ import javafx.scene.web.WebView;
  *
  * @author Kasper
  */
-public class GameGuiController implements Initializable {
+class GameGuiController implements Initializable {
 
 	/**
 	 * Images for rendering the map part of the GUI.

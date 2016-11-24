@@ -7,14 +7,8 @@ package castleescape.gui;
 
 import castleescape.business.BusinessMediator;
 import castleescape.business.framework.Character;
-import castleescape.business.framework.Game;
+
 import java.io.File;
-import java.sql.Time;
-import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -48,7 +42,7 @@ public class CastleEscape extends Application {
 
 		BusinessMediator bm = new BusinessMediator();
 
-		ChoiceDialog<Character> characterChoiceDialog = new ChoiceDialog<Character>(bm.getCharacterList()[0],bm.getCharacterList());
+		ChoiceDialog<Character> characterChoiceDialog = new ChoiceDialog<>(bm.getCharacterList()[0], bm.getCharacterList());
 		characterChoiceDialog.setHeaderText("Which character would you like to play?");
 		characterChoiceDialog.setTitle("Character selection");
 		characterChoiceDialog.showAndWait();
