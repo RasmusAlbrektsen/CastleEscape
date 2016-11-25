@@ -7,6 +7,7 @@ package castleescape.data;
 
 import castleescape.business.framework.Configuration;
 import castleescape.business.framework.Room;
+import castleescape.business.framework.Score;
 import castleescape.business.object.InspectableObject;
 import castleescape.business.object.Item;
 import java.util.List;
@@ -27,12 +28,14 @@ public class DataMediator {
 	 * The object responsible for reading level data.
 	 */
 	private final LevelDataReader levelDataReader;
+	private final ScoreFileManager scoreFileManager;
 
 	/**
 	 * Constructs a new data mediator.
 	 */
 	public DataMediator() {
 		levelDataReader = new LevelDataReader();
+		scoreFileManager = new ScoreFileManager();
 	}
 
 	/**
@@ -46,16 +49,19 @@ public class DataMediator {
 	}
 
 	/**
-	 * Read all level data in the folder at the specified path. The level data
-	 * can then be retrieved using the methods
+	 * Read all data of the level with the specified name. The level data can
+	 * then be retrieved using the methods
 	 * {@link #getInspectableObjects()}, {@link #getItems()} and
 	 * {@link #getRooms()}.
 	 *
-	 * @param levelFolderPath the path of the level folder as a string
+	 * @param levelName the name of the level to read
 	 */
-	public void readLevelData(String levelFolderPath) {
+	public void readLevelData(String levelName) {
 		//Pass call to level data reader
-		levelDataReader.readLevel(levelFolderPath);
+		levelDataReader.readLevel(levelName);
+
+		//Pass call to score file manager
+		scoreFileManager.readScores(levelName);
 	}
 
 	/**
@@ -100,5 +106,37 @@ public class DataMediator {
 	public Configuration getConfiguration() {
 		//Pass call to level data reader
 		return levelDataReader.getConfiguration();
+	}
+
+	/**
+	 * Read the score data for the specified level. This data can be retrieved
+	 * by calling {@link #getScores()}.
+	 *
+	 * @param levelName the name of the level to read
+	 */
+	public void readScoreData(String levelName) {
+		scoreFileManager.readScores(levelName);
+	}
+	
+	/**
+	 * Save the specified score to the score file associated with the specified
+	 * level name. If no such file exists, it will be created when calling this
+	 * method.
+	 *
+	 * @param levelName the name of the level for which to save the score
+	 * @param score     the score to save
+	 */
+	public void saveScoreData(String levelName, Score score) {
+		scoreFileManager.saveScore(levelName, score);
+	}
+
+	/**
+	 * Get the scores that were read during the last call to
+	 * {@link #readScoreData(String)}.
+	 *
+	 * @return the scores that were read last
+	 */
+	public List<Score> getScores() {
+		return scoreFileManager.getScores();
 	}
 }

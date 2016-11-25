@@ -7,8 +7,10 @@ Furthermore, each time you run away from the monster you get more time to escape
 &lt;br/&gt;
 Also, when the monster is set free it will roam around the map in a random manner. You should therefore always look out for it, as it might enter your room while you are in the process of doing something else!
 &lt;br/&gt;
-Thanks for playing the tutorial level, and have fun with the rest of the game!</description>
-    <inventory/>
+To end the tutorial and get back to the level selection menu, inspect the magical portal in front of you.</description>
+    <inventory>
+        <object>Magical Portal</object>
+    </inventory>
     <exits>
         <north>Forest</north>
     </exits>

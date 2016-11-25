@@ -560,10 +560,7 @@ public class GameGuiController implements Initializable, GameListener {
 	}
 
 	@Override
-	public void onGameExit(String output) {
-		//Write the text that was generated on game exit
-		writeToConsole(output);
-
+	public void onGameExit() {
 		//If the game is no longer running, get the players score
 		this.getNameAndSaveScore();
 		

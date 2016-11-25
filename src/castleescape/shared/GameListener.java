@@ -21,10 +21,8 @@ public interface GameListener {
 
 	/**
 	 * Called right after the game has ended.
-	 * 
-	 * @param output the textual output that the game generated on exit
 	 */
-	void onGameExit(String output);
+	void onGameExit();
 
 	/**
 	 * Called every time the game has made an iteration (getting user input,

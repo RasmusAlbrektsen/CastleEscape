@@ -12,8 +12,8 @@ import castleescape.business.framework.Game;
 import castleescape.business.object.InspectableObject;
 import castleescape.data.DataMediator;
 import castleescape.shared.GameListener;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

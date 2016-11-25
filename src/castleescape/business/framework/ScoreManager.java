@@ -5,14 +5,10 @@
  */
 package castleescape.business.framework;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import castleescape.business.ViewUtil;
+import castleescape.data.DataMediator;
 
 /**
  * Class responsible for all score related operations, including keeping track
@@ -22,8 +18,15 @@ import castleescape.business.ViewUtil;
  */
 public class ScoreManager {
 
-	private static final String HIGHSCORE_FILE = "HighScores.txt";
-	private static final String SCORE_ELEMENT_SEPARATOR = ":";
+	/**
+	 * The name of the level for which these scores apply.
+	 */
+	private final String levelName;
+
+	/**
+	 * The object to use for saving scores to the file system.
+	 */
+	private final DataMediator dataMediator;
 
 	/**
 	 * The player's current score. This will change over the course of the game.
@@ -38,15 +41,33 @@ public class ScoreManager {
 	/**
 	 * The list of scores. This list is always sorted in descending order.
 	 */
-	private List<Score> scores;
+	private final List<Score> scores;
 
 	/**
-	 * Constructs a new object for managing scores. This automatically reads the
-	 * score file.
+	 * Constructs a new object for managing scores. This will automatically read
+	 * the scores associated with the specified level.
+	 *
+	 * @param dataMediator the object to use for saving scores to the file
+	 *                     system
+	 * @param levelName    the name of the level for which these scores apply
 	 */
-	public ScoreManager() {
+	public ScoreManager(DataMediator dataMediator, String levelName) {
+		this.dataMediator = dataMediator;
+		this.levelName = levelName;
+
+		//Initialize score list
 		scores = new ArrayList<>();
-		readFromFile();
+
+		//Read score data from the file system
+		dataMediator.readScoreData(levelName);
+
+		//Retrieve unsorted list of scores from the data mediator
+		List<Score> unsortedScores = dataMediator.getScores();
+
+		//Add al the scores to the internal score list, sorting it along the way
+		for (Score score : unsortedScores) {
+			addScore(score);
+		}
 	}
 
 	/**
@@ -71,12 +92,10 @@ public class ScoreManager {
 	 * Record the player's current score by evaluating it as a new highscore and
 	 * saving it in the score file. This method should only be called when the
 	 * game is over.
-	 * <p>
-	 * Calling this method will not reset the player's score. To do so, call
-	 * {@link #reset()}.
+	 *
+	 * @param name the name of the user who achieved the current score
 	 */
 	public void recordCurrentGameScore(String name) {
-
 		//Clip the name to three characters
 		if (name.length() > 3) {
 			name = name.substring(0, 3);
@@ -89,7 +108,7 @@ public class ScoreManager {
 		addScore(score);
 
 		//Save the score to the score file
-		saveScore(score);
+		dataMediator.saveScoreData(levelName, score);
 	}
 
 	/**
@@ -125,66 +144,6 @@ public class ScoreManager {
 		//been set yet, then this score must be the new highscore
 		if (highscore == null || score.getPlayerScore() > highscore.getPlayerScore()) {
 			highscore = score;
-		}
-	}
-
-	/**
-	 * Write the specified score to the score file.
-	 *
-	 * @param score the score to save in the score file
-	 */
-	private void saveScore(Score score) {
-		//Use try-with-resources to create and use a filewriter. This will
-		//automatically close the filewriter if something goes wrong and is the
-		//preferred way to handle IO operations.
-		try (FileWriter writer = new FileWriter(HIGHSCORE_FILE, true)) {
-
-			//Write the score to a new line in the score file
-			writer.write(score.getPlayerName() + SCORE_ELEMENT_SEPARATOR + score.getPlayerScore() + "\n");
-
-			//Ensure that all data has actually been written out. Some IO
-			//implementations use buffering to enhance performance, but closing
-			//the stream before any buffered input has been written out will
-			//cause the buffered data to be lost.
-			writer.flush();
-
-			//Close the filewriter
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Read the score file, if it exists, and store the contents in this score
-	 * manager. This method will also sort the scores.
-	 */
-	private void readFromFile() {
-		//Use try-with-resources to create and use a scanner on a file. This
-		//will automatically close the scanner if something goes wrong and is
-		//the preferred way to handle IO operations.
-		try (Scanner scanner = new Scanner(new File(HIGHSCORE_FILE))) {
-
-			//Loop through all lines in the file
-			while (scanner.hasNextLine()) {
-				//Get the name and score on the line as separate strings. The
-				//file is assumed to be well formatted.
-				String[] lineContent = scanner.nextLine().split(SCORE_ELEMENT_SEPARATOR);
-
-				//Get the name and score from the current line
-				String name = lineContent[0];
-				int points = Integer.parseInt(lineContent[1]);
-				Score score = new Score(name, points);
-
-				//Add the score to the internal list. This automatically sorts
-				//and tracks the highscore
-				addScore(score);
-			}
-
-			//Close the scanner for goo measure
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -231,59 +190,6 @@ public class ScoreManager {
 			//want to start from 1, not 0)
 			ViewUtil.print((i + 1) + ". ");
 			ViewUtil.println(currentScore);
-		}
-	}
-
-	/**
-	 * Reset this score manager so that it can track a new player's score.
-	 */
-	public void reset() {
-		currentGameScore = 0;
-	}
-
-	/**
-	 * Private class for storing player names and scores together in a
-	 * convenient way.
-	 */
-	private class Score {
-
-		//Instance variables are final, as they should never be changed
-		private final String playerName;
-		private final int playerScore;
-
-		/**
-		 * Constructs a new score object with the specified player name and
-		 * score.
-		 *
-		 * @param playerName the name of the player
-		 * @param score      the player's score
-		 */
-		public Score(String playerName, int score) {
-			this.playerName = playerName;
-			this.playerScore = score;
-		}
-
-		/**
-		 * Get the name of the player that made this score.
-		 *
-		 * @return the name of the player that made this score
-		 */
-		public String getPlayerName() {
-			return playerName;
-		}
-
-		/**
-		 * Get the score of this score object.
-		 *
-		 * @return the score of this score object
-		 */
-		public int getPlayerScore() {
-			return playerScore;
-		}
-
-		@Override
-		public String toString() {
-			return playerName + ", " + playerScore + " points";
 		}
 	}
 }

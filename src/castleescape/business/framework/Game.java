@@ -48,7 +48,7 @@ public class Game {
 	 * The object that listens for game events.
 	 */
 	private GameListener listener;
-	
+
 	/**
 	 * Map of command executers. The keys are CommandWord objects and the values
 	 * are the CommandExecuters associated with these CommandWord objects.
@@ -96,7 +96,7 @@ public class Game {
 	 * Boolean keeping track of whether the game is running.
 	 */
 	private boolean running;
-	
+
 	/**
 	 * The message to display at the start of the game.
 	 */
@@ -140,7 +140,7 @@ public class Game {
 				configuration.getSafeRoom(),
 				configuration.getMonsterMoveChance(),
 				configuration.getMonsterMoveTime());
-		
+
 		//Set welcome message
 		welcomeMessage = configuration.getWelcomeMessage();
 
@@ -177,8 +177,9 @@ public class Game {
 		possibleCharacters.add(new Character("Tim", "Tim is pretty generic, he does not make that much noise and can carry a reasonable number of items.", 0.4, 4));
 		possibleCharacters.add(new Character("", "Debug character.", 0, 999));
 
-		//Initialize remaining variables
-		scoreManager = new ScoreManager();
+		//Initialize score manager. this automatically read the scores for the
+		//current level
+		scoreManager = new ScoreManager(dataMediator, levelName);
 	}
 
 	/**
@@ -271,7 +272,7 @@ public class Game {
 		//Print the long description of the current room, that is the starting
 		//room
 		ViewUtil.println(currentRoom.getLongDescription());
-		
+
 		//Notify the listener that the game has started
 		listener.onGameStart(ViewUtil.getString());
 	}
@@ -285,10 +286,10 @@ public class Game {
 	 */
 	public void processCommand(Command command) {
 		//If the game has ended, do nothing
-		if (! running) {
+		if (!running) {
 			return;
 		}
-		
+
 		//If the player is caught by the monster, game over
 		if (monster.isPlayerCaught()) {
 			ViewUtil.println("The monster caught you and shredded you to pieces!");
@@ -296,10 +297,11 @@ public class Game {
 
 			//Game over, so we quit
 			end();
-			
+
 			//We notify the listener now, as we don't want to execute more code
 			//in the special case that the user was caught by the monster
-			listener.onGameExit(ViewUtil.getString());
+			listener.onGameIteration(ViewUtil.getString());
+			listener.onGameExit();
 			return;
 		}
 
@@ -312,6 +314,7 @@ public class Game {
 		//unknown
 		if (executer == null) {
 			ViewUtil.println("I don't know what you mean.");
+			listener.onGameIteration(ViewUtil.getString());
 			return;
 		}
 
@@ -320,14 +323,14 @@ public class Game {
 
 		//Notify the monster that a command has been entered.
 		monster.notifyOfCommand(this);
-		
+
 		//Notify the listener that an iteration has been made
 		listener.onGameIteration(ViewUtil.getString());
-		
+
 		//If the game is no longer running after this iteration, notify the
 		//listener that the game has ended
-		if (! running) {
-			listener.onGameExit(ViewUtil.getString());
+		if (!running) {
+			listener.onGameExit();
 		}
 	}
 
@@ -336,7 +339,7 @@ public class Game {
 	 */
 	public void end() {
 		running = false;
-		
+
 		//We do not notify the listener yet, as there may still be some stuff to
 		//do in the processCommand() method
 	}
@@ -359,7 +362,6 @@ public class Game {
 	 */
 	public void saveScore(String name) {
 		scoreManager.recordCurrentGameScore(name);
-		scoreManager.reset();
 	}
 
 	/**
@@ -398,10 +400,10 @@ public class Game {
 	public Room getRoom(String name) {
 		return roomMap.get(name);
 	}
-	
+
 	/**
 	 * Subscribe to events from the game.
-	 * 
+	 *
 	 * @param listener the listener to subscribe
 	 */
 	public void setGameListener(GameListener listener) {

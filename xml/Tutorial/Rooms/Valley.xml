@@ -4,7 +4,7 @@
     <description>This valley has no good hiding spots! You better keep running south!</description>
     <inventory/>
     <exits>
-        <south>Forest</south>
         <east>Training Grounds</east>
+        <south>Forest</south>
     </exits>
 </room>

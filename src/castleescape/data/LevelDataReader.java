@@ -32,7 +32,7 @@ public class LevelDataReader {
 	 * The name of the root directory containing all level directories.
 	 */
 	private static final String ROOT_DIRECTORY = "xml/";
-	
+
 	/**
 	 * A subdirectory in a level directory.
 	 */
@@ -74,15 +74,15 @@ public class LevelDataReader {
 		//Get all directories containing level specific data. These are all
 		//located in the root directory
 		File[] levelDirs = new File(ROOT_DIRECTORY).listFiles();
-		
+
 		//Create array of strings to hold the names of all the level directories
 		String[] levelNames = new String[levelDirs.length];
-		
+
 		//For every level diretory, save its name in the array of level names
 		for (int i = 0; i < levelDirs.length; i++) {
 			levelNames[i] = levelDirs[i].getName();
 		}
-		
+
 		//Return the result
 		return levelNames;
 	}
