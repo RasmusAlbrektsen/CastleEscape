@@ -5,6 +5,7 @@
     <events>
         <event>
             <type>quit</type>
+            <reward>1</reward>
             <description>Congratulations on completing the game!</description>
         </event>
     </events>

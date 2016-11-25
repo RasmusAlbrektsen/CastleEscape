@@ -7,8 +7,8 @@
         <object>bronze lock</object>
     </inventory>
     <exits>
-        <west>Art Room</west>
         <east>Library</east>
         <south>Dining Room</south>
+        <west>Art Room</west>
     </exits>
 </room>

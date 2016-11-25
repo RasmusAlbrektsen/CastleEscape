@@ -6,30 +6,35 @@
         <event>
             <trigger>silver lock</trigger>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description>The silver lock opens with a big clank! Behind it, a golden lock unveils.</description>
             <item>silver lock</item>
         </event>
         <event>
             <trigger>silver lock</trigger>
             <type>addRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>gold lock</item>
         </event>
         <event>
             <trigger>silver lock</trigger>
             <type>makeNoise</type>
+            <reward>1</reward>
             <description/>
             <weight>0.98</weight>
         </event>
         <event>
             <trigger>silver lock</trigger>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>The great hall is mighty big. There is a staircase to the upper floor, but it has been barricaded by lots of old furniture and statues. The main door is now only locked by a gold lock.</description>
             <room>Great Hall</room>
         </event>
         <event>
             <trigger>silver lock</trigger>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>This door blocks the only way to freedom, but it is tightly locked! The door has only one more lock, the gold lock. Maybe the key is hidden around this place?</description>
             <object>mian door</object>
         </event>

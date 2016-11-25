@@ -6,18 +6,21 @@
         <event>
             <trigger>rat</trigger>
             <type>addPlayerItem</type>
+            <reward>1</reward>
             <description>Cutting the rat in half made it possible to acquire the gold key. It is full of grease, but other than that it is undamaged.</description>
             <item>gold key</item>
         </event>
         <event>
             <trigger>rat</trigger>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>rat</item>
         </event>
         <event>
             <trigger>rat</trigger>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>Entering the lab reveals nothing new. The rat is still warm to the touch.</description>
             <room>Lab</room>
         </event>

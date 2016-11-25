@@ -6,18 +6,21 @@
         <event>
             <trigger>safe</trigger>
             <type>addRoomItem</type>
+            <reward>1</reward>
             <description>Using the code from the garden painting unlocked the safe. The safe is now an unlocked safe.</description>
             <item>unlocked safe</item>
         </event>
         <event>
             <trigger>safe</trigger>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>safe</item>
         </event>
         <event>
             <trigger>safe</trigger>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>Entering the office reveals an unlocked safe in the far corner.</description>
             <room>Office</room>
         </event>

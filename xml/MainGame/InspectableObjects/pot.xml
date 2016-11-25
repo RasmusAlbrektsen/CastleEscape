@@ -5,16 +5,19 @@
     <events>
         <event>
             <type>addPlayerItem</type>
+            <reward>1</reward>
             <description>You fucking idiot, you broke the pot! But what is that? A silver key. Maybe you are not so stupid after all...</description>
             <item>silver key</item>
         </event>
         <event>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>pot</item>
         </event>
         <event>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>The treasury is flooding with useless gold coins and diamonds and shit. The pieces of the broken pot are still all over the floor, and the flower has surely taken a beating. What a shame, the world could use more beautiful flowers.</description>
             <room>Treasury</room>
         </event>

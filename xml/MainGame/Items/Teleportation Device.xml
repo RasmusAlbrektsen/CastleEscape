@@ -5,6 +5,7 @@
     <events>
         <event>
             <type>teleport</type>
+            <reward>-1</reward>
             <description/>
             <destination>Wine Cellar</destination>
         </event>

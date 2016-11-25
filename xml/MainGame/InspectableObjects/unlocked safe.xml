@@ -5,21 +5,25 @@
     <events>
         <event>
             <type>addPlayerItem</type>
+            <reward>1</reward>
             <description>Inspecting the safe reveals a bronze key. The safe is now an empty safe.</description>
             <item>bronze key</item>
         </event>
         <event>
             <type>addRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>empty safe</item>
         </event>
         <event>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>unlocked safe</item>
         </event>
         <event>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>Entering the office reveals an empty safe in the far corner.</description>
             <room>Office</room>
         </event>

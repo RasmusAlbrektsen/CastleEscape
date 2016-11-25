@@ -6,18 +6,21 @@
         <event>
             <trigger>barred door</trigger>
             <type>addRoomItem</type>
+            <reward>1</reward>
             <description>The bar on the door releases, and the door finally unlocks.</description>
             <item>main door</item>
         </event>
         <event>
             <trigger>barred door</trigger>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>barred door</item>
         </event>
         <event>
             <trigger>barred door</trigger>
             <type>addExit</type>
+            <reward>1</reward>
             <description/>
             <destination>Garden</destination>
             <direction>north</direction>
@@ -25,6 +28,7 @@
         <event>
             <trigger>barred door</trigger>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>The great hall is mighty big. There is a staircase to the upper floor, but it has been barricaded by lots of old furniture and statues. The main door to the north is unlocked, go to freedom!</description>
             <room>Great Hall</room>
         </event>

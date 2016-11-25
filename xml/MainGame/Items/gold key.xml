@@ -6,30 +6,35 @@
         <event>
             <trigger>gold lock</trigger>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description>The gold lock opens with a big clank. The main door finally seems unlocked. Or is it?</description>
             <item>gold lock</item>
         </event>
         <event>
             <trigger>gold lock</trigger>
             <type>addRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>barred door</item>
         </event>
         <event>
             <trigger>gold lock</trigger>
             <type>makeNoise</type>
+            <reward>1</reward>
             <description/>
             <weight>0.98</weight>
         </event>
         <event>
             <trigger>gold lock</trigger>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>The great hall is mighty big. There is a staircase to the upper floor, but it has been barricaded by lots of old furniture and statues. The main door can still not be opened, it is barricaded from the other side.</description>
             <room>Great Hall</room>
         </event>
         <event>
             <trigger>gold lock</trigger>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>main door</item>
         </event>

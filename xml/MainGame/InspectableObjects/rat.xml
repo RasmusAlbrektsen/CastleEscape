@@ -5,6 +5,7 @@
     <events>
         <event>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>Entering the lab reveals nothing new. The rat looks so full after having eaten that gold key.</description>
             <room>Lab</room>
         </event>

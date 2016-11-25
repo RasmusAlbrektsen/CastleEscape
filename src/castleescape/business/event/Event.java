@@ -19,7 +19,8 @@ public class Event {
 			WEIGHT = "weight",
 			ROOM = "room",
 			DESCRIPTION = "description",
-			OBJECT = "object";
+			OBJECT = "object",
+			REWARD = "reward";
 
 	/**
 	 * The event word.
@@ -73,6 +74,6 @@ public class Event {
 		game.getEventExecuter(eventWord).execute(game, this);
 		
 		//Add points for every event executed
-		game.getScoreManager().addPoints(1);
+		game.getScoreManager().addPoints(Integer.parseInt(this.getEventParam(REWARD)));
 	}
 }

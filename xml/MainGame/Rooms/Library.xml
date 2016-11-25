@@ -6,7 +6,7 @@
         <object>glasses</object>
     </inventory>
     <exits>
-        <west>Great Hall</west>
         <north>Lab</north>
+        <west>Great Hall</west>
     </exits>
 </room>

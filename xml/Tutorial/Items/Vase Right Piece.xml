@@ -6,30 +6,35 @@
         <event>
             <trigger>Vase Left Piece</trigger>
             <type>removePlayerItem</type>
+			<reward>1</reward>
             <description>You successfully combined the two pieces together to construct a precious vase. I am proud of your deeds, and thus i have given you access to the treasury to the south. If you do not wish to keep the vase, select it in the choice box on the left, which contains all the items in your inventory, and press drop.</description>
             <item>Vase Left Piece</item>
         </event>
         <event>
             <trigger>Vase Left Piece</trigger>
             <type>removePlayerItem</type>
+			<reward>1</reward>
             <description/>
             <item>Vase Right Piece</item>
         </event>
         <event>
             <trigger>Vase Left Piece</trigger>
             <type>removeRoomItem</type>
+			<reward>1</reward>
             <description/>
             <item>Vase Left Piece</item>
         </event>
         <event>
             <trigger>Vase Left Piece</trigger>
             <type>removeRoomItem</type>
+			<reward>1</reward>
             <description/>
             <item>Vase Right Piece</item>
         </event>
         <event>
             <trigger>Vase Left Piece</trigger>
             <type>addExit</type>
+			<reward>1</reward>
             <description/>
             <destination>Treasury</destination>
             <direction>south</direction>
@@ -37,12 +42,14 @@
         <event>
             <trigger>Vase Left Piece</trigger>
             <type>setDescription</type>
+			<reward>1</reward>
             <description>Go to the treasury to grab the key, then use it on the locked cage.</description>
             <room>Training Grounds</room>
         </event>
         <event>
             <trigger>Vase Left Piece</trigger>
             <type>addPlayerItem</type>
+			<reward>1</reward>
             <description/>
             <item>Precious Vase</item>
         </event>

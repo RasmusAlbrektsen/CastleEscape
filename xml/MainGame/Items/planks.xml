@@ -6,6 +6,7 @@
         <event>
             <trigger>staircase</trigger>
             <type>addExit</type>
+            <reward>1</reward>
             <description>The staircase is repaired, and reaching the door up above to the north is now possible.</description>
             <destination>Kitchen</destination>
             <direction>north</direction>
@@ -13,54 +14,63 @@
         <event>
             <trigger>staircase</trigger>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>The wine cellar smells strongly of wine and alcohol. Only addicted human beings could stand such an odor.</description>
             <room>Wine Cellar</room>
         </event>
         <event>
             <trigger>staircase</trigger>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>staircase</item>
         </event>
         <event>
             <trigger>staircase</trigger>
             <type>removePlayerItem</type>
+            <reward>1</reward>
             <description/>
             <item>planks</item>
         </event>
         <event>
             <trigger>staircase</trigger>
             <type>addRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>planks</item>
         </event>
         <event>
             <trigger>embers</trigger>
             <type>addPlayerItem</type>
+            <reward>1</reward>
             <description>You lit one of the planks and created a torch. The fireplace is now also lit. The light reveals a door to the west.</description>
             <item>torch</item>
         </event>
         <event>
             <trigger>embers</trigger>
             <type>removePlayerItem</type>
+            <reward>1</reward>
             <description/>
             <item>planks</item>
         </event>
         <event>
             <trigger>embers</trigger>
             <type>setDescription</type>
+            <reward>1</reward>
             <description>The kitchen is lit by the flames in the fireplace.</description>
             <room>Kitchen</room>
         </event>
         <event>
             <trigger>embers</trigger>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>embers</item>
         </event>
         <event>
             <trigger>embers</trigger>
             <type>addExit</type>
+            <reward>1</reward>
             <description/>
             <destination>Dining Room</destination>
             <direction>west</direction>

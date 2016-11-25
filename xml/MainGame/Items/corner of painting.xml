@@ -6,12 +6,14 @@
         <event>
             <trigger>glasses</trigger>
             <type>addPlayerItem</type>
+            <reward>1</reward>
             <description>Looking at the painting through the glasses reveals a strange number sequence. What might it be for?</description>
             <item>slip with numbers</item>
         </event>
         <event>
             <trigger>glasses</trigger>
             <type>removePlayerItem</type>
+            <reward>1</reward>
             <description/>
             <item>corner of painting</item>
         </event>

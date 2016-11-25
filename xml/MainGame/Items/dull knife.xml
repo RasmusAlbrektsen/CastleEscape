@@ -6,12 +6,14 @@
         <event>
             <trigger>grindstone</trigger>
             <type>addPlayerItem</type>
+            <reward>1</reward>
             <description>Sharpening the dull knife on the grindstone was a success. The knife is now perfectly sharp.</description>
             <item>knife</item>
         </event>
         <event>
             <trigger>grindstone</trigger>
             <type>removePlayerItem</type>
+            <reward>1</reward>
             <description/>
             <item>dull knife</item>
         </event>

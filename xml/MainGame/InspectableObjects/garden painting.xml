@@ -5,11 +5,13 @@
     <events>
         <event>
             <type>addPlayerItem</type>
+            <reward>1</reward>
             <description>The corner of the painting seems suspicious. Perhaps it should be inspected further. Better rip it off for now.</description>
             <item>corner of painting</item>
         </event>
         <event>
             <type>removeRoomItem</type>
+            <reward>1</reward>
             <description/>
             <item>garden painting</item>
         </event>
