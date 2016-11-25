@@ -36,6 +36,11 @@ public class Configuration {
 	 * The time that it takes the monster to move one room, in milliseconds.
 	 */
 	private final int monsterMoveTime;
+	
+	/**
+	 * The message to display at the start of the game.
+	 */
+	private final String welcomeMessage;
 
 	/**
 	 * Constructs a new configuration object.
@@ -47,13 +52,15 @@ public class Configuration {
 	 *                          percent
 	 * @param monsterMoveTime   the time that it takes the monster to move one
 	 *                          room, in milliseconds
+	 * @param welcomeMessage the message to display at the start of the game
 	 */
-	public Configuration(Room startRoom, Room safeRoom, Room monsterStartRoom, double monsterMoveChance, int monsterMoveTime) {
+	public Configuration(Room startRoom, Room safeRoom, Room monsterStartRoom, double monsterMoveChance, int monsterMoveTime, String welcomeMessage) {
 		this.startRoom = startRoom;
 		this.safeRoom = safeRoom;
 		this.monsterStartRoom = monsterStartRoom;
 		this.monsterMoveChance = monsterMoveChance;
 		this.monsterMoveTime = monsterMoveTime;
+		this.welcomeMessage = welcomeMessage;
 	}
 
 	/**
@@ -100,5 +107,9 @@ public class Configuration {
 	 */
 	public int getMonsterMoveTime() {
 		return monsterMoveTime;
+	}
+	
+	public String getWelcomeMessage() {
+		return welcomeMessage;
 	}
 }

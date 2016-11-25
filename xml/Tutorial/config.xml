@@ -4,4 +4,6 @@
     <monsterstartroom>Monster Pit</monsterstartroom>
     <monstermovechance>0.2</monstermovechance>
     <monstermovetime>120000</monstermovetime>
+	<welcome>Welcome to the Tutorial
+In this tutorial you will learn the basics of playing the game. Good luck!</welcome>
 </configurations>

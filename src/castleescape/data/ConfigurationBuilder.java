@@ -20,7 +20,8 @@ public class ConfigurationBuilder implements IBuilder {
 			SAFE_ROOM = "saferoom",
 			MONSTER_START_ROOM = "monsterstartroom",
 			MONSTER_MOVE_CHANCE = "monstermovechance",
-			MONSTER_MOVE_TIME = "monstermovetime";
+			MONSTER_MOVE_TIME = "monstermovetime",
+			WELCOME = "welcome";
 
 	/**
 	 * The room in which the player starts.
@@ -46,6 +47,11 @@ public class ConfigurationBuilder implements IBuilder {
 	 * The time that it takes the monster to move one room, in milliseconds.
 	 */
 	private int monsterMoveTime;
+	
+	/**
+	 * The message to display at the start of the game.
+	 */
+	private String welcome;
 
 	/**
 	 * The configuration object that has been built. Will be null until
@@ -77,6 +83,11 @@ public class ConfigurationBuilder implements IBuilder {
 			case MONSTER_MOVE_TIME:
 				monsterMoveTime = Integer.parseInt(content);
 				break;
+			case WELCOME:
+				//The welcome message may contain newlines, but we need to
+				//convert these to line break elements
+				welcome = content.replaceAll("\n", "<br/>");
+				break;
 		}
 	}
 
@@ -87,7 +98,8 @@ public class ConfigurationBuilder implements IBuilder {
 				dataStorage.getRoom(safeRoom),
 				dataStorage.getRoom(monsterStartRoom),
 				monsterMoveChance,
-				monsterMoveTime);
+				monsterMoveTime,
+				welcome);
 	}
 
 	@Override

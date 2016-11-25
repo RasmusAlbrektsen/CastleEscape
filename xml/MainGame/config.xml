@@ -4,4 +4,6 @@
     <monsterstartroom>Dining Room</monsterstartroom>
     <monstermovechance>0.2</monstermovechance>
     <monstermovetime>6000</monstermovetime>
+	<welcome>Welcome to Castle Escape!
+Castle Escape is a game where the objective is to escape a castle. Wow.</welcome>
 </configurations>

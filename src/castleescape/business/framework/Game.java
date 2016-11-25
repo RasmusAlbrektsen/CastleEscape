@@ -96,6 +96,11 @@ public class Game {
 	 * Boolean keeping track of whether the game is running.
 	 */
 	private boolean running;
+	
+	/**
+	 * The message to display at the start of the game.
+	 */
+	private final String welcomeMessage;
 
 	/**
 	 * Constructs a new game object to play the specified level.
@@ -135,6 +140,9 @@ public class Game {
 				configuration.getSafeRoom(),
 				configuration.getMonsterMoveChance(),
 				configuration.getMonsterMoveTime());
+		
+		//Set welcome message
+		welcomeMessage = configuration.getWelcomeMessage();
 
 		//Add command executers and associate them with command words
 		commandExecuters = new HashMap<>();
@@ -252,8 +260,7 @@ public class Game {
 
 		//Print out game details
 		ViewUtil.newLine();
-		ViewUtil.println("Welcome to Castle Escape!");
-		ViewUtil.println("Castle Escape is a game where the objective is to escape a castle. Wow.");
+		ViewUtil.println(welcomeMessage);
 
 		//Printing out CommandWord.HELP will replace it with the return value of
 		//its toString() method, which is the string representation of the
