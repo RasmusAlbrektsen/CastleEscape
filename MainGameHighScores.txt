@@ -1,5 +1,4 @@
 XIT:29
 DAN:5
 ALX:10
-DIT:52
 XIT:-22
