@@ -8,8 +8,7 @@ package castleescape.data;
 import castleescape.business.framework.Configuration;
 
 /**
- *
- * @author Kasper
+ * Builder responsible for processing raw configuration data.
  */
 public class ConfigurationBuilder implements IBuilder {
 

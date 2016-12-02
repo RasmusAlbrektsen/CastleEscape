@@ -15,8 +15,6 @@ import java.util.Map;
 
 /**
  * Builder responsible for processing raw inspectable object data.
- *
- * @author Alex, Kasper
  */
 public class InspectableObjectBuilder implements IBuilder {
 

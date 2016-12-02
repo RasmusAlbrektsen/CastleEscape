@@ -16,8 +16,6 @@ import java.util.List;
 
 /**
  * A command executer for executing use commands.
- *
- * @author DitteKoustrup
  */
 public class UseCommandExecuter implements CommandExecuter {
 
@@ -26,13 +24,13 @@ public class UseCommandExecuter implements CommandExecuter {
 		//Get item and object names
 		String itemName = command.getCommandParameter(Command.ITEM);
 		String objectName = command.getCommandParameter(Command.OBJECT);
-		
+
 		//If either was not specified, tell the user
 		if (itemName == null || objectName == null) {
 			ViewUtil.println("I need two actual objects to use with one another!");
 			return;
 		}
-		
+
 		//Get item from the player's inventory
 		Item item = game.getPlayer().getInventory().getItemByName(itemName);
 
@@ -52,7 +50,7 @@ public class UseCommandExecuter implements CommandExecuter {
 			return;
 		}
 
-		//Create array list to store al use events
+		//Create array list to store all use events
 		List<Event> useEvents = new ArrayList<>();
 
 		//Get the events created by using item on object
@@ -73,6 +71,9 @@ public class UseCommandExecuter implements CommandExecuter {
 			ViewUtil.println("I can't seem to see how i should use these objects with each other.");
 			return;
 		}
+
+		//Sort the events
+		useEvents.sort(new EventComparator());
 
 		//Execute all retrieved events
 		for (Event e : useEvents) {

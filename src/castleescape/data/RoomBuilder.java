@@ -14,8 +14,6 @@ import java.util.Map.Entry;
 
 /**
  * Builder responsible for processing raw room data.
- *
- * @author Alex, Kasper
  */
 public class RoomBuilder implements IBuilder {
 

@@ -19,8 +19,6 @@ import java.util.List;
  * the effort required to remove this coupling would increase the complexity of
  * both the business and the data layer far above what is worthwhile for an
  * application this simple.
- *
- * @author Kasper
  */
 public class DataMediator {
 

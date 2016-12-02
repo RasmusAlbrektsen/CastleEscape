@@ -5,15 +5,13 @@ import castleescape.business.framework.Room;
 import castleescape.business.ViewUtil;
 
 /**
- * An event executer for adding an exit to the current room.
- * <p>
- * Created by Alex on 13/10/2016.
+ * Event executer for adding an exit to the current room.
  */
 public class AddExitEventExecuter implements EventExecuter {
 
 	/**
-	 * Adds a room to the current room. The room must already exist, and have a
-	 * name.
+	 * Adds a room to the current rooms exits. The room must already exist, and
+	 * have a name.
 	 */
 	@Override
 	public void execute(Game game, Event event) {
@@ -22,11 +20,14 @@ public class AddExitEventExecuter implements EventExecuter {
 
 		//Get the room to connect to
 		Room otherRoom = game.getRoom(event.getEventParam(Event.DESTINATION));
+
+		//If the room does not exist, we cannot add it
 		if (otherRoom == null) {
-			System.out.println("The room with the name " + Event.DESTINATION + " does not exist");
+			//Use System.out.println() for debugging purposes
+			System.out.println("The room with the name " + event.getEventParam(Event.DESTINATION) + " does not exist");
 		}
 
-		//print the description, if one is present
+		//Print the description, if one is present
 		String description = event.getEventParam(Event.DESCRIPTION);
 		if (description != null) {
 			ViewUtil.println(description);

@@ -23,8 +23,6 @@ import org.xml.sax.SAXException;
  * This logic has been moved to a separate class to reduce the complexity of the
  * mediator, whose only job should be to handle communication between the data
  * and the business layer, and to perform any necessary mapping.
- *
- * @author Alex, Kasper
  */
 public class LevelDataReader {
 

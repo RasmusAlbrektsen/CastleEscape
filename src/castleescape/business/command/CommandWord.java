@@ -3,7 +3,11 @@ package castleescape.business.command;
 import castleescape.business.ViewUtil;
 
 /**
- * An enum defining all command words known in this framework.
+ * An enum defining all command words known in this framework. Command enums
+ * still specify a description of how to use them. This has been carried over
+ * from the time when players had to type commands manually and could not use a
+ * user interface. The command descriptions have not been removed, as it allows
+ * the game to easily support fully text-based input again.
  */
 public enum CommandWord {
 	GO("go", "go <direction>\nDirection is either 'north', 'south', 'east' or 'west'"),
@@ -18,7 +22,7 @@ public enum CommandWord {
 	PEEK("peek", "peek <direction>"),
 	HIGHSCORES("highscores", "highscores\nHighscores takes no parameters"),
 	UNKNOWN("?", "Unknown command");
-	
+
 	/**
 	 * The representation of a command word as a string.
 	 */
@@ -31,7 +35,7 @@ public enum CommandWord {
 
 	/**
 	 * Private constructor for new command words. All new command word objects
-	 * must specify a string representation.
+	 * must specify a string representation and a description of their uses.
 	 *
 	 * @param commandString      the string representation of this command word
 	 * @param commandDescription a description of how to use this command

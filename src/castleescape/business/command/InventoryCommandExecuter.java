@@ -11,8 +11,6 @@ import castleescape.business.ViewUtil;
 
 /**
  * A command executer for executing inventory commands.
- *
- * @author Christian Schou
  */
 public class InventoryCommandExecuter implements CommandExecuter {
 

@@ -36,8 +36,7 @@
  *                                                                             *
  ******************************************************************************/
 
-.toggle-button, .button {
-	/*-fx-graphic: url("../../res/button.png");*/
+.styledButton {
 	-fx-background-image: url("../../res/button.png");
 	-fx-background-repeat: no-repeat;       
     -fx-background-position:left; 
@@ -51,15 +50,13 @@
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
 }
 
-.toggle-button:hover,
-.button:hover,
-.button:default:hover {
+.styledButton:hover,
+.styledButton:default:hover {
        -fx-background-image: url("../../res/button-focused.png");
 }
 
-.toggle-button:pressed,
-.button:pressed,
-.button:default:pressed {
+.styledButton:pressed,
+.styledButton:default:pressed {
        -fx-background-image: url("../../res/button-pressed.png");
 }
 
@@ -69,17 +66,13 @@
  *                                                                             *
  ******************************************************************************/
 .compassButton {
-	-fx-background-image: null;
+	-fx-background-color: transparent;
 	-fx-min-width: 66;
 	-fx-min-height: 66;
 	-fx-pref-width: 66;
 	-fx-pref-height: 66;
 	-fx-max-width: 66;
 	-fx-max-height: 66;
-}
-
-.compassButton:hover {
-	-fx-background-image: null;
 }
 
 /*******************************************************************************

@@ -13,7 +13,7 @@ import java.util.Set;
  * Class describing a room in the game. Rooms have a description and a
  * {@link HashMap} linking the direction strings
  * {@code "north", "south", "east", "west"} to the exits in these directions, if
- * any.
+ * any. Rooms can also contain inspectable objects and items.
  */
 public class Room {
 
@@ -121,6 +121,7 @@ public class Room {
 		descriptionBuilder.append("<h1>").append(getRoomName()).append("</h1>")
 				.append(getShortDescription()).append("</br></br>");
 
+		//Only print inventory if the room contains any items
 		if (getInventory().getItemCount() != 0) {
 			descriptionBuilder.append("Scattered on the floor you see: ").append(getInventory()).append("</br></br>");
 		}
@@ -132,13 +133,19 @@ public class Room {
 
 	/**
 	 * Get a string describing the exits of this room. The string consists of a
-	 * single line with the exits separated by spaces.
+	 * single line with the exits separated by spaces. The string will be
+	 * special if the room has no exits.
 	 * <p>
 	 * Example return value: {@code "Exits: north east"}
 	 *
 	 * @return a string describing the exits of this room
 	 */
 	private String getExitString() {
+		//If there are no exits, return a special string
+		if (exits.isEmpty()) {
+			return "There are no exits from this room";
+		}
+
 		//Initialize returnString variable
 		String returnString = "Exits:";
 
@@ -226,7 +233,7 @@ public class Room {
 		InspectableObject object = inventory.getItemByName(name);
 
 		//If object isn't equal to null, then it points to an object, and we
-		//won't and we have to keep searching.
+		//won't have to keep searching.
 		if (object != null) {
 			return object;
 		} else {

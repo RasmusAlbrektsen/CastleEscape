@@ -4,9 +4,9 @@ import castleescape.business.framework.Game;
 import java.util.Map;
 
 /**
- * Created by Alex on 13/10/2016. Contains all data for a given event.
- * Parameters is stored as a key-value pair to account for inconsistencies in
- * the parameter order in the XML format.
+ * Class containing all data for a given event. Parameters are stored as a
+ * key-value pair to account for inconsistencies in the parameter order in the
+ * XML format.
  */
 public class Event {
 
@@ -72,7 +72,7 @@ public class Event {
 		//Get the event executer to execute this specific event and call its
 		//execute() method
 		game.getEventExecuter(eventWord).execute(game, this);
-		
+
 		//Add points for every event executed
 		game.getScoreManager().addPoints(Integer.parseInt(this.getEventParam(REWARD)));
 	}

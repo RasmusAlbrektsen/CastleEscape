@@ -13,8 +13,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * Class used to handle .xml files and store their raw data in {@link IBuilder}
  * objects. This class is used in conjunction with a SAXParser to read xml
  * files.
- *
- * @author Alex, Kasper
  */
 public class XMLHandler extends DefaultHandler {
 

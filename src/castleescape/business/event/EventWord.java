@@ -1,19 +1,20 @@
 package castleescape.business.event;
 
 /**
- * Created by Alex on 13/10/2016. Holds all event types. String representations
- * are as it would look like in XML files.
+ * Enum holding all event types. String representations are as it would look
+ * like in XML files.
  */
 public enum EventWord {
-	ADD_ROOM_ITEM("addRoomItem"),
-	ADD_PLAYER_ITEM("addPlayerItem"),
-	REMOVE_ROOM_ITEM("removeRoomItem"),
-	REMOVE_PLAYER_ITEM("removePlayerItem"),
-	MAKE_NOISE("makeNoise"),
-	SET_DESCRIPTION("setDescription"),
-	ADD_EXIT("addExit"),
-	TELEPORT("teleport"),
-	QUIT("quit");
+	ADD_ROOM_ITEM("addRoomItem", 80),
+	ADD_PLAYER_ITEM("addPlayerItem", 80),
+	REMOVE_ROOM_ITEM("removeRoomItem", 100),
+	REMOVE_PLAYER_ITEM("removePlayerItem", 100),
+	MAKE_NOISE("makeNoise", 20),
+	SET_DESCRIPTION("setDescription", 50),
+	SET_OBJECT_DESCRIPTION("setObjectDescription", 50),
+	ADD_EXIT("addExit", 30),
+	TELEPORT("teleport", 10),
+	QUIT("quit", 0);
 
 	/**
 	 * The representation of an event word as a string.
@@ -21,14 +22,33 @@ public enum EventWord {
 	private final String name;
 
 	/**
+	 * The importance of this event type. The more important an event type is,
+	 * the earlier it will be executed among a series of events
+	 */
+	private final int weight;
+
+	/**
 	 * Private constructor for new event words.
 	 *
-	 * @param name the string representation of this event word
+	 * @param name   the string representation of this event word
+	 * @param weight the importance of this event type. The more important an
+	 *               event type is, the earlier it will be executed among a
+	 *               series of events
 	 */
-	EventWord(String name) {
+	EventWord(String name, int weight) {
 		this.name = name;
+		this.weight = weight;
 	}
 
+	/**
+	 * Get the weight of this event word.
+	 * 
+	 * @return the weight of this event word
+	 */
+	public int getWeight() {
+		return weight;
+	}
+	
 	/**
 	 * Get the {@link EventWord} object associated with the specified event
 	 * string. If the string is not recognized as an event or is null, this
@@ -36,18 +56,14 @@ public enum EventWord {
 	 *
 	 * @param eventName the string representation of an event
 	 * @return the {@link EventWord} equivalent to the specified event string,
-	 *         or {@link IllegalArgumentException} if the event string was not
-	 *         recognized
+	 * @throws IllegalArgumentException if the event string was not recognized
 	 */
 	public static EventWord getEventWord(String eventName) {
 		//Go through all event words
 		for (EventWord eventWord : EventWord.values()) {
 
 			//If the eventWord string equals the string representation of the
-			//current event word, then return it, because we found a match.
-			//Notice that if the eventWord string is "?", then EventWord.UNKNOWN
-			//will be returned here, but that is fine, as "?" is not a valid
-			//event
+			//current event word, then return it, because we found a match
 			if (eventWord.toString().equalsIgnoreCase(eventName)) {
 				return eventWord;
 			}

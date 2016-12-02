@@ -7,13 +7,17 @@ package castleescape.business.framework;
 
 /**
  * Class for storing player names and scores together in a convenient way.
- *
- * @author Kasper
  */
 public class Score {
 
-	//Instance variables are final, as they should never be changed
+	/**
+	 * The name of the player that got this score.
+	 */
 	private final String playerName;
+
+	/**
+	 * The amount of points.
+	 */
 	private final int playerScore;
 
 	/**

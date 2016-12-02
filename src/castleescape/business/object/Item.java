@@ -12,12 +12,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Class describing a type og inspectable object that can be kept in an
+ * Class describing a type of inspectable object that can be kept in an
  * {@link Inventory} and used with other inspectable objects to generate game
  * events.
- *
- * @author Christian, Kasper, Sebastian
- * @see <a href="https://codeshare.io/pvTlZ">Codeshare</a>
  */
 public class Item extends InspectableObject {
 
@@ -69,8 +66,8 @@ public class Item extends InspectableObject {
 	/**
 	 * Define a use between this item and some other inspectable object.
 	 *
-	 * @param otherName the name of the inspectable object that this item can
-	 *                  be used with
+	 * @param otherName the name of the inspectable object that this item can be
+	 *                  used with
 	 * @param eventList the list of events that should be executed as a result
 	 *                  of this use.
 	 */
@@ -123,5 +120,4 @@ public class Item extends InspectableObject {
 
 		return eventList;
 	}
-
 }

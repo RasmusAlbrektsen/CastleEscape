@@ -12,9 +12,6 @@ import castleescape.business.ViewUtil;
 
 /**
  * Class describing an object that can be placed in a room and inspected.
- *
- * @author Christian, Kasper, Sebastian
- * @see <a href="https://codeshare.io/JVaDp">Codeshare</a>
  */
 public class InspectableObject {
 
@@ -29,6 +26,9 @@ public class InspectableObject {
 	 */
 	private String description;
 
+	/**
+	 * The events that should be executed when this object is inspected.
+	 */
 	private final List<Event> inspectEvents;
 
 	/**

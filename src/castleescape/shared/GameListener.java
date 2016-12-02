@@ -7,8 +7,6 @@ package castleescape.shared;
 
 /**
  * A game listener is an object that can receive events from the game.
- *
- * @author Christian Schou
  */
 public interface GameListener {
 

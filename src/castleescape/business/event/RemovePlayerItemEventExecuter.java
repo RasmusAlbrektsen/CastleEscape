@@ -11,8 +11,6 @@ import castleescape.business.ViewUtil;
 
 /**
  * An event executer for removing an item from the player's inventory.
- *
- * @author Kasper
  */
 public class RemovePlayerItemEventExecuter extends InventoryEventExecuter {
 
@@ -23,9 +21,9 @@ public class RemovePlayerItemEventExecuter extends InventoryEventExecuter {
 	public void execute(Game game, Event event) {
 		//Get the item specified by the event by using the method in the
 		//superclass InventoryEventExecuter
-		Item item = getItemFromEvent(event);
+		Item item = getItemFromEvent(event, game);
 
-		//print the description, if one is present
+		//Print the description, if one is present
 		String description = event.getEventParam(Event.DESCRIPTION);
 		if (description != null) {
 			ViewUtil.println(description);

@@ -17,7 +17,6 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -35,8 +34,6 @@ import javafx.scene.web.WebView;
  * Controller class for the game GUI view. This class is also responsible for
  * getting initial user input required to start the game, such as level and
  * character selection.
- *
- * @author Kasper
  */
 public class GameGuiController implements Initializable, GameListener {
 
@@ -78,6 +75,8 @@ public class GameGuiController implements Initializable, GameListener {
 	private Button peekButton;
 	@FXML
 	private Button highscoreButton;
+	@FXML
+	private Button quitButton;
 
 	/* Drop downs */
 	@FXML
@@ -203,6 +202,14 @@ public class GameGuiController implements Initializable, GameListener {
 	private void onHighscoreButtonAction() {
 		businessMediator.notifyHighscores();
 	}
+	
+	/**
+	 * Called when the quit button is pressed.
+	 */
+	@FXML
+	private void onQuitButtonAction() {
+		businessMediator.end();
+	}
 
 	/**
 	 * Set the business mediator to be used by this controller.
@@ -223,7 +230,7 @@ public class GameGuiController implements Initializable, GameListener {
 
 		//Subscribe to game events
 		businessMediator.setGameListener(this);
-		
+
 		//Start the game
 		businessMediator.start();
 	}
@@ -269,7 +276,7 @@ public class GameGuiController implements Initializable, GameListener {
 		//reset when we repopulate it, even if the selected item persists
 		String item = inventoryDropDown.getValue();
 
-		//Repopulate the choice box. This requires out list to be wrapped in an
+		//Repopulate the choice box. This requires our list to be wrapped in an
 		//observable array list
 		inventoryDropDown.setItems(FXCollections.observableArrayList(playerItems));
 
@@ -391,8 +398,8 @@ public class GameGuiController implements Initializable, GameListener {
 		//away from the center of the canvas, where r is the radius of the
 		//compass minus a few pixels to account for the edge of the compass to
 		//be anti-aliased
-		int halfWidth = (int) compass.getWidth() / 2;
-		int halfHeight = (int) compass.getHeight() / 2;
+		int halfWidth = (int) cx;
+		int halfHeight = (int) cy;
 
 		for (int y = -halfHeight; y < halfHeight; y++) {
 			for (int x = -halfWidth; x < halfWidth; x++) {
@@ -403,7 +410,7 @@ public class GameGuiController implements Initializable, GameListener {
 		}
 
 		//Draw the compass image
-		g.drawImage(compassImg, 0, 0);
+		renderImageCentered(g, compassImg, cx, cy);
 	}
 
 	/**
@@ -443,13 +450,12 @@ public class GameGuiController implements Initializable, GameListener {
 	 * If the return value is null, that means the user did not want to play any
 	 * level and the game should quit.
 	 *
-	 * @param bm the business mediator, used to get the list of possible levels
 	 * @return the name of the level that the user wishes to play, or null if
 	 *         the user did not choose a level
 	 */
-	private String getLevelNameFromUser(BusinessMediator bm) {
+	private String getLevelNameFromUser() {
 		//Get the available levels
-		String[] levelNames = bm.getLevels();
+		String[] levelNames = businessMediator.getLevels();
 
 		//Create choice dialog for the user to select the level he/she wants to
 		//play
@@ -472,14 +478,12 @@ public class GameGuiController implements Initializable, GameListener {
 	 * of it. If the return value is null, that means the user did not want to
 	 * play any character and the game should quit.
 	 *
-	 * @param bm the business mediator, used to get the list of possible
-	 *           characters
 	 * @return the name of the character that the user wishes to play, or null
 	 *         if the user did not choose a character
 	 */
-	private String getCharacterNameFromUser(BusinessMediator bm) {
+	private String getCharacterNameFromUser() {
 		//Get the available characters and their descriptions
-		Map<String, String> characters = bm.getCharacterList();
+		Map<String, String> characters = businessMediator.getCharacterList();
 
 		//Create array of character names from the map above
 		String[] characterNames = new ArrayList<>(characters.keySet()).toArray(new String[0]);
@@ -525,7 +529,7 @@ public class GameGuiController implements Initializable, GameListener {
 	 */
 	private void attemptGameInitialization() {
 		//Get level name
-		String levelName = getLevelNameFromUser(businessMediator);
+		String levelName = getLevelNameFromUser();
 
 		//If level name is non-null, initialize a new game with this level
 		if (levelName != null) {
@@ -537,7 +541,7 @@ public class GameGuiController implements Initializable, GameListener {
 		}
 
 		//Get character name
-		String characterName = getCharacterNameFromUser(businessMediator);
+		String characterName = getCharacterNameFromUser();
 
 		//If character name is non-null, set the character for the new game
 		if (characterName != null) {
@@ -563,7 +567,7 @@ public class GameGuiController implements Initializable, GameListener {
 	public void onGameExit() {
 		//If the game is no longer running, get the players score
 		this.getNameAndSaveScore();
-		
+
 		//Try to start a new game, or quit if the user wishes to
 		startGame();
 	}

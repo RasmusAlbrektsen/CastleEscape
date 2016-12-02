@@ -16,11 +16,9 @@ import java.util.Map;
 
 /**
  * Class defining the monster in the game. This class contains instance methods
- * for keeping track of the monster's state (hunting or idle) and whether the
- * player has been caught at any given time.
- *
- * @author DitteKoustrup, Kasper, Alex
- * @see <a href="https://codeshare.io/4jocK">Codeshare</a>
+ * for keeping track of the monster's state (hunting or idle), whether the
+ * player has been caught at any given time and moving the monster, either
+ * randomly or by using pathfinding.
  */
 public class Monster {
 
@@ -83,7 +81,7 @@ public class Monster {
 	private Deque<Room> chasePath;
 
 	/**
-	 * Constructs a new monster that starts in the specified room.
+	 * Constructs a new monster.
 	 *
 	 * @param location   the room that the monster is in initially
 	 * @param safeRoom   the safe room, the monster cannot enter this
@@ -133,22 +131,22 @@ public class Monster {
 	 * @param game the game object
 	 */
 	public void notifyOfCommand(Game game) {
-		//If the monster is hunting the player, warn the player
+		//If the monster is hunting the player
 		if (isHunting()) {
 
 			//If the player entered the safe room as a result of the command,
 			//stop hunting
 			if (game.getCurrentRoom() == safeRoom) {
-				ViewUtil.println("You escaped the monster.");
 				ViewUtil.newLine();
+				ViewUtil.println("You escaped the monster.");
 				setIdle();
 
 				//No more to do for now, so we return
 				return;
 			} else {
 				//Otherwise warn the player
-				ViewUtil.printShaky(WARNING_MESSAGE);
 				ViewUtil.newLine();
+				ViewUtil.printShaky(WARNING_MESSAGE);
 			}
 
 			//Move the monster towards the player if enough time has passed.
@@ -168,6 +166,7 @@ public class Monster {
 			return;
 		}
 
+		//The monster is not hunting the player
 		//If the monster is waiting for the player, no need to do any more.
 		//Otherwise determine if the monster should move to a random room
 		//connected to the current room.
@@ -186,8 +185,8 @@ public class Monster {
 					//The monster cannot enter the safe room. If it tries to,
 					//choose another room. This will produce an infinite loop if
 					//the safe room is the only way for the monster to go, but
-					//in that case the layout of the rooms in the game violate
-					//the requirements.
+					//in that case the layout of the rooms in the game violates
+					//the requirements, so this bug has not been fixed.
 					do {
 						newRoom = exits[(int) (Math.random() * exits.length)];
 					} while (newRoom == safeRoom);
@@ -229,13 +228,11 @@ public class Monster {
 			//The new path to the player
 			chasePath = getPathToRoom(destination);
 
-			if (chasePath.size() > lastDistance) {
-				//Player ran away from the monster, get more time
-				addEscapeTime(moveTime);
-			} else if (chasePath.size() < lastDistance) {
-				//Player ran towards the monster, loose time
-				addEscapeTime(-moveTime);
-			} //Else no difference in distance, no time change
+			//The difference in path length. For instance, if the new distance
+			//is smaller than the previous, then the difference below is
+			//negative, and the player will loose time
+			int distanceDiff = chasePath.size() - lastDistance;
+			addEscapeTime(moveTime * distanceDiff);
 		}
 	}
 
@@ -266,6 +263,13 @@ public class Monster {
 		return hunting;
 	}
 
+	/**
+	 * Test whether the monster is currently waiting for the player. While the
+	 * monster is waiting it will do nothing.
+	 *
+	 * @return {@code true} if the monster is waiting for the player,
+	 *         {@code false} otherwise
+	 */
 	public boolean isWaitingForPlayer() {
 		return waitingForPlayer;
 	}
@@ -278,7 +282,8 @@ public class Monster {
 	 *         otherwise
 	 */
 	public boolean isPlayerCaught() {
-		//If the monster is not hunting the player then we should always return false
+		//If the monster is not hunting the player then we should always return
+		//false
 		if (!hunting) {
 			return false;
 		}
@@ -301,7 +306,8 @@ public class Monster {
 	}
 
 	/**
-	 * Add more time for the player to escape the monster.
+	 * Add more time for the player to escape the monster. Passing a negative
+	 * argument will remove time.
 	 *
 	 * @param extraTime the amount of extra time for the player to escape the
 	 *                  monster, in milliseconds
@@ -391,14 +397,14 @@ public class Monster {
 		//The last room in the path is the goal
 		optimalPath.add(goal);
 
-		Room currentRoom = goal;
+		Room current = goal;
 
-		//For every room along the path (starting with the goal ^) get the
+		//For every room along the path (starting with the goal) get the
 		//previous room in the path and add it to the start of the deque
-		while (optimalRoomConnections.get(currentRoom) != null) {
-			Room neighbor = optimalRoomConnections.get(currentRoom);
+		while (optimalRoomConnections.get(current) != null) {
+			Room neighbor = optimalRoomConnections.get(current);
 			optimalPath.addFirst(neighbor);
-			currentRoom = neighbor;
+			current = neighbor;
 		}
 
 		//Return the optimal path

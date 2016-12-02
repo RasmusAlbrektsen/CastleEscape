@@ -11,8 +11,6 @@ import java.util.HashMap;
  * Instances of this class are responsible for keeping references to all
  * {@link InspectableObject inspectable objects}, including {@link Item items}
  * that have been read into the game during startup.
- *
- * @author Kasper
  */
 public class InspectableObjectRegister {
 
@@ -21,7 +19,14 @@ public class InspectableObjectRegister {
 	 * are the names of the inspectable objects which are thus guaranteed to be
 	 * unique.
 	 */
-	private static final HashMap<String, InspectableObject> objectStore = new HashMap<>();
+	private final HashMap<String, InspectableObject> objectStore;
+
+	/**
+	 * Constructs a new register for inspectable objects and items.
+	 */
+	public InspectableObjectRegister() {
+		objectStore = new HashMap<>();
+	}
 
 	/**
 	 * Register the specified inspectable object. This method should also be
@@ -29,7 +34,7 @@ public class InspectableObjectRegister {
 	 *
 	 * @param object the inspectable object to register
 	 */
-	public static void registerInspectableObject(InspectableObject object) {
+	public void registerInspectableObject(InspectableObject object) {
 		objectStore.put(object.getName(), object);
 	}
 
@@ -40,7 +45,7 @@ public class InspectableObjectRegister {
 	 * @return the inspectable object with the specified name, or null if no
 	 *         such inspectable object exists
 	 */
-	public static InspectableObject getAsInspectableObject(String name) {
+	public InspectableObject getAsInspectableObject(String name) {
 		return objectStore.get(name);
 	}
 
@@ -50,7 +55,7 @@ public class InspectableObjectRegister {
 	 * @param name the name of the item
 	 * @return the item with the specified name, or null if no such item exists
 	 */
-	public static Item getAsItem(String name) {
+	public Item getAsItem(String name) {
 		//Get the object with the specified name as an inspectable object
 		InspectableObject obj = getAsInspectableObject(name);
 

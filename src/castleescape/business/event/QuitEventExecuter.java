@@ -9,8 +9,7 @@ import castleescape.business.ViewUtil;
 import castleescape.business.framework.Game;
 
 /**
- *
- * @author DitteKoustrup
+ * Event executer for quitting the game.
  */
 public class QuitEventExecuter implements EventExecuter {
 
@@ -21,9 +20,9 @@ public class QuitEventExecuter implements EventExecuter {
 		if (description != null) {
 			ViewUtil.println(description);
 		}
-		
+
 		//Notify the game that it should end
 		game.end();
 	}
-	
+
 }

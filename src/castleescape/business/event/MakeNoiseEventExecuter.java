@@ -10,8 +10,6 @@ import castleescape.business.ViewUtil;
 
 /**
  * An event executer for making noise and attracting the monster.
- *
- * @author Sebastian
  */
 public class MakeNoiseEventExecuter implements EventExecuter {
 
@@ -21,7 +19,7 @@ public class MakeNoiseEventExecuter implements EventExecuter {
 	 */
 	@Override
 	public void execute(Game game, Event event) {
-		//print the description, if one is present
+		//Print the description, if one is present
 		String description = event.getEventParam(Event.DESCRIPTION);
 		if (description != null) {
 			ViewUtil.println(description);
@@ -44,10 +42,11 @@ public class MakeNoiseEventExecuter implements EventExecuter {
 		//Roll a random number in the range [0;1[ to determine, if noise should
 		//be generated
 		double random = Math.random();
+		
+		System.out.println("P: " + playerWeight + "  C: " + weight + "  R: " + random);
 
 		if (random < noiseChance) {
-			//Noise was generated, make the monster hunt the player with a 30
-			//second head start
+			//Noise was generated, make the monster hunt the player
 			game.getMonster().setHunting(game.getCurrentRoom());
 			ViewUtil.println("You fool! You make too much noise.");
 		}

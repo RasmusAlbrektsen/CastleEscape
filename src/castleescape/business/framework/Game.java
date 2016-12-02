@@ -25,6 +25,7 @@ import castleescape.business.command.InspectCommandExecuter;
 import castleescape.business.command.HighscoresCommandExecuter;
 import castleescape.business.command.CommandExecuter;
 import castleescape.business.ViewUtil;
+import castleescape.business.event.SetObjectDescriptionEventExecuter;
 import castleescape.business.object.InspectableObject;
 import castleescape.business.object.InspectableObjectRegister;
 import castleescape.data.DataMediator;
@@ -33,14 +34,13 @@ import castleescape.shared.GameListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Class defining instance behavior for setting up and running a game. This
  * includes creating the game {@link Room rooms}, processing commands, changing
- * rooms, initiating and running the game loop and quitting the game. It also
- * defines instance methods for printing a welcome message and help information.
- *
- * @see <a href="https://codeshare.io/vRDTN">Codeshare</a>
+ * rooms, and quitting the game. It also defines instance methods for printing a
+ * welcome message.
  */
 public class Game {
 
@@ -65,10 +65,10 @@ public class Game {
 	 * Map of rooms in the game. The keys are room names and the values are the
 	 * rooms with these names.
 	 */
-	private final HashMap<String, Room> roomMap;
+	private final Map<String, Room> roomMap;
 
 	/**
-	 * The room that we are currently in.
+	 * The room that the player is currently in.
 	 */
 	private Room currentRoom;
 
@@ -86,6 +86,12 @@ public class Game {
 	 * The player character in the game.
 	 */
 	private Character player;
+
+	/**
+	 * Object keeping track of all theinspectable objects and items that have
+	 * been registered in the game when the current level was loaded.
+	 */
+	private final InspectableObjectRegister inspectableObjectRegister;
 
 	/**
 	 * The score manager in the game.
@@ -116,12 +122,15 @@ public class Game {
 		//Load the level with the specified name
 		dataMediator.readLevelData(levelName);
 
-		//Initialize inspectable objects and items
+		//Initialize register for inspectable objects and items
+		inspectableObjectRegister = new InspectableObjectRegister();
+
+		//Register inspectable objects and items
 		List<InspectableObject> inspectableObjects = dataMediator.getInspectableObjects();
 		inspectableObjects.addAll(dataMediator.getItems());
 
 		for (InspectableObject o : inspectableObjects) {
-			InspectableObjectRegister.registerInspectableObject(o);
+			inspectableObjectRegister.registerInspectableObject(o);
 		}
 
 		//Initialize rooms
@@ -164,6 +173,7 @@ public class Game {
 		eventExecuters.put(EventWord.ADD_ROOM_ITEM, new AddRoomItemEventExecuter());
 		eventExecuters.put(EventWord.MAKE_NOISE, new MakeNoiseEventExecuter());
 		eventExecuters.put(EventWord.SET_DESCRIPTION, new SetDescriptionEventExecuter());
+		eventExecuters.put(EventWord.SET_OBJECT_DESCRIPTION, new SetObjectDescriptionEventExecuter());
 		eventExecuters.put(EventWord.REMOVE_PLAYER_ITEM, new RemovePlayerItemEventExecuter());
 		eventExecuters.put(EventWord.REMOVE_ROOM_ITEM, new RemoveRoomItemEventExecuter());
 		eventExecuters.put(EventWord.TELEPORT, new TeleportEventExecuter());
@@ -171,13 +181,13 @@ public class Game {
 
 		//Add possible player characters
 		possibleCharacters = new ArrayList<>();
-		possibleCharacters.add(new Character("Norman", "Norman who is a normal ninja, that makes less noise but can't carry that much.", 0.2, 2));
-		possibleCharacters.add(new Character("Bob", "Bob is a bodybuilder making him capable of carrying a lot if items but he also makes a lot of noise.", 0.8, 6));
-		possibleCharacters.add(new Character("Obi", "Obi the obvious is a man that makes a lot of noise, but is capable to carry a medium amount of stuff.", 0.7, 3));
+		possibleCharacters.add(new Character("Norman", "Norman is a normal ninja, who makes very little noise but can't carry that much.", 0.2, 2));
+		possibleCharacters.add(new Character("Bob", "Bob is a bodybuilder, making him capable of carrying a lot of items, but he also makes a lot of noise.", 0.95, 6));
+		possibleCharacters.add(new Character("Obi", "Obi the obvious is a man who makes a fair amount of noise, but is capable to carry a medium amount of stuff.", 0.7, 3));
 		possibleCharacters.add(new Character("Tim", "Tim is pretty generic, he does not make that much noise and can carry a reasonable number of items.", 0.4, 4));
 		possibleCharacters.add(new Character("", "Debug character.", 0, 999));
 
-		//Initialize score manager. this automatically read the scores for the
+		//Initialize score manager. This automatically reads the scores for the
 		//current level
 		scoreManager = new ScoreManager(dataMediator, levelName);
 	}
@@ -216,6 +226,15 @@ public class Game {
 	 */
 	public Character getPlayer() {
 		return player;
+	}
+
+	/**
+	 * Get the register for inspectable objects and items.
+	 *
+	 * @return the register for inspectable objects and items
+	 */
+	public InspectableObjectRegister getInspectableObjectRegister() {
+		return inspectableObjectRegister;
 	}
 
 	/**
@@ -279,7 +298,7 @@ public class Game {
 
 	/**
 	 * Process the specified {@link Command} to carry out the action associated
-	 * with it. Thisa method will also check whether the player has been caught,
+	 * with it. This method will also check whether the player has been caught,
 	 * as such an action can only happen when the player executes a command.
 	 *
 	 * @param command the command to process

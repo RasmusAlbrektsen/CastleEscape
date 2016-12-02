@@ -10,8 +10,6 @@ import castleescape.business.ViewUtil;
 
 /**
  * A command executer for executing help commands.
- *
- * @author Christian Schou
  */
 public class HelpCommandExecuter implements CommandExecuter {
 

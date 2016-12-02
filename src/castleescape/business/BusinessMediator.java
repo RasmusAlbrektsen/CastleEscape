@@ -23,9 +23,7 @@ import java.util.Map;
  * All data exchange is in the form of simple and standard data types to ensure
  * that no part of the presentation layer is dependent on model representations
  * in the business layer. This requires a fair bit of mapping, which is also
- * performed by this class.
- *
- * @author Kasper
+ * performed by this class, thus making it a mediator.
  */
 public class BusinessMediator {
 
@@ -63,7 +61,8 @@ public class BusinessMediator {
 	}
 
 	/**
-	 * Notify the game that it should start playing.
+	 * Notify the game that it should start playing. This should be called after
+	 * a call to {@link #initialize(java.lang.String)}.
 	 */
 	public void start() {
 		//Start the game
@@ -74,7 +73,6 @@ public class BusinessMediator {
 	 * Notify the game that it should end.
 	 */
 	public void end() {
-		//TODO: No usages yet
 		//Construct command object and request that the game processes it
 		Command command = new Command(CommandWord.QUIT, null);
 		game.processCommand(command);
@@ -197,7 +195,7 @@ public class BusinessMediator {
 		//Construct map to store character information
 		Map<String, String> params = new HashMap<>();
 
-		//Add parameter describing which item whould be taken
+		//Add parameter describing which item should be taken
 		params.put(Command.ITEM, toTake);
 
 		//Construct command object and request that the game processes it
@@ -215,7 +213,7 @@ public class BusinessMediator {
 		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
-		//Add parameter describing which item whould be dropped
+		//Add parameter describing which item should be dropped
 		params.put(Command.ITEM, toDrop);
 
 		//Construct command object and request that the game processes it
@@ -234,7 +232,7 @@ public class BusinessMediator {
 		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
-		//Add parameter describing which inspectable object whould be inspected
+		//Add parameter describing which inspectable object should be inspected
 		params.put(Command.OBJECT, toInspect);
 
 		//Construct command object and request that the game processes it
@@ -254,7 +252,7 @@ public class BusinessMediator {
 		//Construct map to store command parameters
 		Map<String, String> params = new HashMap<>();
 
-		//Add parameter describing which item whould be used
+		//Add parameter describing which item should be used
 		params.put(Command.ITEM, useItem);
 
 		//Add parameter describing which inspectable object the item should be

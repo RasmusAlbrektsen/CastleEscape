@@ -14,8 +14,6 @@ import castleescape.business.ViewUtil;
 
 /**
  * A command executer for executing drop commands.
- *
- * @author Kasper
  */
 public class DropCommandExecuter implements CommandExecuter {
 
@@ -25,14 +23,14 @@ public class DropCommandExecuter implements CommandExecuter {
 		Character player = game.getPlayer();
 		Room room = game.getCurrentRoom();
 
-		//Attempt to get the item with the specified name in the player's
-		//inventory. If no such item exists, then the value of item will be null
-		String itemName = command.getCommandParameter(Command.ITEM);
-		Item item = game.getPlayer().getInventory().getItemByName(itemName);
-
 		//Get the inventory of the player and the current room
 		Inventory playerInventory = player.getInventory();
 		Inventory roomInventory = room.getInventory();
+
+		//Attempt to get the item with the specified name in the player's
+		//inventory. If no such item exists, then the value of item will be null
+		String itemName = command.getCommandParameter(Command.ITEM);
+		Item item = playerInventory.getItemByName(itemName);
 
 		//Attempt to move the specified item from the player inventory to the
 		//room inventory. If the item is null, then this method will do nothing
@@ -45,7 +43,7 @@ public class DropCommandExecuter implements CommandExecuter {
 		if (success) {
 			ViewUtil.println("Dropped " + itemName + " on the floor.");
 		} else {
-			ViewUtil.println("I don't have that item!");
+			ViewUtil.println("I cannot drop that item!");
 		}
 	}
 }

@@ -16,8 +16,6 @@ import java.util.List;
  * Class responsible for storing all the data read when loading a level.
  * Instances of this class can be passed to builders if they require knowledge
  * of other data during building.
- *
- * @author Kasper
  */
 public class LevelDataStorage {
 
@@ -54,7 +52,7 @@ public class LevelDataStorage {
 	public InspectableObject getInspectableObject(String name) {
 		//Loop through all inspectable objects and return the first occurrence
 		for (InspectableObject o : inspectableObjects) {
-			if (o.getName().equals(name)) {
+			if (o.hasName(name)) {
 				return o;
 			}
 		}
@@ -90,7 +88,7 @@ public class LevelDataStorage {
 	public Item getItem(String name) {
 		//Loop through all items and return the first occurrence
 		for (Item i : items) {
-			if (i.getName().equals(name)) {
+			if (i.hasName(name)) {
 				return i;
 			}
 		}

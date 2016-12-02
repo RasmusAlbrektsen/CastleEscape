@@ -14,8 +14,6 @@ import castleescape.business.ViewUtil;
 
 /**
  * A command executer for executing take commands.
- *
- * @author Kasper
  */
 public class TakeCommandExecuter implements CommandExecuter {
 
@@ -29,7 +27,7 @@ public class TakeCommandExecuter implements CommandExecuter {
 		//inventory. If no such item exists, then the value of item will be null
 		String itemName = command.getCommandParameter(Command.ITEM);
 		Item item = room.getInventory().getItemByName(itemName);
-		
+
 		//If the item does not exist in the room, tell the user
 		if (item == null) {
 			ViewUtil.println("There is no such item to take!");

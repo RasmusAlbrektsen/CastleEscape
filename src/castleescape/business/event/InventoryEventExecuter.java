@@ -5,15 +5,13 @@
  */
 package castleescape.business.event;
 
+import castleescape.business.framework.Game;
 import castleescape.business.object.InspectableObject;
-import castleescape.business.object.InspectableObjectRegister;
 import castleescape.business.object.Item;
 
 /**
  * An abstract event executer that performs operations on an inventory. This
  * type of event executers will need to retrieve an item from the event object.
- *
- * @author Kasper
  */
 abstract class InventoryEventExecuter implements EventExecuter {
 
@@ -21,24 +19,26 @@ abstract class InventoryEventExecuter implements EventExecuter {
 	 * Get the item that is described in the specified event. The event is
 	 * assumed to have a parameter with the name "item".
 	 *
-	 * @param e the event to get the item information from
+	 * @param e    the event to get the item information from
+	 * @param game the game instance
 	 * @return the item described by the event, or null if no such item exists
 	 */
-	Item getItemFromEvent(Event e) {
+	protected Item getItemFromEvent(Event e, Game game) {
 		String itemName = e.getEventParam(Event.ITEM);
-		return InspectableObjectRegister.getAsItem(itemName);
+		return game.getInspectableObjectRegister().getAsItem(itemName);
 	}
 
 	/**
 	 * Get the inspectable object that is described in the specified event. The
 	 * event is assumed to have a parameter with the name "item".
 	 *
-	 * @param e the event to get the item information from
+	 * @param e    the event to get the item information from
+	 * @param game the game instance
 	 * @return the inspectable object described by the event, or null if no such
 	 *         object exists
 	 */
-	InspectableObject getObjectFromEvent(Event e) {
+	protected InspectableObject getObjectFromEvent(Event e, Game game) {
 		String objectName = e.getEventParam(Event.ITEM);
-		return InspectableObjectRegister.getAsInspectableObject(objectName);
+		return game.getInspectableObjectRegister().getAsInspectableObject(objectName);
 	}
 }

@@ -7,8 +7,6 @@ package castleescape.business.framework;
 
 /**
  * An immutable object to store the game's configurations.
- * 
- * @author Kasper
  */
 public class Configuration {
 
@@ -36,7 +34,7 @@ public class Configuration {
 	 * The time that it takes the monster to move one room, in milliseconds.
 	 */
 	private final int monsterMoveTime;
-	
+
 	/**
 	 * The message to display at the start of the game.
 	 */
@@ -52,7 +50,7 @@ public class Configuration {
 	 *                          percent
 	 * @param monsterMoveTime   the time that it takes the monster to move one
 	 *                          room, in milliseconds
-	 * @param welcomeMessage the message to display at the start of the game
+	 * @param welcomeMessage    the message to display at the start of the game
 	 */
 	public Configuration(Room startRoom, Room safeRoom, Room monsterStartRoom, double monsterMoveChance, int monsterMoveTime, String welcomeMessage) {
 		this.startRoom = startRoom;
@@ -108,7 +106,12 @@ public class Configuration {
 	public int getMonsterMoveTime() {
 		return monsterMoveTime;
 	}
-	
+
+	/**
+	 * Get the message to display at the start of the game.
+	 *
+	 * @return the message to display at the start of the game
+	 */
 	public String getWelcomeMessage() {
 		return welcomeMessage;
 	}

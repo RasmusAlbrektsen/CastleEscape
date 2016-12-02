@@ -10,8 +10,6 @@ import castleescape.business.framework.Room;
 
 /**
  * Event executer for teleporting the player.
- *
- * @author Kasper
  */
 public class TeleportEventExecuter implements EventExecuter {
 
@@ -24,7 +22,7 @@ public class TeleportEventExecuter implements EventExecuter {
 		Room teleportRoom = game.getRoom(teleport);
 
 		if (teleportRoom == null) {
-			//If no room was found, print an error message
+			//If no room was found, print an error message for debugging
 			System.out.println("The room " + teleport + " does not exist!");
 		} else {
 			//Otherwise, move the player to the room specified by the event

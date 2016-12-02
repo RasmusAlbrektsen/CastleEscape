@@ -15,8 +15,6 @@ import java.util.Map.Entry;
 
 /**
  * Builder responsible for processing raw item data.
- *
- * @author Alex, Kasper
  */
 public class ItemBuilder extends InspectableObjectBuilder {
 

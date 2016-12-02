@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <inspectableobject>
     <name>Orb of Completion</name>
-    <description>On the touch the orb explode and a text is revealed</description>
+    <description>Touching the orb results in an inferno of light. The world around begins to fade - it is replaced by a feeling of joy and calmness.</description>
     <events>
         <event>
             <type>quit</type>
             <reward>1</reward>
-            <description>Congratulations on completing the game!</description>
+            <description>Congratulations on escaping the terrible monster and completing the game!</description>
         </event>
     </events>
 </inspectableobject>

@@ -10,9 +10,6 @@ import java.util.List;
 
 /**
  * Class describing an object that can store items.
- *
- * @author Christian, Kasper, Sebastian
- * @see <a href="https://codeshare.io/pqEfD">Codeshare</a>
  */
 public class Inventory {
 
@@ -157,36 +154,6 @@ public class Inventory {
 	}
 
 	/**
-	 * Swap the specified items inside this inventory. If either item is not
-	 * present inside this inventory the method will do nothing. This method
-	 * returns a boolean based on whether the swap operation was a success.
-	 *
-	 * @param item1 the first item to swap
-	 * @param item2 the second item to swap
-	 * @return {@code true} if the items were successfully swapped,
-	 *         {@code false} otherwise
-	 */
-	public boolean swapItems(Item item1, Item item2) {
-		//We can only swap items if both are present in this inventory
-		if (content.contains(item1) && content.contains(item2)) {
-
-			//Retrieve the locations of the items to be swapped
-			int item1Location = content.indexOf(item1);
-			int item2Location = content.indexOf(item2);
-
-			//Swap the items
-			content.set(item1Location, item2);
-			content.set(item2Location, item1);
-
-			return true;
-		}
-
-		//Either items was not present in this inventory, so the inventory is
-		//untouched
-		return false;
-	}
-
-	/**
 	 * Get the item located at the specified index in this inventory.
 	 *
 	 * @param i the index of the item to retrieve
@@ -199,7 +166,7 @@ public class Inventory {
 		//exception thrown by content.get(i) because exceptions should thrown as
 		//early as possible
 		if (i < 0 || i >= content.size()) {
-			throw new IndexOutOfBoundsException("Index " + i + " was not in this inventory!");
+			throw new IndexOutOfBoundsException("Index " + i + " is not in this inventory!");
 		}
 
 		//Return the item at the index i

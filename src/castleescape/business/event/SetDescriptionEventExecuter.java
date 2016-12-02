@@ -10,8 +10,6 @@ import castleescape.business.framework.Room;
 
 /**
  * An event executer for changing the description of a room.
- *
- * @author Christian Schou
  */
 public class SetDescriptionEventExecuter implements EventExecuter {
 
@@ -23,10 +21,10 @@ public class SetDescriptionEventExecuter implements EventExecuter {
 	public void execute(Game game, Event event) {
 		//Get the room for which the description should be changed
 		Room room = game.getRoom(event.getEventParam(Event.ROOM));
-		
+
 		//Get the new description for this room
 		String roomDescription = event.getEventParam(Event.DESCRIPTION);
-		
+
 		//Set the description of the room
 		room.setDescription(roomDescription);
 	}

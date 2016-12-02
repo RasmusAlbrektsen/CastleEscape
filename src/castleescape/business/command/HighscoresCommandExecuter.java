@@ -10,19 +10,17 @@ import castleescape.business.framework.Game;
 
 /**
  * A command executer for executing highscore commands.
- * 
- * @author Kasper
  */
 public class HighscoresCommandExecuter implements CommandExecuter {
-	
+
 	@Override
 	public void execute(Game game, Command command) {
 		//Print out highscores only if the command has no parameters
 		if (command.hasCommandParameters()) {
 			ViewUtil.println("Highscores of what?");
 		} else {
-			//Write out the top ten scores at most
-			game.getScoreManager().writeScoreTable(10);
+			//Write out all the scores
+			game.getScoreManager().writeScoreTable(-1);
 		}
 	}
 }

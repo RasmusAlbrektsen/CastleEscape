@@ -17,8 +17,6 @@ import java.util.Scanner;
 /**
  * Class responsible for reading score data into the game and writing it back to
  * the file system.
- *
- * @author Kasper
  */
 public class ScoreFileManager {
 

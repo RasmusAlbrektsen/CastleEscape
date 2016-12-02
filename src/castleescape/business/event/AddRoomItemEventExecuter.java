@@ -6,8 +6,7 @@ import castleescape.business.object.Item;
 import castleescape.business.ViewUtil;
 
 /**
- * An event executer for adding an item to the current room's inventory. Created
- * by Alex on 13/10/2016.
+ * Event executer for adding an item to the current room's inventory.
  */
 public class AddRoomItemEventExecuter extends InventoryEventExecuter {
 
@@ -18,9 +17,9 @@ public class AddRoomItemEventExecuter extends InventoryEventExecuter {
 	public void execute(Game game, Event event) {
 		//Get the item specified by the event by using the method in the
 		//superclass InventoryEventExecuter
-		InspectableObject object = getObjectFromEvent(event);
+		InspectableObject object = getObjectFromEvent(event, game);
 
-		//print the description, if one is present
+		//Print the description, if one is present
 		String description = event.getEventParam(Event.DESCRIPTION);
 		if (description != null) {
 			ViewUtil.println(description);

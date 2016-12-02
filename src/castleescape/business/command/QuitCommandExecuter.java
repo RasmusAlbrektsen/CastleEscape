@@ -10,8 +10,6 @@ import castleescape.business.ViewUtil;
 
 /**
  * A command executer for executing quit commands.
- *
- * @author Kasper
  */
 public class QuitCommandExecuter implements CommandExecuter {
 

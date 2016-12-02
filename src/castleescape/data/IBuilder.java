@@ -16,8 +16,6 @@ package castleescape.data;
  * generics, and since IBuilder subclasses need to handle different types of
  * models, typecasting is inevitable. Using generics would solve this problem,
  * but that would be a future addition.
- *
- * @author Alex, Kasper
  */
 public interface IBuilder {
 

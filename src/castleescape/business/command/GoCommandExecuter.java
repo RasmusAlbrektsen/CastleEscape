@@ -11,8 +11,6 @@ import castleescape.business.ViewUtil;
 
 /**
  * A command executer for executing go commands.
- *
- * @author Kasper
  */
 public class GoCommandExecuter implements CommandExecuter {
 

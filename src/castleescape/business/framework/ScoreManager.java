@@ -13,8 +13,6 @@ import castleescape.data.DataMediator;
 /**
  * Class responsible for all score related operations, including keeping track
  * of the player's score.
- *
- * @author Kasper
  */
 public class ScoreManager {
 
@@ -64,7 +62,8 @@ public class ScoreManager {
 		//Retrieve unsorted list of scores from the data mediator
 		List<Score> unsortedScores = dataMediator.getScores();
 
-		//Add al the scores to the internal score list, sorting it along the way
+		//Add all the scores to the internal score list, sorting it along the
+		//way
 		for (Score score : unsortedScores) {
 			addScore(score);
 		}
@@ -163,14 +162,6 @@ public class ScoreManager {
 			return;
 		}
 
-		//Print highscore and table header
-		ViewUtil.printBold("Highscore:");
-		ViewUtil.newLine();
-		ViewUtil.println(highscore);
-		ViewUtil.newLine();
-		ViewUtil.printBold("Top " + scoreCount + " scores:");
-		ViewUtil.newLine();
-
 		//If we are requested to print all scores (scoreCount == -1) then set
 		//scoreCount to the size og the scores list. The reasoning behind this
 		//functionality is merely to add convenience to the users of this
@@ -179,6 +170,14 @@ public class ScoreManager {
 		if (scoreCount == -1) {
 			scoreCount = scores.size();
 		}
+
+		//Print highscore and table header
+		ViewUtil.printBold("Highscore:");
+		ViewUtil.newLine();
+		ViewUtil.println(highscore);
+		ViewUtil.newLine();
+		ViewUtil.printBold("Top " + scoreCount + " scores:");
+		ViewUtil.newLine();
 
 		//Print until we have reached the score count or the last element in the
 		//scores list.

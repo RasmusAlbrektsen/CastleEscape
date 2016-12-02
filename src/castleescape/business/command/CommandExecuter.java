@@ -10,8 +10,6 @@ import castleescape.business.framework.Game;
 /**
  * Interface defining all objects that are able to execute
  * {@link Command commands}.
- *
- * @author DitteKoustrup
  */
 public interface CommandExecuter {
 

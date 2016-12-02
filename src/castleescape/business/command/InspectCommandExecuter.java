@@ -15,8 +15,6 @@ import castleescape.business.ViewUtil;
 
 /**
  * A command executer for executing inspect commands.
- *
- * @author Christian Schou
  */
 public class InspectCommandExecuter implements CommandExecuter {
 
@@ -52,6 +50,9 @@ public class InspectCommandExecuter implements CommandExecuter {
 		//the return statement above), so inspect it. This will return a list of
 		//events to be executed
 		List<Event> inspectEvents = currentObject.inspect();
+
+		//Sort the events
+		inspectEvents.sort(new EventComparator());
 
 		//Execute all retrieved events
 		for (Event e : inspectEvents) {

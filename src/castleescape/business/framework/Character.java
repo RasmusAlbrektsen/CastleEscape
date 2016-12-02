@@ -10,9 +10,6 @@ import castleescape.business.object.Inventory;
 /**
  * Class defining a playable character in the game. This class contains all the
  * characteristics that make a character unique.
- *
- * @author DitteKoustrup, Kasper
- * @see <a href="https://codeshare.io/bLKnE">Codeshare</a>
  */
 public class Character {
 
@@ -29,8 +26,8 @@ public class Character {
 	/**
 	 * How likely the character is to make noise when performing actions like
 	 * inspecting or using items. A value of 0.0 means that the character will
-	 * never make noise while a value of 1.0 means that the character will
-	 * always make noise.
+	 * never make noise while a value of 1.0 means that the character will make
+	 * as much noise as possible.
 	 */
 	private final double clumsiness;
 
