@@ -213,7 +213,7 @@ public class LevelDataReader {
 	 * Build all the room exits. Room exits need to be built after all other
 	 * data has been read since they store references to other rooms.
 	 */
-	public void buildRoomExits() {
+	private void buildRoomExits() {
 		//Loop through all room builders
 		for (RoomBuilder builder : roomBuilders) {
 			//Build the room's exits
@@ -230,7 +230,7 @@ public class LevelDataReader {
 	 * @throws IOException
 	 * @throws SAXException
 	 */
-	public void readConfig(SAXParser parser, XMLHandler handler, String path) throws IOException, SAXException {
+	private void readConfig(SAXParser parser, XMLHandler handler, String path) throws IOException, SAXException {
 		//Create file from path and ensure that it exists
 		File configFile = new File(path);
 		if (!configFile.exists()) {
