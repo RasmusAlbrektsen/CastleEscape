@@ -403,7 +403,7 @@ public class GameGuiController implements Initializable, GameListener {
 
 		for (int y = -halfHeight; y < halfHeight; y++) {
 			for (int x = -halfWidth; x < halfWidth; x++) {
-				if (x * x + y * y >= (halfWidth - 2) * (halfHeight - 2)) {
+				if (x * x + y * y >= (halfWidth - 14) * (halfHeight - 14)) {
 					g.getPixelWriter().setArgb(x + halfWidth, y + halfHeight, 0);
 				}
 			}
@@ -587,7 +587,7 @@ public class GameGuiController implements Initializable, GameListener {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		//Read image resources from the classpath
-		compassImg = new Image(getClass().getResourceAsStream("/res/compass.png"));
+		compassImg = new Image(getClass().getResourceAsStream("/res/compassBig.png"));
 		roomImg = new Image(getClass().getResourceAsStream("/res/room.png"));
 		horizontalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorHorizontal.png"));
 		verticalDoorImg = new Image(getClass().getResourceAsStream("/res/roomDoorVertical.png"));

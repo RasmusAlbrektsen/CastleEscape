@@ -5,6 +5,7 @@
  */
 package castleescape.business.event;
 
+import castleescape.business.ViewUtil;
 import castleescape.business.framework.Game;
 import castleescape.business.framework.Room;
 
@@ -15,6 +16,12 @@ public class TeleportEventExecuter implements EventExecuter {
 
 	@Override
 	public void execute(Game game, Event event) {
+		//Print the description, if one is present
+		String description = event.getEventParam(Event.DESCRIPTION);
+		if (!description.isEmpty()) {
+			ViewUtil.println(description);
+		}
+
 		//Get the name of the room that we should teleport to
 		String teleport = event.getEventParam(Event.DESTINATION);
 

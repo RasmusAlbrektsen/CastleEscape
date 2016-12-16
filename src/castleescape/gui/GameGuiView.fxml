@@ -55,21 +55,21 @@
    <right>
       <VBox BorderPane.alignment="CENTER">
          <children>
-            <StackPane prefHeight="196.0" prefWidth="196.0">
+            <StackPane prefHeight="220.0" prefWidth="220.0">
                <children>
-                  <Canvas fx:id="compass" height="196.0" width="196.0" />
-                  <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="196.0" prefWidth="196.0">
+                  <Canvas fx:id="compass" height="220.0" width="220.0" />
+                  <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="220.0">
                      <top>
-                        <Button fx:id="northButton" mnemonicParsing="false" onAction="#onNorthButtonAction" styleClass="compassButton" BorderPane.alignment="CENTER" />
+                        <Button fx:id="northButton" mnemonicParsing="false" onAction="#onNorthButtonAction" styleClass="compassButtonV" BorderPane.alignment="CENTER" />
                      </top>
                      <right>
-                        <Button fx:id="eastButton" mnemonicParsing="false" onAction="#onEastButtonAction" styleClass="compassButton" BorderPane.alignment="CENTER" />
+                        <Button fx:id="eastButton" mnemonicParsing="false" onAction="#onEastButtonAction" styleClass="compassButtonH" BorderPane.alignment="CENTER" />
                      </right>
                      <bottom>
-                        <Button fx:id="southButton" mnemonicParsing="false" onAction="#onSouthButtonAction" styleClass="compassButton" BorderPane.alignment="CENTER" />
+                        <Button fx:id="southButton" mnemonicParsing="false" onAction="#onSouthButtonAction" styleClass="compassButtonV" BorderPane.alignment="CENTER" />
                      </bottom>
                      <left>
-                        <Button fx:id="westButton" mnemonicParsing="false" onAction="#onWestButtonAction" styleClass="compassButton" BorderPane.alignment="CENTER" />
+                        <Button fx:id="westButton" mnemonicParsing="false" onAction="#onWestButtonAction" styleClass="compassButtonH" BorderPane.alignment="CENTER" />
                      </left>
                   </BorderPane>
                </children>

@@ -26,7 +26,7 @@ public class RemoveRoomItemEventExecuter extends InventoryEventExecuter {
 
 		//Print the description, if one is present
 		String description = event.getEventParam(Event.DESCRIPTION);
-		if (description != null) {
+		if (!description.isEmpty()) {
 			ViewUtil.println(description);
 		}
 

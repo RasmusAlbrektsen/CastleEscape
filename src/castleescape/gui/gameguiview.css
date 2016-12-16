@@ -65,14 +65,24 @@
  * Compass                                                                     *
  *                                                                             *
  ******************************************************************************/
-.compassButton {
+.compassButtonH {
+	-fx-background-color: transparent;
+	-fx-min-width: 78;
+	-fx-min-height: 66;
+	-fx-pref-width: 78;
+	-fx-pref-height: 66;
+	-fx-max-width: 78;
+	-fx-max-height: 66;
+}
+
+.compassButtonV {
 	-fx-background-color: transparent;
 	-fx-min-width: 66;
-	-fx-min-height: 66;
+	-fx-min-height: 78;
 	-fx-pref-width: 66;
-	-fx-pref-height: 66;
+	-fx-pref-height: 78;
 	-fx-max-width: 66;
-	-fx-max-height: 66;
+	-fx-max-height: 78;
 }
 
 /*******************************************************************************

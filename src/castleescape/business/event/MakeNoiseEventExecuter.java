@@ -21,7 +21,7 @@ public class MakeNoiseEventExecuter implements EventExecuter {
 	public void execute(Game game, Event event) {
 		//Print the description, if one is present
 		String description = event.getEventParam(Event.DESCRIPTION);
-		if (description != null) {
+		if (!description.isEmpty()) {
 			ViewUtil.println(description);
 		}
 
