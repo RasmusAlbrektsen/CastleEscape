@@ -12,7 +12,6 @@
         <event>
             <type>removeRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>pot</item>
         </event>
         <event>

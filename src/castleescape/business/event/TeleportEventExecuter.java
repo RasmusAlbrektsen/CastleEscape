@@ -18,7 +18,7 @@ public class TeleportEventExecuter implements EventExecuter {
 	public void execute(Game game, Event event) {
 		//Print the description, if one is present
 		String description = event.getEventParam(Event.DESCRIPTION);
-		if (!description.isEmpty()) {
+		if (description != null) {
 			ViewUtil.println(description);
 		}
 

@@ -22,21 +22,18 @@
             <trigger>staircase</trigger>
             <type>removeRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>staircase</item>
         </event>
         <event>
             <trigger>staircase</trigger>
             <type>removePlayerItem</type>
             <reward>1</reward>
-            <description/>
             <item>planks</item>
         </event>
         <event>
             <trigger>staircase</trigger>
             <type>addRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>planks</item>
         </event>
         <event>
@@ -50,7 +47,6 @@
             <trigger>embers</trigger>
             <type>removePlayerItem</type>
             <reward>1</reward>
-            <description/>
             <item>planks</item>
         </event>
         <event>
@@ -64,14 +60,12 @@
             <trigger>embers</trigger>
             <type>removeRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>embers</item>
         </event>
         <event>
             <trigger>embers</trigger>
             <type>addExit</type>
             <reward>1</reward>
-            <description/>
             <destination>Dining Room</destination>
             <direction>west</direction>
         </event>

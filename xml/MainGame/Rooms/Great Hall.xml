@@ -3,8 +3,8 @@
     <name>Great Hall</name>
     <description>The great hall is mighty big. There is a staircase to the upper floor, but it has been barricaded by lots of old furniture and statues. The main door is locked tightly by numerous locks, the only reachable lock being a bronze lock.</description>
     <inventory>
-        <object>main door</object>
         <object>bronze lock</object>
+        <object>main door</object>
     </inventory>
     <exits>
         <east>Library</east>

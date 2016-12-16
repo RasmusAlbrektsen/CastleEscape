@@ -6,13 +6,11 @@
         <event>
             <type>addRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>Vase Left Piece</item>
         </event>
         <event>
             <type>addRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>Vase Right Piece</item>
         </event>
         <event>
@@ -24,7 +22,6 @@
         <event>
             <type>removeRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>Deep Hole</item>
         </event>
     </events>

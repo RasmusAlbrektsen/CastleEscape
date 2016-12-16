@@ -6,7 +6,6 @@
         <event>
             <type>quit</type>
             <reward>1</reward>
-            <description/>
         </event>
     </events>
 </inspectableobject>

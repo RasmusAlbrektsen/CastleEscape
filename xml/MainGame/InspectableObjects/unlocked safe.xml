@@ -12,13 +12,11 @@
         <event>
             <type>addRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>empty safe</item>
         </event>
         <event>
             <type>removeRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>unlocked safe</item>
         </event>
         <event>

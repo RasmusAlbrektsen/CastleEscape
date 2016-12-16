@@ -14,14 +14,12 @@
             <trigger>barred door</trigger>
             <type>removeRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>barred door</item>
         </event>
         <event>
             <trigger>barred door</trigger>
             <type>addExit</type>
             <reward>1</reward>
-            <description/>
             <destination>Garden</destination>
             <direction>north</direction>
         </event>

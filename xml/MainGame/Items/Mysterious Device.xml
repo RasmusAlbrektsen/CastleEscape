@@ -12,19 +12,16 @@ The device is active. Inspect it again to use it.</description>
         <event>
             <type>addPlayerItem</type>
             <reward>1</reward>
-            <description/>
             <item>Teleportation Device</item>
         </event>
         <event>
             <type>removePlayerItem</type>
             <reward>1</reward>
-            <description/>
             <item>Mysterious Device</item>
         </event>
         <event>
             <type>removeRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>Mysterious Device</item>
         </event>
     </events>

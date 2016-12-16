@@ -29,7 +29,7 @@ public class AddExitEventExecuter implements EventExecuter {
 
 		//Print the description, if one is present
 		String description = event.getEventParam(Event.DESCRIPTION);
-		if (!description.isEmpty()) {
+		if (description != null) {
 			ViewUtil.println(description);
 		}
 

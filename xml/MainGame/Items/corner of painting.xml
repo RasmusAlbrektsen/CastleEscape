@@ -14,7 +14,6 @@
             <trigger>glasses</trigger>
             <type>removePlayerItem</type>
             <reward>1</reward>
-            <description/>
             <item>corner of painting</item>
         </event>
     </events>

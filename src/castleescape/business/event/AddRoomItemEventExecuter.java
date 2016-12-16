@@ -21,7 +21,7 @@ public class AddRoomItemEventExecuter extends InventoryEventExecuter {
 
 		//Print the description, if one is present
 		String description = event.getEventParam(Event.DESCRIPTION);
-		if (!description.isEmpty()) {
+		if (description != null) {
 			ViewUtil.println(description);
 		}
 

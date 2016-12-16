@@ -14,28 +14,24 @@
             <trigger>Vase Left Piece</trigger>
             <type>removePlayerItem</type>
             <reward>1</reward>
-            <description/>
             <item>Vase Right Piece</item>
         </event>
         <event>
             <trigger>Vase Left Piece</trigger>
             <type>removeRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>Vase Left Piece</item>
         </event>
         <event>
             <trigger>Vase Left Piece</trigger>
             <type>removeRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>Vase Right Piece</item>
         </event>
         <event>
             <trigger>Vase Left Piece</trigger>
             <type>addExit</type>
             <reward>1</reward>
-            <description/>
             <destination>Treasury</destination>
             <direction>south</direction>
         </event>
@@ -50,7 +46,6 @@
             <trigger>Vase Left Piece</trigger>
             <type>addPlayerItem</type>
             <reward>1</reward>
-            <description/>
             <item>Precious Vase</item>
         </event>
     </events>

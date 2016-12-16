@@ -17,7 +17,7 @@ public class QuitEventExecuter implements EventExecuter {
 	public void execute(Game game, Event event) {
 		//Get event description and print it, if it exists
 		String description = event.getEventParam(Event.DESCRIPTION);
-		if (!description.isEmpty()) {
+		if (description != null) {
 			ViewUtil.println(description);
 		}
 

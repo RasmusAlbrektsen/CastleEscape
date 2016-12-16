@@ -14,14 +14,12 @@
             <trigger>silver lock</trigger>
             <type>addRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>gold lock</item>
         </event>
         <event>
             <trigger>silver lock</trigger>
             <type>makeNoise</type>
             <reward>1</reward>
-            <description/>
             <weight>0.98</weight>
         </event>
         <event>

@@ -16,7 +16,6 @@ Oh, and don't go west yet, there is nothing to see there for now.</description>
             <trigger>Locked Cage</trigger>
             <type>addExit</type>
             <reward>1</reward>
-            <description/>
             <destination>Monster Pit</destination>
             <direction>east</direction>
         </event>
@@ -45,7 +44,6 @@ Oh, and don't go west yet, there is nothing to see there for now.</description>
             <trigger>Locked Cage</trigger>
             <type>addExit</type>
             <reward>1</reward>
-            <description/>
             <destination>Valley</destination>
             <direction>west</direction>
         </event>

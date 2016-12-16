@@ -14,7 +14,6 @@
             <trigger>rat</trigger>
             <type>removeRoomItem</type>
             <reward>1</reward>
-            <description/>
             <item>rat</item>
         </event>
         <event>
