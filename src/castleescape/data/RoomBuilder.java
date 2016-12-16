@@ -44,8 +44,8 @@ public class RoomBuilder implements IBuilder {
 	private final Map<String, String> exits;
 
 	/**
-	 * The room that has been built. Will be null until {@link #build()} has
-	 * been called.
+	 * The room that has been built. Will be null until
+	 * {@link #build(LevelDataStorage)} has been called.
 	 */
 	protected Room result;
 
@@ -118,7 +118,7 @@ public class RoomBuilder implements IBuilder {
 			result.getInventory().addItem(dataStorage.getItem(item));
 		}
 	}
-	
+
 	@Override
 	public void postBuild(LevelDataStorage dataStorage) {
 		//Build the exits of the room.

@@ -64,7 +64,7 @@ public class DataMediator {
 
 	/**
 	 * Get the inspectable objects that were read during the last call to
-	 * {@link #readLevel(String)}.
+	 * {@link #readLevelData(String)}.
 	 *
 	 * @return the inspectable objects that were read
 	 */
@@ -75,7 +75,7 @@ public class DataMediator {
 
 	/**
 	 * Get the items that were read during the last call to
-	 * {@link #readLevel(String)}.
+	 * {@link #readLevelData(String)}.
 	 *
 	 * @return the items that were read
 	 */
@@ -86,7 +86,7 @@ public class DataMediator {
 
 	/**
 	 * Get the rooms that were read during the last call to
-	 * {@link #readLevel(String)}.
+	 * {@link #readLevelData(String)}.
 	 *
 	 * @return the rooms that were read
 	 */
@@ -97,7 +97,7 @@ public class DataMediator {
 
 	/**
 	 * Get the configurations that were read during the last call to
-	 * {@link #readLevel(String)}.
+	 * {@link #readLevelData(String)}.
 	 *
 	 * @return the configurations that were read
 	 */

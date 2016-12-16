@@ -67,9 +67,10 @@ public interface IBuilder {
 
 	/**
 	 * Get the result from this builder. This method should only ever be called
-	 * after a call to {@link #build()}, as it will otherwise return null.
-	 * Sadly, there is no common type for Items, InspectableObjects and Rooms
-	 * other than Object, so the caller of this method must perform typecasting.
+	 * after a call to {@link #build(LevelDataStorage)}, as it will otherwise
+	 * return null. Sadly, there is no common type for Items, InspectableObjects
+	 * and Rooms other than Object, so the caller of this method must perform
+	 * typecasting.
 	 *
 	 * @return the result of this builder
 	 */

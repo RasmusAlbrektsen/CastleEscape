@@ -57,7 +57,7 @@ public class InspectableObjectBuilder implements IBuilder {
 
 	/**
 	 * The inspectable object that has been built. Will be null until
-	 * {@link #build()} has been called.
+	 * {@link #build(LevelDataStorage)} has been called.
 	 */
 	protected InspectableObject result;
 

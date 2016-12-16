@@ -111,7 +111,7 @@ public class Game {
 	/**
 	 * Constructs a new game object to play the specified level.
 	 * <p>
-	 * To start the game, call the {@link #play()} method after the game object
+	 * To start the game, call the {@link #start()} method after the game object
 	 * has been successfully constructed.
 	 *
 	 * @param dataMediator the data mediator to use for communicating with the
