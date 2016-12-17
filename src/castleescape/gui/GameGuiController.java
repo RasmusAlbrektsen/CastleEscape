@@ -495,8 +495,9 @@ public class GameGuiController implements Initializable, GameListener {
 		choiceDialog.setTitle("Character selection");
 
 		//We also want to display the character's description, so we create a
-		//new label control to display the character's description 
-		Label descriptionLabel = new Label();
+		//new label control to display the character's description. To begin
+		//with, this is the description of the 0th character
+		Label descriptionLabel = new Label(characters.get(characterNames[0]));
 
 		//The 'expendable content' of the choice dialog is set to our label
 		choiceDialog.getDialogPane().setExpandableContent(descriptionLabel);
@@ -509,6 +510,9 @@ public class GameGuiController implements Initializable, GameListener {
 				//selection we update the label's text to the character's
 				//description from the character map
 				descriptionLabel.setText(characters.get(newValue));
+				
+				//Resize the dialog box
+				choiceDialog.getDialogPane().getScene().getWindow().sizeToScene();
 			}
 		});
 
