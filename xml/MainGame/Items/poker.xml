@@ -30,5 +30,12 @@
             <description>The great hall is mighty big. There is a staircase to the upper floor, but it has been barricaded by lots of old furniture and statues. The main door to the north is unlocked, go to freedom!</description>
             <room>Great Hall</room>
         </event>
+		<event>
+            <trigger>barred door</trigger>
+            <type>setObjectDescription</type>
+            <reward>1</reward>
+            <description>The main door is finally open! What are you waiting for? Go to freedom!</description>
+            <object>main door</object>
+        </event>
     </events>
 </item>

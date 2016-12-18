@@ -42,8 +42,6 @@ public class MakeNoiseEventExecuter implements EventExecuter {
 		//Roll a random number in the range [0;1[ to determine, if noise should
 		//be generated
 		double random = Math.random();
-		
-		System.out.println("P: " + playerWeight + "  C: " + weight + "  R: " + random);
 
 		if (random < noiseChance) {
 			//Noise was generated, make the monster hunt the player

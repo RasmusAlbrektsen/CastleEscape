@@ -34,7 +34,7 @@
             <type>setObjectDescription</type>
             <reward>1</reward>
             <description>This door blocks the only way to freedom, but it is tightly locked! The door has only one more lock, the gold lock. Maybe the key is hidden around this place?</description>
-            <object>mian door</object>
+            <object>main door</object>
         </event>
     </events>
 </item>

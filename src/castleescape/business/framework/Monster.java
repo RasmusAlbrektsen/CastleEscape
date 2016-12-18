@@ -197,6 +197,10 @@ public class Monster {
 					//player
 					if (newRoom == game.getCurrentRoom()) {
 						setHunting(game.getCurrentRoom());
+						
+						//We should also warn the player
+						ViewUtil.newLine();
+						ViewUtil.printShaky(WARNING_MESSAGE);
 					}
 				}
 			}
